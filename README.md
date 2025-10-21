@@ -42,17 +42,9 @@ VoidMuse致力于通过**开源组件整合**的方式，以**最低的开发成
 
 ## 🚀 快速开始
 
-### 🎯 三分钟快速上手
 
-想要立即体验VoidMuse的强大功能？跟着我们的快速配置指南，三步搞定！
-
-👉 **[📖 查看三步快速上手指南](doc/quick-start.md)**
-
-> 💡 只需配置AI模型API密钥，就能开始使用基础功能。搜索和代码理解功能可以后续按需配置。
-
-### 两种使用方式
-
-#### 🎯 作为用户 - 直接使用插件
+### 使用方式
+直接使用插件
 
 **VS Code安装**
 1. 打开VS Code扩展商店 (Ctrl+Shift+X)
@@ -64,32 +56,16 @@ VoidMuse致力于通过**开源组件整合**的方式，以**最低的开发成
 2. 搜索 "VoidMuse"
 3. 点击安装并重启IDE
 
-#### 🔧 作为学习者 - 本地开发学习
+作为学习者 - 本地开发学习【另外一个系列讲】
 
-```bash
-# 克隆学习型项目
-git clone https://github.com/your-org/voidmuse.git
-cd voidmuse
 
-# 安装前端依赖
-cd gui
-npm install
+### 🎯 三分钟快速上手
 
-# 启动开发服务器
-npm run dev
+想要立即体验VoidMuse的强大功能？跟着我们的快速配置指南，三步搞定！
 
-# 安装VS Code插件依赖
-cd ../extensions/vscode
-npm install
+👉 **[📖 查看三步快速上手指南](doc/quick-start.md)**
 
-# 启动VS Code插件调试
-npm run compile
-# 按F5启动调试
-
-# 构建IntelliJ插件
-cd ../intellij
-./gradlew buildPlugin
-```
+> 💡 只需配置AI模型API密钥，就能开始使用基础功能。搜索和代码理解功能可以后续按需配置。
 
 ### 详细配置指南
 
@@ -99,11 +75,6 @@ cd ../intellij
 - 🔍 **[搜索功能配置](doc/googleSearchConfig.md)** - Google搜索配置详细教程
 - 🔍 **[博查搜索配置](doc/bochaSearchConfig.md)** - 国内搜索服务配置
 - 🧠 **代码理解配置** - 使用相同的AI模型API即可
-
-详细配置指南请参考：
-- [基础配置指南](docs/basic-setup.md)
-- [开发环境搭建](docs/dev-environment.md)
-- [调试与学习技巧](docs/debug-and-learn.md)
 
 ---
 
@@ -130,32 +101,20 @@ cd ../intellij
 
 我们精心选择并整合了以下优秀开源组件：
 
-#### 前端技术栈
-- **React 18.x** - 现代化UI框架
-- **TypeScript 5.x** - 类型安全的JavaScript超集
-- **Vite 4.x** - 快速的前端构建工具
 - **Ant Design 5.x** - 企业级UI设计语言
 - **TipTap** - 富文本编辑器
+- **Vercel的 ai-sdk** - 多模型支持、agent框架
 
-#### AI相关组件
-- **@ai-sdk/anthropic** - Claude模型集成
-- **@ai-sdk/openai** - OpenAI模型支持
-- **@ai-sdk/deepseek** - DeepSeek模型适配
-- **@openrouter/ai-sdk-provider** - 多模型路由支持
-- **@modelcontextprotocol/sdk** - MCP协议实现
 
-#### IDE集成
-- **VS Code Extension API** - VS Code插件开发
-- **IntelliJ Platform SDK** - IDEA插件框架
-- **Gradle** - Java项目构建工具
+### 📖 学习资源汇总
 
-### 📖 深度学习资源
-
-- [Codebase原理详解](docs/codebase-principles.md)
-- [提高检索准确率的10种方法](docs/accuracy-optimization.md)
-- [Embedding技术深度解析](docs/embedding-guide.md)
-- [AI工程化最佳实践](docs/ai-engineering.md)
-- [MCP协议技术解析](docs/mcp-protocol.md)
+1. 微软 AI Agents for Beginners：构建AI代理的基础知识，https://learn.microsoft.com/zh-cn/shows/ai-agents-for-beginners/
+2. 吴恩达 Agentic AI 课程：代理式AI的实际应用，https://deeplearning.ai
+3. Hugging Face AI Agents 课程：实用的AI智能体开发技能，https://huggingface.co/learn/agents-course/zh-CN/unit0/introduction
+4. Google 5天 AI Agent 培训课：实战项目经验，https://rsvp.withgoogle.com/events/google-ai-agents-intensive_2025/home
+5. Anthropic 官方课程：高级AI Agent技术，https://anthropic.skilljar.com
+6. Coursera AI Agents 专项课程：学术理论与实际应用结合，https://coursera.org/specializations/ai-agents
+7. Salesforce AI Agent Course：企业级AI Agent解决方案，https://salesforce.com/ap/agentforce/ai-agent-course/
 
 ---
 
@@ -178,7 +137,7 @@ cd ../intellij
   - 本地化向量数据库
   - 语义相似度检索
   - 智能代码上下文提取
-- **深度文档**: [Codebase技术原理](docs/codebase-deep-dive.md)
+- **深度文档**: [Codebase技术原理](doc/codebase-deep-dive.md)
 
 ### 💬 多模型AI对话 (AI Chat)
 
@@ -221,38 +180,32 @@ cd ../intellij
 ### 📖 推荐学习路径
 
 #### 初级路径 (AI概念入门)
-1. [什么是Embedding？](docs/embedding-basics.md)
-2. [向量数据库基础](docs/vector-db-intro.md)
-3. [大模型API使用指南](docs/llm-api-guide.md)
+1. [什么是Embedding？](doc/tutorial/embedding-basics.md)
+2. [向量数据库基础]()
 
 #### 高级路径 (工程实践)
-1. [Codebase索引原理与实现](docs/codebase-implementation.md)
-2. [提高检索准确率的策略](docs/retrieval-optimization.md)
-3. [多模型适配架构设计](docs/multi-model-architecture.md)
-4. [MCP协议深度解析](docs/mcp-deep-dive.md)
+1. [Codebase索引原理与实现](doc/tutorial/codebase-implementation.md)
+2. [提高检索准确率的策略]()
+3. [多模型适配架构设计]()
+4. [MCP协议深度解析]()
 
 ### 🛠️ 实践项目
 
-- [构建你的第一个AI插件](docs/build-your-plugin.md)
-- [自定义Embedding模型集成](docs/custom-embedding.md)
-- [扩展MCP协议支持](docs/extend-mcp.md)
-- [实现自定义搜索引擎](docs/custom-search.md)
+- [实现深度搜索](doc/tutorial/function%20call的实践-实现深度搜索.md)
+- [Embedding模型踩坑合集]()
+- [自定义Embedding模型集成]()
+- [扩展MCP协议支持]()
+- [实现自定义搜索引擎]()
 
 ---
 
 ## 🚀 未来功能规划
 
-| 功能模块 | 核心特性 | 技术原理 | 计划时间 | 学习价值 |
-|---------|---------|---------|---------|----------|
-| 🧠 **上下文记忆** | 跨会话记忆、智能优先级、个性化学习 | 向量数据库 + 语义检索 | xxx | AI记忆系统设计 |
-| 🗜️ **上下文压缩** | 动态长度管理、多级压缩、语义保持 | 智能摘要 + 分层压缩 | xxx | 大模型上下文优化 |
-| 🤖 **Agent代码生成** | 需求分析、架构设计、自动实现、测试验证 | 多Agent协作框架 | xxx | AI驱动软件开发 |
-
-### 🤝 参与开发
-
-欢迎社区贡献：**算法优化** | **原型开发** | **测试验证** | **文档编写**
-
-📖 技术文档：[记忆系统](docs/context-memory-design.md) | [压缩算法](docs/compression-algorithms.md) | [Agent架构](docs/agent-architecture.md) | [协作协议](docs/multi-agent-protocol.md)
+| 功能模块 | 核心特性 | 技术原理 | 学习价值 |
+|---------|---------|---------|----------|
+| 🧠 **上下文记忆** | 跨会话记忆、智能优先级、个性化学习 | 向量数据库 + 语义检索 |AI记忆系统设计 |
+| 🗜️ **上下文压缩** | 动态长度管理、多级压缩、语义保持 | 智能摘要 + 分层压缩 |大模型上下文优化 |
+| 🤖 **Agent代码生成** | 需求分析、架构设计、自动实现、测试验证 | 多Agent协作框架 | AI驱动软件开发 |
 
 ---
 
@@ -282,33 +235,6 @@ cd ../intellij
 我们欢迎各种形式的贡献！无论是Bug修复、功能开发、文档完善还是技术分享，都能让VoidMuse变得更好。
 
 详细贡献指南：[贡献指南](doc/contributing.md)
-
-### 快速开始贡献
-
-1. **Fork项目** 到你的GitHub账户
-2. **创建特性分支** (`git checkout -b feature/AmazingFeature`)
-3. **提交更改** (`git commit -m 'Add some AmazingFeature'`)
-4. **推送到分支** (`git push origin feature/AmazingFeature`)
-5. **开启Pull Request**
-
----
-
-## 🙏 致谢
-
-### 开源组件致谢
-
-感谢以下优秀的开源项目：
-
-- [React](https://reactjs.org/) - 用户界面构建库
-- [Ant Design](https://ant.design/) - 企业级UI设计语言
-- [Vite](https://vitejs.dev/) - 下一代前端构建工具
-- [TypeScript](https://www.typescriptlang.org/) - JavaScript的超集
-- [AI SDK](https://sdk.vercel.ai/) - 统一的AI模型接口
-- [Model Context Protocol](https://modelcontextprotocol.io/) - AI工具调用标准
-- [TipTap](https://tiptap.dev/) - 无头富文本编辑器
-- [VS Code Extension API](https://code.visualstudio.com/api) - VS Code扩展开发
-- [IntelliJ Platform SDK](https://plugins.jetbrains.com/docs/intellij/) - IntelliJ插件开发
-
 
 ### 社区贡献者
 
