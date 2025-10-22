@@ -1,0 +1,65 @@
+{
+  "chat": {
+    "title": "聊天",
+    "placeholder": "请输入消息...",
+    "send": "发送"
+  },
+  "index": {
+    "title": "首页",
+    "welcome": "欢迎使用AI聊天助手"
+  },
+  "tokenUsage": {
+    "title": "Token使用统计",
+    "description": "查看和分析您的Token使用情况，包括各模型的使用量和成本统计。",
+    "loadError": "数据加载失败",
+    "refresh": "刷新",
+    "statisticsOverview": "统计概览",
+    "dailyUsageRecords": "日使用记录",
+    "filters": {
+      "allProjects": "全部项目",
+      "allTypes": "全部类型",
+      "allBaseUrls": "全部BaseUrl",
+      "codeEdit": "代码编辑",
+      "codeComplete": "代码补全"
+    }
+  },
+  "ollama": {
+    "title": "Ollama 管理",
+    "description": "在您的系统上安装和管理 Ollama AI 模型",
+    "systemInfo": {
+      "title": "系统信息",
+      "systemVersion": "系统版本",
+      "ollamaStatus": "Ollama 状态",
+      "installed": "已安装",
+      "notInstalled": "未安装"
+    },
+    "config": {
+      "title": "安装配置",
+      "installPath": "安装路径",
+      "installPathPlaceholder": "请输入 Ollama 安装路径",
+      "modelPath": "模型存储路径",
+      "modelPathPlaceholder": "请输入模型存储路径",
+      "embeddingModel": "嵌入模型",
+      "selectEmbeddingModel": "选择嵌入模型",
+      "customModelPlaceholder": "请输入自定义模型名称"
+    },
+    "install": {
+      "start": "安装 Ollama",
+      "installing": "正在安装...",
+      "installed": "已安装",
+      "stop": "停止安装",
+      "confirmStop": "确认停止安装",
+      "confirmStopMessage": "您确定要停止安装过程吗？这可能会使系统处于不完整状态。",
+      "output": "安装输出"
+    },
+    "folderSelect": {
+      "pathInfo": "文件夹选择信息",
+      "selectedFolder": "已选择文件夹",
+      "pleaseInputFullPath": "请在下方输入框中手动输入完整的绝对路径。"
+    },
+    "error": {
+      "initializationFailed": "初始化页面数据失败",
+      "installationFailed": "安装失败，请检查配置后重试"
+    }
+  }
+}

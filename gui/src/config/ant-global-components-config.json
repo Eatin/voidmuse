@@ -1,0 +1,34 @@
+{
+  "themes": {
+    "light": {
+      "components": {
+        "Button": {
+          "colorPrimary": "#ff4d4f"
+        },
+        "Input": {
+          "colorPrimary": "#1890ff",
+          "colorBorder": "#d9d9d9"
+        },
+        "Layout": {
+          "bodyBg": "#ffffff",
+          "headerBg": "#ffffff"
+        }
+      }
+    },
+    "dark": {
+      "components": {
+        "Button": {
+          "colorPrimary": "#36cfc9"
+        },
+        "Input": {
+          "colorPrimary": "#177ddc",
+          "colorBorder": "#434343"
+        },
+        "Layout": {
+          "bodyBg": "#181a1f",
+          "headerBg": "#181a1f"
+        }
+      }
+    }
+  }
+} 

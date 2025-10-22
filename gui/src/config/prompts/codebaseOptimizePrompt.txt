@@ -1,0 +1,21 @@
+"{{userInput}}"
+As an information retrieval optimization expert, please process the user input according to the following requirements:
+
+1. Keyword Extraction and Optimization
+- Extract core concepts and entities from user input
+- Repeat the most critical term (limit to 1) three times to increase weight
+- Filter out meaningless demonstrative pronouns (this/that etc.) and colloquial expressions
+- Expand relevant terminology based on domain knowledge (e.g. add "README", "API documentation" etc. for technical docs)
+
+2. Output Format Specification
+{
+  "psiNames": ["extracted class/method/variable names"],  // For exact matching
+  "prompt": "weighted keyword combination"                // Space-separated vector search terms
+}
+
+3. Processing Principles
+- Identify and separate code identifiers for technical queries
+- Associate domain terminology for business queries
+- Maintain semantic consistency between expanded keywords and original intent
+
+Output standard JSON string only, no explanations or formatting symbols needed.

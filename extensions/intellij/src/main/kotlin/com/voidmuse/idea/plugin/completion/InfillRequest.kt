@@ -1,0 +1,120 @@
+package com.voidmuse.idea.plugin.completion
+
+import com.intellij.openapi.components.service
+import com.intellij.openapi.editor.Document
+import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.util.TextRange
+import com.intellij.psi.PsiElement
+import com.voidmuse.idea.plugin.common.EncodingManager
+import com.voidmuse.idea.plugin.completion.psi.filePath
+import com.voidmuse.idea.plugin.completion.psi.readText
+
+const val MAX_PROMPT_TOKENS = 32 * 1024
+
+class InfillRequest private constructor(
+    val prefix: String,
+    val suffix: String,
+    val caretOffset: Int,
+    val fileDetails: FileDetails?,
+    val context: InfillContext?,
+    val stopTokens: List<String>,
+    val editor: Editor,
+) {
+
+    data class FileDetails(val fileContent: String, val fileExtension: String? = null)
+
+    class Builder {
+        private val prefix: String
+        private val suffix: String
+        private val caretOffset: Int
+        private var fileDetails: FileDetails? = null
+        private var additionalContext: String? = null
+        private var context: InfillContext? = null
+        private var stopTokens: List<String>
+        private var editor: Editor
+
+        constructor(
+            document: Document,
+            editor: Editor,
+            caretOffset: Int,
+            type: CompletionType = CompletionType.MULTI_LINE
+        ) {
+            this.editor = editor
+            prefix =
+                document.getText(TextRange(0, caretOffset))
+                    .truncateText(MAX_PROMPT_TOKENS, false)
+            suffix =
+                document.getText(TextRange(caretOffset, document.textLength))
+                    .truncateText(MAX_PROMPT_TOKENS)
+            this.caretOffset = caretOffset
+            this.stopTokens = getStopTokens(type)
+        }
+
+        fun fileDetails(fileDetails: FileDetails) = apply { this.fileDetails = fileDetails }
+        fun additionalContext(additionalContext: String) =
+            apply { this.additionalContext = additionalContext }
+
+        fun context(context: InfillContext) = apply { this.context = context }
+
+        private fun getStopTokens(type: CompletionType): List<String> {
+            var whitespaceCount = 0
+            val lineSuffix = suffix
+                .takeWhile { char ->
+                    if (char == '\n') false
+                    else if (char.isWhitespace()) whitespaceCount++ < 2
+                    else whitespaceCount < 2
+                }
+            val baseTokens = when (type) {
+                CompletionType.SINGLE_LINE -> emptyList()
+                else -> listOf("\n\n")
+            }
+
+            return if (lineSuffix.isNotEmpty()) {
+                baseTokens + lineSuffix
+            } else {
+                baseTokens
+            }
+        }
+
+        fun build(): InfillRequest {
+            val modifiedPrefix = if (!additionalContext.isNullOrEmpty()) {
+                "/*\n${additionalContext}\n*/\n\n$prefix"
+            } else {
+                prefix
+            }
+            return InfillRequest(
+                modifiedPrefix,
+                suffix,
+                caretOffset,
+                fileDetails,
+                context,
+                stopTokens,
+                editor
+            )
+        }
+    }
+}
+
+class InfillContext(
+    val enclosingElement: ContextElement,
+    val contextElements: Set<ContextElement>
+) {
+
+    fun getRepoName(): String = enclosingElement.psiElement.project.name
+}
+
+class ContextElement(val psiElement: PsiElement) {
+    var tokens: Int = -1
+
+    fun filePath() = this.psiElement.filePath()
+    fun text() = this.psiElement.readText()
+}
+
+fun String.truncateText(maxTokens: Int, fromStart: Boolean = true): String {
+    return service<EncodingManager>().truncateText(this, maxTokens, fromStart)
+}
+
+enum class CompletionType {
+    SINGLE_LINE,
+    MULTI_LINE,
+}

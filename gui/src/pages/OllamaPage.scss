@@ -1,0 +1,419 @@
+.ollama-page {
+  padding: 16px;
+  max-width: 1000px;
+  min-width: 320px;
+  margin: 0 auto;
+  background: var(--background-color);
+  min-height: 100%;
+
+  .ollama-page-header {
+    margin-bottom: 20px;
+    text-align: center;
+    
+    .ant-typography {
+      margin-bottom: 8px;
+    }
+    
+    h2 {
+      color: #1890ff;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    p {
+      color: var(--text-secondary-color);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+  }
+
+  .ollama-page-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: 12px;
+    
+    .ant-spin {
+      margin-bottom: 8px;
+    }
+  }
+
+  // Card styles
+  .system-info-card,
+  .config-card {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    margin-bottom: 16px;
+    
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+    
+    .ant-card-head {
+      border-bottom: 1px solid var(--border-color);
+      background: var(--card-background-color);
+      padding: 12px 16px;
+      
+      .ant-card-head-title {
+        font-weight: 600;
+        color: var(--text-color);
+        font-size: 16px;
+      }
+    }
+    
+    .ant-card-body {
+      padding: 16px;
+      background: var(--card-background-color);
+    }
+  }
+
+  // System info specific styles
+  .system-info-card {
+    .info-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      
+      &:first-child {
+        padding-top: 0;
+      }
+      
+      .ant-typography {
+        margin: 0;
+        color: var(--text-color);
+        
+        &:first-child {
+          font-weight: 500;
+          min-width: 120px;
+        }
+      }
+    }
+  }
+
+  // Configuration card specific styles
+  .config-card {
+    .path-config {
+      margin-bottom: 16px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      .ant-typography {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-color);
+        font-weight: 500;
+      }
+      
+      .ant-input {
+        margin-top: 8px;
+        border-radius: 6px;
+        border-color: var(--border-color);
+        background: var(--input-background-color);
+        color: var(--text-color);
+        
+        &:focus {
+          border-color: #1890ff;
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+      }
+    }
+    
+    .model-config {
+      margin-bottom: 20px;
+      
+      .ant-typography {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-color);
+        font-weight: 500;
+      }
+      
+      .ant-select {
+        width: 100%;
+        
+        .ant-select-selector {
+          border-radius: 6px;
+          border-color: var(--border-color);
+          background: var(--input-background-color);
+        }
+      }
+    }
+    
+    .install-buttons {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      
+      .ant-btn {
+        border-radius: 6px;
+        font-weight: 500;
+        min-width: 120px;
+        height: 36px;
+        
+        &.ant-btn-primary {
+          background: #1890ff;
+          border-color: #1890ff;
+          
+          &:hover {
+            background: #40a9ff;
+            border-color: #40a9ff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+          }
+          
+          &:disabled {
+            background: var(--disabled-color);
+            border-color: var(--disabled-color);
+            color: var(--disabled-text-color);
+            transform: none;
+            box-shadow: none;
+          }
+        }
+        
+        &.ant-btn-dangerous {
+          background: #ff4d4f;
+          border-color: #ff4d4f;
+          
+          &:hover {
+            background: #ff7875;
+            border-color: #ff7875;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255, 77, 79, 0.3);
+          }
+        }
+      }
+    }
+  }
+
+  // Alert styles
+  .ant-alert {
+    border-radius: 6px;
+    
+    &.ant-alert-error {
+      border-left: 4px solid #ff4d4f;
+    }
+  }
+  
+  // Installation output console styles
+  .installation-output {
+    margin-top: 16px;
+    
+    .output-console {
+      margin-top: 8px;
+      padding: 12px;
+      background-color: var(--console-background-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      color: var(--console-text-color);
+      line-height: 1.4;
+      
+      // Auto scroll to bottom
+      scroll-behavior: smooth;
+      
+      // Dark theme support is handled by CSS variables
+      
+      // Scrollbar styling
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background: var(--scrollbar-track-color);
+        border-radius: 3px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb-color);
+        border-radius: 3px;
+        
+        &:hover {
+          background: var(--scrollbar-thumb-hover-color);
+        }
+      }
+      
+      // Dark theme scrollbar styles are handled by CSS variables
+    }
+  }
+}
+
+// Responsive design improvements
+// Extra small devices (phones, 320px and up)
+@media (max-width: 480px) {
+  .ollama-page {
+    padding: 8px;
+    
+    .ollama-page-header {
+      margin-bottom: 12px;
+      
+      h2 {
+        font-size: 18px;
+      }
+      
+      p {
+        font-size: 12px;
+      }
+    }
+    
+    .system-info-card,
+    .config-card {
+      margin-bottom: 8px;
+      
+      .ant-card-head {
+        padding: 8px 10px;
+        
+        .ant-card-head-title {
+          font-size: 13px;
+        }
+      }
+      
+      .ant-card-body {
+        padding: 10px;
+      }
+    }
+    
+    .system-info-card {
+      .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 0;
+        
+        .ant-typography:first-child {
+          min-width: auto;
+          margin-bottom: 4px;
+        }
+      }
+    }
+    
+    .config-card {
+      .path-config {
+        margin-bottom: 10px;
+      }
+      
+      .install-buttons {
+        margin-top: 12px;
+        padding-top: 10px;
+        
+        .ant-btn {
+          width: 100%;
+          margin-bottom: 6px;
+          min-width: auto;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Small devices (landscape phones, 481px and up)
+@media (min-width: 481px) and (max-width: 768px) {
+  .ollama-page {
+    padding: 12px;
+    
+    .ollama-page-header {
+      margin-bottom: 16px;
+      
+      h2 {
+        font-size: 20px;
+      }
+      
+      p {
+        font-size: 13px;
+      }
+    }
+    
+    .system-info-card,
+    .config-card {
+      margin-bottom: 12px;
+      
+      .ant-card-head {
+        padding: 10px 12px;
+        
+        .ant-card-head-title {
+          font-size: 14px;
+        }
+      }
+      
+      .ant-card-body {
+        padding: 12px;
+      }
+    }
+    
+    .config-card {
+      .path-config {
+        margin-bottom: 12px;
+      }
+      
+      .install-buttons {
+        margin-top: 16px;
+        padding-top: 12px;
+        
+        .ant-btn {
+          width: 100%;
+          margin-bottom: 8px;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Medium devices (tablets, 769px and up)
+@media (min-width: 769px) and (max-width: 992px) {
+  .ollama-page {
+    padding: 14px;
+    
+    .system-info-card,
+    .config-card {
+      .ant-card-body {
+        padding: 14px;
+      }
+    }
+    
+    .config-card {
+      .install-buttons {
+        .ant-btn {
+          min-width: 100px;
+        }
+      }
+    }
+  }
+}
+
+// Large devices (desktops, 993px and up)
+@media (min-width: 993px) {
+  .ollama-page {
+    .config-card {
+      .install-buttons {
+        .ant-btn {
+          min-width: 140px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "themes": {
+        "light": {
+            "token": {
+                "colorBgElevated": "#ffffff"
+            }
+        },
+        "dark": {
+            "token": {
+                "colorBgElevated": "#33363d"
+            }
+        }
+    }
+}

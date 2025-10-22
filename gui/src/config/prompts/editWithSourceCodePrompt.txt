@@ -1,0 +1,29 @@
+The user has requested a section of code in a file to be rewritten.
+
+            This is the prefix of the file:
+            ```{{language}}
+            {{prefix}}
+            ```
+            This is the suffix of the file:
+            ```{{language}}
+            {{suffix}}
+            ```
+            This is the knowledge :
+            ```md
+            {{knowledgeContext}}
+            ```
+
+            This is the code to rewrite:
+            ```{{language}}
+            {{codeToEdit}}
+            ```
+            This is the other reference file codes, file name is {{fileNames}}
+            ```{{language}}
+            {{fileContext}}
+            ```
+
+            Output requirements:
+            1. The user's request is: "{{userInput}}"
+            2. The provided code may not be complete and should be compatible with formatting errors.
+            3. Return pure code without symbol identification of code blocks, remove ``` symbol blocks, keep tabs and spaces present in the source code.
+            Here is the rewritten code:

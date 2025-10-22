@@ -1,0 +1,181 @@
+{
+  "name": "voidmuse-vscode",
+  "publisher": "voidmuse",
+  "displayName": "voidmuse",
+  "description": "",
+  "version": "0.0.3",
+  "icon": "icon/marketplaceIcon.png",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onUri",
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "l10n": "./l10n",
+  "contributes": {
+    "commands": [
+      {
+        "command": "example.sayHello",
+        "title": "Say Hello from Example",
+        "category": "Example"
+      },
+      {
+        "command": "voidmuse.acceptPartially",
+        "title": "Accept Changes"
+      },
+      {
+        "command": "voidmuse.rejectPartially",
+        "title": "Reject Changes"
+      },
+      {
+        "command": "voidmuse.acceptAll",
+        "title": "Accept all Changes"
+      },
+      {
+        "command": "voidmuse.rejectAll",
+        "title": "Reject all Changes"
+      },
+      {
+        "command": "voidmuse.writeCommentsForCode",
+        "category": "Voidmuse",
+        "title": "%voidmuse.writeCommentsForCode%",
+        "group": "Voidmuse"
+      },
+      {
+        "command": "voidmuse.fixCode",
+        "category": "Voidmuse",
+        "title": "%voidmuse.fixCode%",
+        "group": "Voidmuse"
+      },
+      {
+        "command": "voidmuse.optimizeCode",
+        "category": "Voidmuse",
+        "title": "%voidmuse.optimizeCode%",
+        "group": "Voidmuse"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "voidmuse.inlineToChat",
+        "mac": "cmd+l",
+        "key": "ctrl+l"
+      },
+      {
+        "command": "voidmuse.inlineToEdit",
+        "mac": "cmd+i",
+        "key": "ctrl+i"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "voidmuse.voidmuseSubMenu",
+        "label": "Voidmuse"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "voidmuse.voidmuseSubMenu",
+          "group": "0_avoidmuse"
+        }
+      ],
+      "voidmuse.voidmuseSubMenu": [
+        {
+          "command": "voidmuse.writeCommentsForCode",
+          "group": "Voidmuse",
+          "when": "editorHasSelection && !editorReadonly"
+        },
+        {
+          "command": "voidmuse.fixCode",
+          "group": "Voidmuse",
+          "when": "editorHasSelection && !editorReadonly"
+        },
+        {
+          "command": "voidmuse.optimizeCode",
+          "group": "Voidmuse",
+          "when": "editorHasSelection && !editorReadonly"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "voidmuse",
+      "properties": {
+        "voidmuse.userConfig": {
+          "type": "object",
+          "default": {},
+          "description": "A flexible configuration object for voidmuse VSCode extension."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "voidmuse",
+          "title": "voidmuse",
+          "icon": "icon/pluginIcon.svg"
+        }
+      ]
+    },
+    "views": {
+      "voidmuse": [
+        {
+          "type": "webview",
+          "id": "voidmuseWebView",
+          "name": "Webview",
+          "visibility": "visible"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.96.0",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "@vscode/l10n-dev": "^0.0.18",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.6",
+    "eslint": "^9.16.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@lancedb/lancedb": "^0.21.3",
+    "@modelcontextprotocol/sdk": "^1.16.0",
+    "@vscode/l10n": "^0.0.10",
+    "apache-arrow": "^18.1.0",
+    "async-mutex": "^0.5.0",
+    "axios": "^1.8.1",
+    "dayjs": "^1.11.13",
+    "diff": "^8.0.2",
+    "express": "^5.1.0",
+    "fastest-levenshtein": "^1.0.16",
+    "ignore": "^7.0.3",
+    "js-base64": "^3.7.7",
+    "l10n": "^0.2.4",
+    "nodejieba": "^3.4.4",
+    "p-limit": "^6.2.0",
+    "simple-git": "^3.27.0",
+    "tiktoken": "^1.0.20",
+    "uri-js": "^4.4.1",
+    "uuid": "^11.1.0",
+    "vectra": "^0.11.1",
+    "winston": "^3.17.0",
+    "winston-transport": "^4.9.0"
+  }
+}

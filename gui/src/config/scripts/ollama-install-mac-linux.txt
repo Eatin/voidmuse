@@ -1,0 +1,156 @@
+#!/bin/bash
+
+# Set UTF-8 encoding
+export LC_ALL=en_US.UTF-8
+
+# Configuration parameters
+EMBEDDING_MODEL="{{embeddingModel}}"
+
+# Detect operating system
+OS_TYPE=$(uname -s)
+case "$OS_TYPE" in
+    Darwin*)
+        OS_NAME="macOS"
+        ;;
+    Linux*)
+        OS_NAME="Linux"
+        ;;
+    *)
+        echo "❌ Unsupported operating system: $OS_TYPE"
+        exit 1
+        ;;
+esac
+
+# Set default paths (Mac/Linux use fixed paths)
+if [ "$OS_NAME" = "macOS" ]; then
+    INSTALL_PATH="/Applications/Ollama.app"
+else
+    INSTALL_PATH="/usr/local/bin"
+fi
+MODELS_PATH="$HOME/.ollama/models"
+
+echo "🤖 Ollama Quick Installation Script ($OS_NAME)"
+echo "Installation path: $INSTALL_PATH"
+echo "Model storage path: $MODELS_PATH"
+echo
+
+# macOS installation function
+install_ollama_macos() {
+    echo "📦 Installing to default location using official script..."
+    # Check if Homebrew is available
+    if command -v brew >/dev/null 2>&1; then
+        echo "🍺 Homebrew detected, installing with brew..."
+        brew install ollama
+        if [ $? -eq 0 ]; then
+            echo "✅ Installation completed"
+        else
+            echo "❌ Homebrew installation failed"
+            exit 1
+        fi
+    else
+        echo "❌ Homebrew not detected, please install Ollama manually"
+        echo "1. Visit https://ollama.com/download/mac"
+        echo "2. Download and install Ollama.app"
+        echo "3. Re-run this script"
+        exit 1
+    fi
+}
+
+# Linux installation function
+install_ollama_linux() {
+    echo "🐧 Installing to default location using official script..."
+    curl -fsSL https://ollama.com/install.sh | sh
+    if [ $? -eq 0 ]; then
+        echo "✅ Installation completed"
+    else
+        echo "❌ Installation failed, please check network connection"
+        exit 1
+    fi
+}
+
+# Check if Ollama is already installed
+echo "🔍 Detecting Ollama..."
+if command -v ollama >/dev/null 2>&1; then
+    echo "✅ Ollama is already installed, skipping installation"
+    ollama --version
+    echo
+else
+    echo "❌ Ollama not installed, starting installation..."
+    
+    if [ "$OS_NAME" = "macOS" ]; then
+        install_ollama_macos
+    else
+        install_ollama_linux
+    fi
+fi
+
+# Configure model storage path
+echo "🔧 Configuring model storage path..."
+echo "✅ Using default model storage path: $MODELS_PATH"
+
+# Create model storage directory
+mkdir -p "$MODELS_PATH"
+if [ $? -eq 0 ]; then
+    echo "✅ Created model storage directory: $MODELS_PATH"
+else
+    echo "❌ Failed to create directory: $MODELS_PATH"
+    exit 1
+fi
+
+# Start Ollama service
+echo "🚀 Starting Ollama service..."
+if [ "$OS_NAME" = "macOS" ]; then
+    # On macOS, usually runs as an application
+    if [ -f "/Applications/Ollama.app/Contents/MacOS/ollama" ]; then
+        /Applications/Ollama.app/Contents/MacOS/ollama serve &
+    else
+        ollama serve &
+    fi
+else
+    # On Linux, runs as a background service
+    ollama serve &
+fi
+
+# Wait for service to start
+echo "⏳ Waiting for service to start..."
+sleep 5
+
+# Test connection
+echo "🔍 Testing connection..."
+ollama list >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    echo "✅ Connection successful"
+else
+    echo "⚠️ Connection test failed, please check if service started properly"
+    echo "Try manual start: ollama serve"
+    exit 1
+fi
+
+# Download test model
+if [ -n "$EMBEDDING_MODEL" ]; then
+    echo "📦 Downloading model: $EMBEDDING_MODEL"
+    echo "Downloading to location: $MODELS_PATH"
+    
+    ollama pull "$EMBEDDING_MODEL"
+    if [ $? -eq 0 ]; then
+        echo "✅ Model download completed"
+        echo "📁 Model file location: $MODELS_PATH"
+    else
+        echo "⚠️ Model download failed, but Ollama is installed properly"
+        echo "You can download manually later: ollama pull $EMBEDDING_MODEL"
+    fi
+else
+    echo "⚠️ No model specified, skipping model download"
+fi
+
+echo
+echo "🎉 Installation completed!"
+echo "📍 Operating system: $OS_NAME"
+echo "📍 Installation path: $INSTALL_PATH"
+echo "📁 Model storage path: $MODELS_PATH"
+if [ -n "$EMBEDDING_MODEL" ]; then
+    echo "💡 Usage: ollama run $EMBEDDING_MODEL"
+fi
+echo "💡 View installed models: ollama list"
+echo "💡 Stop service: pkill ollama"
+echo

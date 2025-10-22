@@ -1,0 +1,69 @@
+.fira-code-markdown {
+  font-family: var(--font-system);
+  
+  &:lang(zh) {
+    font-family: var(--font-system);
+  }
+  
+  *:not(:lang(zh)) {
+    font-family: var(--font-mono);
+  }
+
+  table {
+    font-size: 0.9rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--md-table-border-color);
+  }
+
+  th {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border: 1px solid var(--md-table-border-color);
+    border-right: 1px solid var(--md-table-border-color);
+    border-bottom: 1px solid var(--md-table-border-color);
+    border-left: none;
+    border-top: none;
+    background-color: var(--md-table-header-bg-color);
+  }
+  
+  td {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border: 1px solid var(--md-table-border-color);
+    border-right: 1px solid var(--md-table-border-color);
+    border-bottom: 1px solid var(--md-table-border-color);
+    border-left: none;
+    border-top: none;
+  }
+  
+  th:first-child,
+  td:first-child {
+    border-left: none;
+  }
+  
+  th:last-child,
+  td:last-child {
+    border-right: none;
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+  
+  tr:nth-child(even) {
+    background-color: var(--md-table-row-even-bg-color);
+  }
+
+  .inline-code {
+    font-family: var(--font-mono);
+    background-color: var(--md-inline-code-background);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 85%;
+  }
+}

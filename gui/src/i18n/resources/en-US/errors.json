@@ -1,0 +1,66 @@
+{
+  "network": {
+    "connectionFailed": "Network connection failed",
+    "timeout": "Request timeout",
+    "serverError": "Server error"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidFormat": "Invalid format",
+    "tooLong": "Content too long",
+    "tooShort": "Content too short"
+  },
+  "api": {
+    "invalidApiKey": "Invalid API key",
+    "quotaExceeded": "Quota exceeded",
+    "modelNotFound": "Model not found"
+  },
+  "context": {
+    "model": {
+      "loadFailed": "Failed to load model data",
+      "saveFailed": "Failed to save model data",
+      "addSuccess": "Model added successfully",
+      "updateSuccess": "Model updated successfully",
+      "deleteSuccess": "Model deleted successfully",
+      "enableSuccess": "Model enabled successfully",
+      "disableSuccess": "Model disabled successfully",
+      "saveSelectedFailed": "Failed to save selected model",
+      "saveAutoCompleteFailed": "Failed to save auto-complete model",
+      "contextError": "useModelContext must be used within ModelProvider",
+      "noModelConfigured": "No model configured, please configure a model"
+    },
+    "embeddingModel": {
+      "loadFailed": "Failed to load embedding model data",
+      "saveFailed": "Failed to save embedding model data",
+      "addSuccess": "Embedding model added successfully",
+      "updateSuccess": "Embedding model updated successfully",
+      "deleteSuccess": "Embedding model deleted successfully",
+      "enableSuccess": "Embedding model enabled successfully",
+      "disableSuccess": "Embedding model disabled successfully",
+      "saveSelectedFailed": "Failed to save selected embedding model",
+      "contextError": "useEmbeddingModelContext must be used within EmbeddingModelProvider"
+    },
+    "mcp": {
+      "loadFailed": "Failed to load MCP data",
+      "saveFailed": "Failed to save MCP data",
+      "addSuccess": "MCP added successfully",
+      "updateSuccess": "MCP updated successfully",
+      "deleteSuccess": "MCP deleted successfully",
+      "enableSuccess": "MCP enabled successfully",
+      "disableSuccess": "MCP disabled successfully",
+      "contextError": "useMcpContext must be used within McpProvider"
+    },
+    "tab": {
+      "contextError": "useTabContext must be used within TabProvider"
+    },
+    "navigation": {
+      "contextError": "useNavigationContext must be used within NavigationProvider"
+    },
+    "project": {
+      "contextError": "useProjectContext must be used within ProjectProvider"
+    },
+    "chat": {
+      "contextError": "useChatContext must be used within a ChatProvider"
+    }
+  }
+}

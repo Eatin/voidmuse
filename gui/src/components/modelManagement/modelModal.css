@@ -1,0 +1,7 @@
+.modelModalInput::placeholder {
+    color: #9094A1 !important;
+}
+
+.modelModalInput:focus{
+    border-color: var(--model-modal-input-focus-border-color) !important;
+}

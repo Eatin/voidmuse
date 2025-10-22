@@ -1,0 +1,20 @@
+.markdown-footer-button.ant-btn-default {
+  background-color: var(--md-footer-btn-bg);
+  border-color: var(--md-footer-btn-border);
+  color: var(--md-footer-btn-color);
+  
+  &:not(:disabled):not(.ant-btn-disabled):hover,
+  &:not(:disabled):not(.ant-btn-disabled):focus {
+    background-color: var(--hover-background-color);
+    border-color: var(--md-footer-btn-hover-border);
+    color: var(--md-footer-btn-hover-color);
+  }
+
+  &.copied {
+    color: var(--success-color, #52c41a);
+  }
+}
+
+.ant-bubble .ant-bubble-footer {
+  margin-top: 0px;
+}

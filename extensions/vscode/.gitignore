@@ -1,0 +1,8 @@
+out
+dist
+node_modules
+gui
+.vscode-test/
+*.vsix
+.idea
+package-lock.json

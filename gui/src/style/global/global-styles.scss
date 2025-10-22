@@ -1,0 +1,24 @@
+@use './variables.scss' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+body.light-theme {
+  background-color: var(--background-color);
+}
+
+body.dark-theme {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+}
+
+.fira-code-markdown {
+  font-family: var(--font-system);
+  
+  code, pre, kbd, samp, .inline-code {
+    font-family: var(--font-mono);
+  }
+}

@@ -1,0 +1,74 @@
+.collapse-panel-wrapper {
+  margin: 10px 0;
+
+  .collapse-button-container {
+    cursor: pointer;
+    position: relative;
+    padding: 3px 5px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    height: 24px;
+    background-color: var(--collapse-panel-background-color);
+    transition: background-color 0.2s ease;
+    display: inline-block;
+    width: auto;
+
+    &:hover {
+      background-color: var(--hover-background-color);
+    }
+  }
+
+  .collapse-button {
+    display: flex;
+    align-items: center;
+    // line-height: 1.2;
+
+    .collapse-icon {
+      color: var(--collapse-panel-icon-color);
+      font-size: 10px;
+      transition: all 0.3s;
+      margin-right: 6px;
+    }
+
+    .header-icon {
+      margin-right: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .header-title {
+      font-size: 11px;
+      color: var(--collapse-panel-title-color);
+    }
+  }
+
+  .collapse-content {
+    padding: 0 0 5px 0;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .collapse-footer-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -20px;
+
+    .collapse-footer-button {
+      border-radius: 4px;
+      font-size: 12px;
+      padding: 2px 12px;
+      color: var(--md-gradient-button-color);
+      background: var(--md-gradient-button-background);
+      border-color: var(--md-gradient-button-border-color);
+
+      &:hover,
+      &:focus {
+        background: var(--md-gradient-button-hover-background) !important;
+        color: var(--md-gradient-button-color) !important;
+        border-color: var(--md-gradient-button-border-color) !important;
+      }
+    }
+  }
+
+}

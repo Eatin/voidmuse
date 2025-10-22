@@ -1,0 +1,61 @@
+.conversations-container {
+    width: 280px;
+  
+    .conversations-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+  
+      .conversations-title {
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
+
+    .conversations-body {
+      max-height: 270px;
+      overflow: auto;
+    }
+    
+    .ant-conversations {
+      padding: 5px 10px 10px 10px;
+
+      .ant-conversations-list {
+        padding-bottom: 8px;
+      }
+      
+      .ant-conversations-item {
+        min-height: 35px;
+        height: 35px;
+        padding: 0 8px 0 20px;
+        
+        &:hover {
+          .anticon-delete {
+            visibility: visible;
+          }
+        }
+      }
+      
+      .anticon-delete {
+        visibility: visible;
+        cursor: pointer;
+        
+        &:hover {
+          color: #ff4d4f;
+        }
+      }
+    }
+}
+
+.ant-conversations > li {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+  
+  
+  

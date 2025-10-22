@@ -1,0 +1,111 @@
+.index-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .index-tabs {
+        margin: 0;
+        padding: 0 10px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        flex: 0 0 auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        // Tab style overrides
+        .ant-tabs-nav {
+            margin: 0;
+            height: 40px;
+        }
+
+        // Content area fills remaining space
+        .ant-tabs-content-holder {
+            flex: 1;
+            height: calc(100vh - 40px);
+            overflow: hidden;
+        }
+
+        .ant-tabs-content {
+            height: 100%;
+        }
+
+        // Remove bottom underline
+        .ant-tabs-nav::before {
+            border-bottom: none !important;
+        }
+
+        // Remove default border and background for all tabs
+        .ant-tabs-tab {
+            background: transparent;
+            border: none;
+            padding: 5px 8px;
+            margin: 5px 10px;
+
+            // Close button hidden by default
+            .ant-tabs-tab-remove {
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            .ant-tabs-tab-btn {
+                color: var(--text-color);
+            }
+        }
+        
+        // Use counting selector: when there are multiple tabs in nav-list
+        .ant-tabs-nav-list:has(.ant-tabs-tab:nth-child(2)) {
+            // Add vertical line separator between first and second tab
+            .ant-tabs-tab:first-child::after {
+                content: "";
+                position: absolute;
+                right: -5px;
+                top: 50%;
+                height: 60%;
+                transform: translateY(-50%);
+                width: 2px;
+                background-color: var(--border-color);
+            }
+
+            // Hover effect for all tabs
+            .ant-tabs-tab:hover {
+                background-color: var(--tab-background-color);
+                color: var(--text-color);
+                border-radius: 4px;
+                
+                .ant-tabs-tab-remove {
+                    opacity: 1;
+                }
+            }
+            
+            // Style for active tab
+            .ant-tabs-tab.ant-tabs-tab-active {
+                background-color: var(--tab-background-color);
+                border-radius: 4px;
+            }
+        }
+        
+        // Close button: always show close button for selected tab
+        .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-remove {
+            opacity: 1;
+        }
+    }
+
+    // Tab content layout
+    .tab-content-layout {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        max-width: 96%;
+        // After adding padding margins, the actual minimum overall width is 320px
+        min-width: 300px;
+        margin: 0 auto;
+        overflow: auto;
+
+        // Use fixed width when screen width is greater than specific breakpoint
+        @media screen and (min-width: 768px) {
+            width: 768px;
+        }
+    }
+}

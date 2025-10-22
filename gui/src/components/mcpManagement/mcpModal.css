@@ -1,0 +1,7 @@
+.mcpModalInput::placeholder {
+    color: #9094A1 !important;
+}
+
+.mcpModalInput:focus{
+    border-color: var(--mcp-modal-input-focus-border-color) !important;
+}

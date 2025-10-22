@@ -1,0 +1,338 @@
+{
+  "display": {
+    "markdownFooter": {
+      "totalTokens": "总token",
+      "inputTokens": "输入token",
+      "outputTokens": "输出token",
+      "conversationCost": "本次对话费用",
+      "firstTokenLatency": "首token",
+      "totalLatency": "总时延",
+      "tokens": "Tokens"
+    },
+    "reasoningChain": {
+      "title": "思考过程",
+      "tooltip": "思考过程"
+    },
+    "collapsePanel": {
+      "collapse": "收起 ↑"
+    },
+    "markdownCodeBlock": {
+      "copy": "复制",
+      "insertToCursor": "插入到光标位置",
+      "createNewFile": "创建新文件",
+      "expandCode": "展开 {{count}} 行代码 ↓",
+      "collapseCode": "收起代码 ↑"
+    }
+  },
+  "setting": {
+    "themeSelector": {
+      "light": "亮色",
+      "dark": "暗色",
+      "moreThemes": "更多主题"
+    },
+    "settingList": {
+      "theme": "主题",
+      "language": "语言",
+      "chinese": "中文",
+      "english": "English",
+      "mcp": "MCP",
+      "model": "模型",
+      "modelManagement": "模型管理",
+      "tokenBill": "token账单",
+      "search": "搜索",
+      "ollama": "Ollama",
+      "errorCenter": "错误中心"
+    }
+  },
+  "dropdown": {
+    "modelDropdown": {
+      "selectModel": "选择模型",
+      "customModels": "自定义模型",
+      "addNewItem": "添加新模型"
+    }
+  },
+  "tool": {
+    "codebaseList": {
+      "searchCode": "搜索代码",
+      "context": "上下文",
+      "more": "...更多({{count}}+)",
+      "collapse": "^ 折叠",
+      "searchFailed": "搜索失败",
+      "noResults": "未找到相关代码",
+      "searching": "正在搜索..."
+    },
+    "searchList": {
+      "search": "搜索",
+      "websiteIcon": "网站图标",
+      "searchIntent": "搜索意图",
+      "searchResults": "搜索结果"
+    },
+    "writeCode": {
+      "title": "代码编写",
+      "fileInfo": "文件信息",
+      "fileName": "文件名",
+      "filePath": "文件路径",
+      "updatedCode": "更新的代码"
+    }
+  },
+  "topBar": {
+    "actionButtons": {
+      "previousQuestion": "上一个问题",
+      "nextQuestion": "下一个问题",
+      "newSession": "新建会话",
+      "settings": "设置",
+      "refresh": "刷新",
+      "close": "关闭",
+      "errorNotification": "错误通知"
+    },
+    "conversationsButton": {
+      "today": "今天",
+      "thisWeek": "本周内",
+      "thisMonth": "本月内",
+      "thisYear": "今年内",
+      "earlier": "更早",
+      "uncategorized": "未分类",
+      "history": "历史记录",
+      "close": "关闭",
+      "delete": "删除",
+      "historySessions": "历史会话"
+    }
+  },
+  "token": {
+    "tokenUsageCard": {
+      "totalTokens": "总Token",
+      "input": "输入",
+      "output": "输出",
+      "totalCost": "总成本"
+    },
+    "tokenUsageList": {
+      "total": "总",
+      "input": "入",
+      "output": "出",
+      "conversations": "次对话",
+      "defaultTitle": "Token使用记录"
+    }
+  },
+  "input": {
+    "placeholder": "\"↑↓\"切换历史输入，\"⇧↵\"进行换行",
+    "internetSearch": "联网搜索",
+    "internetSearchTooltip": "联网搜索",
+    "sendTooltip": "发送",
+    "searchConfigWarning": "请先配置搜索服务",
+    "searchConfigCheckFailed": "检查搜索配置失败",
+    "searchTabTitle": "搜索",
+    "internetSearchName": "联网搜索",
+    "attachments": {
+      "dropTitle": "拖拽文件到这里",
+      "uploadTitle": "上传文件",
+      "uploadDescription": "点击或拖拽文件到此区域上传"
+    }
+  },
+  "languageSelector": {
+    "switchSuccess": "语言切换成功",
+    "switchMessage": "语言已切换，需要刷新页面才能完全生效。",
+    "refreshLater": "稍后刷新",
+    "refreshNow": "立即刷新"
+  },
+  "modelManagement": {
+    "title": "模型",
+    "subtitle": "模型管理",
+    "description": "配置 API key 添加更多可用模型，预置模型默认使用稳定版本。",
+    "addModelButton": "添加模型",
+    "embeddingTitle": "Embedding模型",
+    "embeddingDescription": "配置用于文本嵌入和语义搜索的Embedding模型。",
+    "addEmbeddingModelButton": "添加Embedding模型",
+    "autoEmbeddingTooltip": "文件变更自动embedding",
+    "autoEmbeddingEnabled": "自动Embedding开启",
+    "autoEmbeddingDisabled": "自动Embedding关闭",
+    "modelColumn": "模型",
+    "providerColumn": "服务商",
+    "actionsColumn": "操作",
+    "autoCompleteColumn": "自动补全",
+    "noEmbeddingModelData": "暂无Embedding模型数据",
+    "noModelData": "暂无模型数据",
+    "addModel": {
+      "title": "添加模型",
+      "editTitle": "编辑模型",
+      "provider": "服务商",
+      "model": "模型",
+      "modelId": "模型ID",
+      "apiKey": "API密钥",
+      "baseUrl": "baseUrl",
+      "useOtherModel": "使用其他模型",
+      "customModelDescription": "配置自定义模型 ID 使用非列表内模型",
+      "getApiKey": "获取 API 密钥",
+      "checkProvider": "前往服务商平台查询",
+      "addModelButton": "添加模型",
+      "confirmButton": "确认",
+      "confirm": "确认",
+      "customModel": "自定义模型",
+      "addButton": "添加模型",
+      "placeholders": {
+        "selectProvider": "选择模型服务商",
+        "selectModel": "选择模型",
+        "enterModelId": "输入模型 ID",
+        "enterApiKey": "输入 API 密钥",
+        "enterNewApiKey": "填写新的 API 秘钥",
+        "enterBaseUrl": "输入 baseUrl",
+        "enterNewBaseUrl": "填写新的 baseUrl"
+      },
+      "validation": {
+        "providerRequired": "请选择服务商",
+        "modelRequired": "请选择模型",
+        "modelIdRequired": "请输入模型 ID",
+        "apiKeyRequired": "请输入 API 密钥",
+        "baseUrlRequired": "请输入 baseUrl",
+        "modelExists": "该模型已存在"
+      }
+    },
+    "deleteModel": {
+      "title": "删除模型",
+      "delete": "删除",
+      "cancel": "取消",
+      "deleteButton": "删除",
+      "cancelButton": "取消"
+    },
+    "addEmbeddingModel": {
+      "title": "添加Embedding模型",
+      "editTitle": "编辑Embedding模型",
+      "addButton": "添加Embedding模型"
+    }
+  },
+  "mcpManagement": {
+    "title": "MCP",
+    "subtitle": "MCP管理",
+    "description": "Model Context Protocol (MCP) 是一种协议，它允许大型语言模型（LLMs）访问自定义的工具和服务。你可以自行添加 MCP Server，更多信息参阅 MCP 官方文档。",
+    "addButton": "添加Mcp服务",
+    "table": {
+      "serviceName": "服务名",
+      "status": "状态",
+      "actions": "操作",
+      "connected": "已连接",
+      "disconnected": "连接失败",
+      "noData": "暂无MCP数据",
+      "noTools": "暂无工具数据",
+      "methodName": "方法名",
+      "description": "描述"
+    },
+    "addModal": {
+      "title": "添加MCP服务",
+      "editTitle": "编辑MCP服务",
+      "configLabel": "请输入mcp配置json格式",
+      "configPlaceholder": "\\Example:\n\\{\n\\    \"mcpServers\": {\n\\        \"example-server\": {\n\\            \"url\": \"https://example.com\"\n\\        }\n\\    }\n\\ }\n",
+      "addButton": "添加MCP服务",
+      "confirmButton": "确认",
+      "validation": {
+        "singleService": "一次请只配置一个mcp服务",
+        "serviceExists": "该服务已存在",
+        "invalidJson": "请输入正确json配置"
+      }
+    },
+    "deleteModal": {
+      "title": "删除MCP配置",
+      "confirmText": "确定要删除 {{name}} 吗？",
+      "warningText": "此操作无法撤销。",
+      "deleteButton": "删除",
+      "cancelButton": "取消"
+    }
+  },
+  "searchManagement": {
+    "title": "搜索",
+    "subtitle": "搜索配置管理",
+    "description": "配置联网搜索服务，支持多种搜索引擎和API提供商。",
+    "addButton": "添加搜索配置",
+    "table": {
+      "provider": "提供商",
+      "config": "配置",
+      "actions": "操作",
+      "noData": "暂无搜索配置数据"
+    },
+    "addModal": {
+      "title": "添加搜索配置",
+      "editTitle": "编辑搜索配置",
+      "provider": "搜索提供商",
+      "config": "配置",
+      "configPlaceholder": "请输入JSON格式的配置",
+      "addButton": "添加搜索配置",
+       "confirmButton": "确认",
+       "cancelButton": "取消",
+       "configDoc": "配置文档",
+       "paramDescription": "参数说明",
+       "getAddress": "获取地址",
+       "providers": {
+         "google": {
+           "configDoc": "配置文档",
+           "params": {
+             "apiKey": "Google Custom Search API密钥",
+             "cx": "自定义搜索引擎ID"
+           }
+         },
+         "bocha": {
+           "configDoc": "配置文档",
+           "params": {
+             "apiKey": "博查API密钥"
+           }
+         },
+         "baidu": {
+           "configDoc": "配置文档",
+           "params": {
+             "apiKey": "百度AI搜索API密钥"
+           }
+         }
+       },
+      "validation": {
+        "providerRequired": "请选择搜索提供商",
+        "configRequired": "请输入配置",
+        "invalidJson": "请输入正确的JSON格式",
+        "configExists": "该配置已存在"
+      }
+    },
+    "deleteModal": {
+       "title": "删除搜索配置",
+       "confirmText": "确定要删除该搜索配置吗？",
+       "warningText": "此操作无法撤销。",
+       "deleteButton": "删除",
+       "cancelButton": "取消"
+     },
+     "deleteSearch": {
+       "title": "删除搜索配置",
+       "delete": "删除",
+       "cancel": "取消"
+     },
+     "messages": {
+       "addSuccess": "搜索配置添加成功",
+       "addFailed": "添加搜索配置失败",
+       "updateSuccess": "搜索配置更新成功",
+       "updateFailed": "更新搜索配置失败",
+       "deleteSuccess": "搜索配置删除成功",
+       "deleteFailed": "删除搜索配置失败",
+       "selectSuccess": "搜索配置选择成功",
+       "selectFailed": "选择搜索配置失败"
+     }
+  },
+  "errors": {
+    "markAllRead": "全部设为已读",
+    "clearAll": "清空",
+    "detail": "错误详情",
+    "viewDetail": "查看详情",
+    "newTag": "新",
+    "level": {
+      "all": "全部级别",
+      "error": "错误",
+      "warning": "警告",
+      "info": "信息"
+    },
+    "status": {
+        "all": "全部状态",
+        "new": "未读",
+        "read": "已读"
+      },
+    "searchPlaceholder": "搜索标题、来源或内容...",
+    "empty": "没有错误记录",
+    "resolve": "标记已解决",
+    "tips": {
+      "title": "如何上报错误？",
+      "desc": "这里展示了运行时的错误与警告。后续可以将 IDE 插件或后端错误上报到此处进行统一查看与排查。"
+    }
+  }
+}

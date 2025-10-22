@@ -1,0 +1,66 @@
+{
+  "network": {
+    "connectionFailed": "网络连接失败",
+    "timeout": "请求超时",
+    "serverError": "服务器错误"
+  },
+  "validation": {
+    "required": "此字段为必填项",
+    "invalidFormat": "格式不正确",
+    "tooLong": "内容过长",
+    "tooShort": "内容过短"
+  },
+  "api": {
+    "invalidApiKey": "API密钥无效",
+    "quotaExceeded": "配额已用完",
+    "modelNotFound": "模型未找到"
+  },
+  "context": {
+    "model": {
+      "loadFailed": "加载模型数据失败",
+      "saveFailed": "保存模型数据失败",
+      "addSuccess": "添加模型成功",
+      "updateSuccess": "更新模型成功",
+      "deleteSuccess": "删除模型成功",
+      "enableSuccess": "启用模型成功",
+      "disableSuccess": "禁用模型成功",
+      "saveSelectedFailed": "保存选中模型失败",
+      "saveAutoCompleteFailed": "保存自动补全模型失败",
+      "contextError": "useModelContext必须在ModelProvider内部使用",
+      "noModelConfigured": "未配置模型, 请配置模型"
+    },
+    "embeddingModel": {
+      "loadFailed": "加载Embedding模型数据失败",
+      "saveFailed": "保存Embedding模型数据失败",
+      "addSuccess": "添加Embedding模型成功",
+      "updateSuccess": "更新Embedding模型成功",
+      "deleteSuccess": "删除Embedding模型成功",
+      "enableSuccess": "启用Embedding模型成功",
+      "disableSuccess": "禁用Embedding模型成功",
+      "saveSelectedFailed": "保存选中Embedding模型失败",
+      "contextError": "useEmbeddingModelContext必须在EmbeddingModelProvider内部使用"
+    },
+    "mcp": {
+      "loadFailed": "加载mcp数据失败",
+      "saveFailed": "保存mcp数据失败",
+      "addSuccess": "添加mcp成功",
+      "updateSuccess": "更新mcp成功",
+      "deleteSuccess": "删除mcp成功",
+      "enableSuccess": "启用mcp成功",
+      "disableSuccess": "禁用mcp成功",
+      "contextError": "useMcpContext必须在McpProvider内部使用"
+    },
+    "tab": {
+      "contextError": "useTabContext必须在TabProvider内部使用"
+    },
+    "navigation": {
+      "contextError": "useNavigationContext必须在NavigationProvider内部使用"
+    },
+    "project": {
+      "contextError": "useProjectContext必须在ProjectProvider内部使用"
+    },
+    "chat": {
+      "contextError": "useChatContext must be used within a ChatProvider"
+    }
+  }
+}

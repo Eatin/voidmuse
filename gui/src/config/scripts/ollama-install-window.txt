@@ -1,0 +1,157 @@
+@echo off
+chcp 65001 >nul
+setlocal enabledelayedexpansion
+
+:: Configuration parameters
+set "INSTALL_PATH={{installPath}}"
+set "MODELS_PATH={{modelPath}}"
+
+:: Check and set default paths
+if "%INSTALL_PATH%"=="" (
+    set "INSTALL_PATH=%LOCALAPPDATA%\Programs\Ollama"
+    set "USE_DEFAULT_INSTALL=true"
+) else (
+    set "USE_DEFAULT_INSTALL=false"
+)
+
+if "%MODELS_PATH%"=="" (
+    set "MODELS_PATH=%USERPROFILE%\.ollama\models"
+    set "USE_DEFAULT_MODELS=true"
+) else (
+    set "USE_DEFAULT_MODELS=false"
+)
+
+echo 🤖 Ollama Install Script
+if "%USE_DEFAULT_INSTALL%"=="true" (
+    echo Installation path: %INSTALL_PATH% (default)
+) else (
+    echo Installation path: %INSTALL_PATH% (custom)
+)
+if "%USE_DEFAULT_MODELS%"=="true" (
+    echo Model storage path: %MODELS_PATH% (default)
+) else (
+    echo Model storage path: %MODELS_PATH% (custom)
+)
+echo.
+
+:: Detect Ollama
+echo Detecting Ollama...
+ollama --version 2>nul
+if %errorlevel% equ 0 (
+    echo ✅ Ollama is already installed, skipping installation
+    goto :configure_models_path
+)
+
+if "%USE_DEFAULT_INSTALL%"=="true" (
+    echo ❌ Ollama not installed, installing to default location using WinGet...
+    :: Use WinGet default installation
+    winget install -e --id Ollama.Ollama --silent
+) else (
+    echo ❌ Ollama not installed, installing to specified location using WinGet...
+    :: Use WinGet to install to specified location
+    winget install -e --id Ollama.Ollama --location "%INSTALL_PATH%" --silent
+)
+if %errorlevel% neq 0 (
+    echo ❌ WinGet installation failed, please check:
+    echo   1. Ensure WinGet is installed
+    echo   2. Ensure network connection is working
+    echo   3. Manual installation: https://ollama.ai/download
+    pause
+    exit /b 1
+)
+echo ✅ Installation completed
+
+:configure_models_path
+:: Configure model storage path
+if "%USE_DEFAULT_MODELS%"=="true" (
+    echo 🔧 Using default model storage path...
+    :: For default path, no need to manually create directory and set environment variables, Ollama will handle automatically
+    echo ✅ Will use Ollama default model storage location
+) else (
+    echo 🔧 Configuring custom model storage path...
+    
+    :: Create model storage directory
+    if not exist "%MODELS_PATH%" (
+        mkdir "%MODELS_PATH%"
+        echo ✅ Created model storage directory: %MODELS_PATH%
+    )
+    
+    :: Set OLLAMA_MODELS environment variable (permanent setting)
+    setx OLLAMA_MODELS "%MODELS_PATH%" >nul
+    if %errorlevel% equ 0 (
+        echo ✅ Set OLLAMA_MODELS environment variable
+    ) else (
+        echo ⚠️ Failed to set environment variable, will use temporary setting
+    )
+    
+    :: Set environment variable for current session
+    set "OLLAMA_MODELS=%MODELS_PATH%"
+)
+
+:: Add to PATH environment variable (if needed)
+if "%USE_DEFAULT_INSTALL%"=="true" (
+    echo 🔧 Using default installation, PATH already configured automatically...
+    :: For default installation, WinGet automatically configures PATH, no manual setting needed
+    echo ✅ PATH environment variable automatically configured by installer
+) else (
+    echo 🔧 Configuring custom installation PATH environment variable...
+    set "OLLAMA_BIN_PATH=%INSTALL_PATH%"
+    if exist "%INSTALL_PATH%\bin" set "OLLAMA_BIN_PATH=%INSTALL_PATH%\bin"
+    
+    :: Temporarily add to current session's PATH
+    set "PATH=%OLLAMA_BIN_PATH%;%PATH%"
+    
+    :: Permanently add to user PATH (optional)
+    powershell -Command "$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User'); if ($currentPath -notlike '*%OLLAMA_BIN_PATH%*') { [Environment]::SetEnvironmentVariable('PATH', $currentPath + ';%OLLAMA_BIN_PATH%', 'User') }"
+)
+
+:start_service
+:: Start service
+echo 🚀 Starting Ollama service...
+start /b ollama serve
+timeout /t 5 /nobreak >nul
+
+:: Test connection
+echo 🔍 Testing connection...
+ollama list
+if %errorlevel% neq 0 (
+    echo ⚠️ Connection test failed, please check if service started properly
+    echo Try manual start: ollama serve
+    pause
+    exit /b 1
+)
+echo ✅ Connection successful
+
+:: Download test model
+if "%USE_DEFAULT_MODELS%"=="true" (
+    echo 📦 Downloading lightweight embedding model to default location...
+) else (
+    echo 📦 Downloading lightweight embedding model to: %MODELS_PATH%
+)
+ollama pull {{embeddingModel}}
+if %errorlevel% neq 0 (
+    echo ⚠️ Model download failed, but Ollama is installed properly
+    echo You can download manually later: ollama pull {{embeddingModel}}
+) else (
+    echo ✅ Model download completed
+    if "%USE_DEFAULT_MODELS%"=="true" (
+        echo 📁 Model file location: %USERPROFILE%\.ollama\models (default)
+    ) else (
+        echo 📁 Model file location: %MODELS_PATH%
+    )
+)
+
+echo.
+echo 🎉 Test completed!
+if "%USE_DEFAULT_INSTALL%"=="true" (
+    echo 📍 Installation path: %INSTALL_PATH% (default)
+) else (
+    echo 📍 Installation path: %INSTALL_PATH% (custom)
+)
+if "%USE_DEFAULT_MODELS%"=="true" (
+    echo 📁 Model storage path: %USERPROFILE%\.ollama\models (default)
+) else (
+    echo 📁 Model storage path: %MODELS_PATH% (custom)
+)
+echo 💡 Usage: ollama run {{embeddingModel}}
+echo.

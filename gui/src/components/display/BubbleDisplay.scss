@@ -1,0 +1,59 @@
+.user-bubble {
+  .ant-bubble-content.ant-bubble-content-filled {
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--user-bubble-bg);
+    color: var(--user-bubble-color);
+    margin-right: -28px;
+  }
+}
+
+.assistant-bubble {
+  .ant-bubble-content.ant-bubble-content-borderless {
+    margin-left: -28px
+  }
+  .ant-bubble-footer {
+    margin-left: -28px;
+  }
+}
+
+.ant-bubble-avatar {
+  padding: 5px 0px 5px 0;
+}
+.ant-bubble{
+  column-gap: 5px;
+}
+
+.ant-bubble-list {
+  .ant-bubble:last-child {
+    margin-bottom: 150px; 
+  }
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+    opacity: 0;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.45);
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent; 
+
+  &:hover, &:active {
+    scrollbar-color: rgba(255, 255, 255, 0.45) transparent; 
+  }
+}

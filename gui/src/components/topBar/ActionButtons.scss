@@ -1,0 +1,13 @@
+.action-buttons {
+  display: flex;
+  align-items: center;
+
+  .action-button {
+    width: 25px;
+    height: 25px;
+
+    &:hover {
+      background-color: var(--hover-background-color);
+    }
+  }
+} 

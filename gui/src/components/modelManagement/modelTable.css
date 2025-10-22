@@ -1,0 +1,3 @@
+.model-table-radio .ant-radio-checked .ant-radio-inner::after {
+    background-color: var(--model-table-radio-after) !important;
+}

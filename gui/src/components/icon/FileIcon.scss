@@ -1,0 +1,23 @@
+.file-icon-container {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  /* 默认蓝色，但可以被组件的color属性覆盖 */
+  --icon-color: #3c85f3;
+}
+
+.file-icon {
+  width: 13px;
+  height: 13px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 4px;
+  /* 使用简单的CSS滤镜来改变图标颜色 */
+  filter: brightness(0) saturate(100%) invert(46%) sepia(99%) saturate(1822%) hue-rotate(202deg) brightness(97%) contrast(96%);
+}
+
+.file-icon-fallback {
+  font-size: 16px;
+  margin-right: 4px;
+  color: var(--icon-color);
+}

@@ -1,0 +1,103 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.voidmuse.idea.plugin.VoidMuse</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>VoidMuse</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+        <vendor email="voidmuse@qq.com" url="https://github.com/voidmuse-dev/voidmuse">voidMuse</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+VoidMuse is an AI-powered IDE plugin that integrates open-source components to minimize development costs.
+Our mission is to empower every developer to build their own AI tools effortlessly through carefully curated open-source solutions.
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="plugin-java.xml">com.intellij.modules.java</depends>
+<!--    <depends optional="true" config-file="plugin-python.xml">com.intellij.modules.python</depends>-->
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="VoidMuse"
+                    canCloseContents="true"
+                    anchor="right"
+                    icon="/icons/pluginIcon.svg"
+                    factoryClass="com.voidmuse.idea.plugin.factory.AIToolTabFactory"
+        />
+        <applicationService serviceImplementation="com.voidmuse.idea.plugin.common.PluginDataPersistent"/>
+       <!-- <postStartupActivity implementation="com.voidmuse.idea.plugin.service.FileService"/>-->
+        <postStartupActivity
+                implementation="com.voidmuse.idea.plugin.activity.PluginStartupActivity"/>
+<!--        <postStartupActivity-->
+<!--                implementation="com.voidmuse.idea.plugin.activity.CheckUpdateActivity"/>-->
+        <projectService
+                id="DiffStreamService"
+                serviceImplementation="com.voidmuse.idea.plugin.editor.DiffStreamService"/>
+        <applicationService
+                serviceImplementation="com.voidmuse.idea.plugin.completion.psi.CompletionContextService"/>
+    </extensions>
+    <applicationListeners>
+        <listener class="com.voidmuse.idea.plugin.activity.PluginProjectManagerListener"
+                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
+    </applicationListeners>
+
+<!--    <resource-bundle>messages.plugin</resource-bundle>-->
+
+    <actions>
+        <action class="com.voidmuse.idea.plugin.codebase.CodebaseIndexingAction"
+                id="com.voidmuse.idea.plugin.codebase.CodebaseIndexingAction"
+                description="(VoidMuse)Index your codebase"
+                text="(VoidMuse)Index your codebase">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+        <action class="com.voidmuse.idea.plugin.editor.InlineEditAction"
+                id="com.voidmuse.idea.plugin.editor.InlineEditAction"
+                description="Inline Edit"
+                text="Inline Edit">
+            <keyboard-shortcut keymap="$default"
+                               first-keystroke="ctrl K"/>
+            <keyboard-shortcut keymap="Mac OS X"
+                               first-keystroke="meta K"/>
+        </action>
+        <action class="com.voidmuse.idea.plugin.editor.ToggleToolWindowAction"
+                id="com.voidmuse.idea.plugin.editor.ToggleToolWindowAction"
+                description="Toggle VoidMuse Tool Window"
+                text="Toggle VoidMuse Tool Window">
+            <keyboard-shortcut keymap="$default"
+                               first-keystroke="ctrl L"/>
+            <keyboard-shortcut keymap="Mac OS X"
+                               first-keystroke="meta L"/>
+        </action>
+        <action id="com.voidmuse.idea.plugin.autocomplete.AcceptAutocompleteAction"
+                class="com.voidmuse.idea.plugin.autocomplete.AcceptAutocompleteAction"
+                text="Accept Autocomplete Suggestion" description="Accept Autocomplete Suggestion">
+            <keyboard-shortcut keymap="$default" first-keystroke="TAB"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="TAB"/>
+        </action>
+
+        <action id="com.voidmuse.idea.plugin.autocomplete.CancelAutocompleteAction"
+                class="com.voidmuse.idea.plugin.autocomplete.CancelAutocompleteAction"
+                text="Cancel Autocomplete Suggestion" description="Cancel Autocomplete Suggestion">
+            <keyboard-shortcut keymap="$default" first-keystroke="ESCAPE"/>
+        </action>
+        <action
+                id="TriggerAutocompleteAction"
+                text="TriggerAutocompleteAction"
+                class="com.voidmuse.idea.plugin.autocomplete.TriggerAutocompleteAction">
+            <keyboard-shortcut first-keystroke="ctrl alt U" keymap="$default"/>
+            <keyboard-shortcut first-keystroke="ctrl meta U" keymap="Mac OS X" replace-all="true"/>
+        </action>
+    </actions>
+
+
+</idea-plugin>

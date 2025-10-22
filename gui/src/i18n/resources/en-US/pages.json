@@ -1,0 +1,65 @@
+{
+  "chat": {
+    "title": "Chat",
+    "placeholder": "Enter your message...",
+    "send": "Send"
+  },
+  "index": {
+    "title": "Home",
+    "welcome": "Welcome to AI Chat Assistant"
+  },
+  "tokenUsage": {
+    "title": "Token Usage Statistics",
+    "description": "View and analyze your Token usage, including usage and cost statistics for each model.",
+    "loadError": "Failed to load data",
+    "refresh": "Refresh",
+    "statisticsOverview": "Statistics Overview",
+    "dailyUsageRecords": "Daily Usage Records",
+    "filters": {
+      "allProjects": "All Projects",
+      "allTypes": "All Types",
+      "allBaseUrls": "All Base URLs",
+      "codeEdit": "Code Edit",
+      "codeComplete": "Code Complete"
+    }
+  },
+  "ollama": {
+    "title": "Ollama Management",
+    "description": "Install and manage Ollama AI models on your system",
+    "systemInfo": {
+      "title": "System Information",
+      "systemVersion": "System Version",
+      "ollamaStatus": "Ollama Status",
+      "installed": "Installed",
+      "notInstalled": "Not Installed"
+    },
+    "config": {
+      "title": "Installation Configuration",
+      "installPath": "Installation Path",
+      "installPathPlaceholder": "Enter Ollama installation path",
+      "modelPath": "Model Storage Path",
+      "modelPathPlaceholder": "Enter model storage path",
+      "embeddingModel": "Embedding Model",
+      "selectEmbeddingModel": "Select embedding model",
+      "customModelPlaceholder": "Enter custom model name"
+    },
+    "install": {
+      "start": "Install Ollama",
+      "installing": "Installing...",
+      "installed": "Already Installed",
+      "stop": "Stop Installation",
+      "confirmStop": "Confirm Stop Installation",
+      "confirmStopMessage": "Are you sure you want to stop the installation process? This may leave the system in an incomplete state.",
+      "output": "Installation Output"
+    },
+    "folderSelect": {
+      "pathInfo": "Folder Selection Information",
+      "selectedFolder": "Selected Folder",
+      "pleaseInputFullPath": "Please manually enter the complete absolute path in the input field below."
+    },
+    "error": {
+      "initializationFailed": "Failed to initialize page data",
+      "installationFailed": "Installation failed, please check the configuration and try again"
+    }
+  }
+}

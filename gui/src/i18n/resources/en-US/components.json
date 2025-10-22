@@ -1,0 +1,338 @@
+{
+  "display": {
+    "markdownFooter": {
+      "totalTokens": "Total Tokens",
+      "inputTokens": "Input Tokens",
+      "outputTokens": "Output Tokens",
+      "conversationCost": "Conversation Cost",
+      "firstTokenLatency": "First Token",
+      "totalLatency": "Total Latency",
+      "tokens": "Tokens"
+    },
+    "reasoningChain": {
+      "title": "Reasoning Process",
+      "tooltip": "Reasoning Process"
+    },
+    "collapsePanel": {
+      "collapse": "Collapse ↑"
+    },
+    "markdownCodeBlock": {
+      "copy": "Copy",
+      "insertToCursor": "Insert to cursor",
+      "createNewFile": "Create new file",
+      "expandCode": "Expand {{count}} lines of code ↓",
+      "collapseCode": "Collapse code ↑"
+    }
+  },
+  "setting": {
+    "themeSelector": {
+      "light": "Light",
+      "dark": "Dark",
+      "moreThemes": "More Themes"
+    },
+    "settingList": {
+      "theme": "Theme",
+      "language": "Language",
+      "chinese": "中文",
+      "english": "English",
+      "mcp": "MCP",
+      "model": "Model",
+      "modelManagement": "Model Management",
+      "tokenBill": "Token Bill",
+      "search": "Search",
+      "ollama": "Ollama",
+      "errorCenter": "Error Center"
+    }
+  },
+  "dropdown": {
+    "modelDropdown": {
+      "selectModel": "Select Model",
+      "customModels": "Custom Models",
+      "addNewItem": "Add New Model"
+    }
+  },
+  "tool": {
+    "codebaseList": {
+      "searchCode": "Search Code",
+      "context": "Context",
+      "more": "...More ({{count}}+)",
+      "collapse": "^ Collapse",
+      "searchFailed": "Search failed",
+      "noResults": "No relevant code found",
+      "searching": "Searching..."
+    },
+    "searchList": {
+      "search": "Search",
+      "websiteIcon": "Website Icon",
+      "searchIntent": "Search Intent",
+      "searchResults": "Search Results"
+    },
+    "writeCode": {
+      "title": "Write Code",
+      "fileInfo": "File Information",
+      "fileName": "File Name",
+      "filePath": "File Path",
+      "updatedCode": "Updated Code"
+    }
+  },
+  "topBar": {
+    "actionButtons": {
+      "previousQuestion": "Previous Question",
+      "nextQuestion": "Next Question",
+      "newSession": "New Session",
+      "settings": "Settings",
+      "refresh": "Refresh",
+      "close": "Close",
+      "errorNotification": "Error Notification"
+    },
+    "conversationsButton": {
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "thisYear": "This Year",
+      "earlier": "Earlier",
+      "uncategorized": "Uncategorized",
+      "history": "History",
+      "close": "Close",
+      "delete": "Delete",
+      "historySessions": "History Sessions"
+    }
+  },
+  "token": {
+    "tokenUsageCard": {
+      "totalTokens": "Total Tokens",
+      "input": "Input",
+      "output": "Output",
+      "totalCost": "Total Cost"
+    },
+    "tokenUsageList": {
+      "total": "Total",
+      "input": "In",
+      "output": "Out",
+      "conversations": "conversations",
+      "defaultTitle": "Token Usage Records"
+    }
+  },
+  "input": {
+    "placeholder": "\"↑↓\" to switch history, \"⇧↵\" for line break",
+    "internetSearch": "Search",
+    "internetSearchTooltip": "Web Search",
+    "sendTooltip": "Send",
+    "searchConfigWarning": "Please configure search service first",
+    "searchConfigCheckFailed": "Failed to check search configuration",
+    "searchTabTitle": "Search",
+    "internetSearchName": "Search",
+    "attachments": {
+      "dropTitle": "Drop file here",
+      "uploadTitle": "Upload files",
+      "uploadDescription": "Click or drag files to this area to upload"
+    }
+  },
+  "languageSelector": {
+    "switchSuccess": "Language switched successfully",
+    "switchMessage": "Language has been changed, please refresh the page for it to take full effect.",
+    "refreshLater": "Refresh later",
+    "refreshNow": "Refresh now"
+  },
+  "modelManagement": {
+    "title": "Models",
+    "subtitle": "Model Management",
+    "description": "Configure API keys to add more available models. Built-in models use stable versions by default.",
+    "addModelButton": "Add Model",
+    "embeddingTitle": "Embedding Model",
+    "embeddingDescription": "Configure embedding models for text embedding and semantic search.",
+    "addEmbeddingModelButton": "Add Embedding Model",
+    "autoEmbeddingTooltip": "Auto embedding on file changes",
+    "autoEmbeddingEnabled": "Auto embedding enabled",
+    "autoEmbeddingDisabled": "Auto embedding disabled",
+    "modelColumn": "Model",
+    "providerColumn": "Provider",
+    "actionsColumn": "Actions",
+    "autoCompleteColumn": "Auto Complete",
+    "noEmbeddingModelData": "No embedding model data",
+    "noModelData": "No model data",
+    "addModel": {
+      "title": "Add Model",
+      "editTitle": "Edit Model",
+      "provider": "Provider",
+      "model": "Model",
+      "modelId": "Model ID",
+      "apiKey": "API Key",
+      "baseUrl": "Base URL",
+      "useOtherModel": "Use Other Model",
+      "customModelDescription": "Configure custom model ID to use models not in the list",
+      "getApiKey": "Get API Key",
+      "checkProvider": "Check Provider Platform",
+      "addModelButton": "Add Model",
+      "confirmButton": "Confirm",
+      "confirm": "Confirm",
+      "customModel": "Custom Model",
+      "addButton": "Add Model",
+      "placeholders": {
+        "selectProvider": "Select model provider",
+        "selectModel": "Select model",
+        "enterModelId": "Enter model ID",
+        "enterApiKey": "Enter API key",
+        "enterNewApiKey": "Enter new API key",
+        "enterBaseUrl": "Enter base URL",
+        "enterNewBaseUrl": "Enter new base URL"
+      },
+      "validation": {
+        "providerRequired": "Please select a provider",
+        "modelRequired": "Please select a model",
+        "modelIdRequired": "Please enter model ID",
+        "apiKeyRequired": "Please enter API key",
+        "baseUrlRequired": "Please enter base URL",
+        "modelExists": "Model already exists"
+      }
+    },
+    "deleteModel": {
+      "title": "Delete Model",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "deleteButton": "Delete",
+      "cancelButton": "Cancel"
+    },
+    "addEmbeddingModel": {
+      "title": "Add Embedding Model",
+      "editTitle": "Edit Embedding Model", 
+      "addButton": "Add Embedding Model"
+    }
+  },
+  "mcpManagement": {
+    "title": "MCP",
+    "subtitle": "MCP Management",
+    "description": "Model Context Protocol (MCP) is a protocol that allows large language models (LLMs) to access custom tools and services. You can add MCP Servers yourself. For more information, refer to the official MCP documentation.",
+    "addButton": "Add MCP Service",
+    "table": {
+      "serviceName": "Service Name",
+      "status": "Status",
+      "actions": "Actions",
+      "connected": "Connected",
+      "disconnected": "Connection Failed",
+      "noData": "No MCP data",
+      "noTools": "No tool data",
+      "methodName": "Method Name",
+      "description": "Description"
+    },
+    "addModal": {
+      "title": "Add MCP Service",
+      "editTitle": "Edit MCP Service",
+      "configLabel": "Please enter MCP configuration in JSON format",
+      "configPlaceholder": "\\Example:\n\\{\n\\    \"mcpServers\": {\n\\        \"example-server\": {\n\\            \"url\": \"https://example.com\"\n\\        }\n\\    }\n\\ }\n",
+      "addButton": "Add MCP Service",
+      "confirmButton": "Confirm",
+      "validation": {
+        "singleService": "Please configure only one MCP service at a time",
+        "serviceExists": "Service already exists",
+        "invalidJson": "Please enter valid JSON configuration"
+      }
+    },
+    "deleteModal": {
+       "title": "Delete MCP Configuration",
+       "confirmText": "Are you sure you want to delete {{name}}?",
+       "warningText": "This action cannot be undone.",
+       "deleteButton": "Delete",
+       "cancelButton": "Cancel"
+     }
+   },
+   "searchManagement": {
+     "title": "Search",
+     "subtitle": "Search Configuration Management",
+     "description": "Configure online search services, supporting multiple search engines and API providers.",
+     "addButton": "Add Search",
+     "table": {
+       "provider": "Provider",
+       "config": "Configuration",
+       "actions": "Actions",
+       "noData": "No search configuration data"
+     },
+     "addModal": {
+       "title": "Add Search Configuration",
+       "editTitle": "Edit Search Configuration",
+       "provider": "Search Provider",
+       "config": "Configuration",
+       "configPlaceholder": "Please enter JSON format configuration",
+       "addButton": "Add Search Configuration",
+        "confirmButton": "Confirm",
+        "cancelButton": "Cancel",
+        "configDoc": "Configuration Documentation",
+        "paramDescription": "Parameter Description",
+        "getAddress": "Get Address",
+        "providers": {
+          "google": {
+            "configDoc": "Configuration Documentation",
+            "params": {
+              "apiKey": "Google Custom Search API Key",
+              "cx": "Custom Search Engine ID"
+            }
+          },
+          "bocha": {
+            "configDoc": "Configuration Documentation",
+            "params": {
+              "apiKey": "Bocha API Key"
+            }
+          },
+          "baidu": {
+            "configDoc": "Configuration Documentation",
+            "params": {
+              "apiKey": "Baidu AI Search API Key"
+            }
+          }
+        },
+       "validation": {
+         "providerRequired": "Please select a search provider",
+         "configRequired": "Please enter configuration",
+         "invalidJson": "Please enter valid JSON format",
+         "configExists": "This configuration already exists"
+       }
+     },
+     "deleteModal": {
+        "title": "Delete Search Configuration",
+        "confirmText": "Are you sure you want to delete this search configuration?",
+        "warningText": "This action cannot be undone.",
+        "deleteButton": "Delete",
+        "cancelButton": "Cancel"
+      },
+      "deleteSearch": {
+        "title": "Delete Search Configuration",
+        "delete": "Delete",
+        "cancel": "Cancel"
+      },
+      "messages": {
+        "addSuccess": "Search configuration added successfully",
+        "addFailed": "Failed to add search configuration",
+        "updateSuccess": "Search configuration updated successfully",
+        "updateFailed": "Failed to update search configuration",
+        "deleteSuccess": "Search configuration deleted successfully",
+        "deleteFailed": "Failed to delete search configuration",
+        "selectSuccess": "Search configuration selected successfully",
+        "selectFailed": "Failed to select search configuration"
+      }
+   },
+   "errors": {
+     "markAllRead": "Mark all as read",
+     "clearAll": "Clear All",
+     "detail": "Error Details",
+     "viewDetail": "View Details",
+     "newTag": "New",
+     "level": {
+       "all": "All Levels",
+       "error": "Error",
+       "warning": "Warning",
+       "info": "Info"
+     },
+     "status": {
+       "all": "All Status",
+       "new": "Unread",
+       "read": "Read"
+     },
+     "searchPlaceholder": "Search title, source or content...",
+     "empty": "No error records",
+     "resolve": "Mark Resolved",
+     "tips": {
+       "title": "How to report errors?",
+       "desc": "This page shows runtime errors and warnings. In the future, IDE plugin or backend can report errors here for unified viewing and troubleshooting."
+     }
+   }
+}

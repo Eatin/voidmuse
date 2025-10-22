@@ -1,0 +1,436 @@
+/* Global variables definition */
+
+// ========== Spacing System ==========
+// Base spacing unit
+:root {
+  --spacing-base: 8px;
+}
+
+// Common spacing
+:root {
+  --spacing-xs: calc(var(--spacing-base) * 0.5); // 4px
+  --spacing-sm: var(--spacing-base); // 8px
+  --spacing-md: calc(var(--spacing-base) * 2); // 16px
+  --spacing-lg: calc(var(--spacing-base) * 3); // 24px
+  --spacing-xl: calc(var(--spacing-base) * 4); // 32px
+  --spacing-2xl: calc(var(--spacing-base) * 6); // 48px
+  --spacing-3xl: calc(var(--spacing-base) * 8); // 64px
+}
+
+// ========== Border Radius System ==========
+:root {
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+}
+
+// ========== Shadow System ==========
+:root {
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+// ========== Animation System ==========
+// Transition duration
+:root {
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --easing-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-ease-in: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Font variables */
+:root {
+  --font-mono: 'Fira Code', monospace;
+  --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
+
+/* Light theme variables */
+.light-theme {
+  --background-color: #ffffff;
+  --text-color: #222222;
+  --text-secondary-color: #666666;
+  --border-color: #e1e1e1;
+  --hover-background-color: #e9ecf0;
+  --border-bottom-color: #f0f0f0;
+  --tab-background-color: #f1f3f5;
+  --card-background-color: #ffffff;
+  --input-background-color: #ffffff;
+  --disabled-color: #f5f5f5;
+  --disabled-text-color: #bfbfbf;
+  // md code block component color configuration
+  --md-code-block-background: #f1f3f5;
+  --md-code-block-header-background: #f1f3f5;
+  --md-code-block-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --md-code-block-header-border-bottom-color: #e8e8e8;
+  --md-code-block-title-color: #666;
+  --md-code-block-gradient-overlay-bg: #f1f3f5;
+  --md-inline-code-background: rgba(175, 184, 193, 0.2);
+  --md-gradient-button-color: #617080;
+  --md-gradient-button-background: #e4e8ec;
+  --md-gradient-button-border-color: transparent;
+  --md-gradient-button-hover-background: #dde1e7;
+  --md-code-block-actions-hover-background: #dde1e7;
+  --md-code-block-actions-color: #000000;
+  --user-bubble-bg: #e2e6eb;
+  --user-bubble-color: #222222;
+  // markdown footer button component color configuration
+  --md-footer-btn-bg: #f1f3f5;
+  --md-footer-btn-border: #e2e6eb;
+  --md-footer-btn-color: #222;
+  --md-footer-btn-hover-border: #c8ccd0;
+  --md-footer-btn-hover-color: #222;
+  // table related color configuration
+  --md-table-border-color: #ddd;
+  --md-table-header-bg-color: #f1f3f5;
+  --md-table-row-even-bg-color: rgba(0, 0, 0, 0.03);
+  // codebase list component color configuration
+  --codebase-bg-color: #ffffff; 
+  --codebase-selected-bg-color: #f2f2f2; 
+  --codebase-line-number-color: #939395; 
+  // collapse panel component color configuration
+  --collapse-panel-background-color: #f5f5f5;
+  --collapse-panel-icon-color: #666;
+  --collapse-panel-title-color: #333;
+  // icon line component
+  --icon-line-actual-color: #c0c1c3;
+  // reasoning chain component
+  --reasoning-text-color: #6d7e8f;
+  // search list component
+  --search-list-index-bg-color: #f1f3f5; 
+  --search-list-index-color: #a5a9b3; 
+  --search-list-title-color: #474747; 
+  --search-result-icon-color: #1677ff; 
+  --search-result-description-color: #595959; 
+  // input
+  --input-scrollbar-background-color: #E9ECF0;
+  --input-internetConnection-button-color: #728991FF;
+  --input-internetConnection-icon-color: #333940FF;
+  --input-internetConnection-button-checked-backgroundColor: #DBEAFE;
+  --input-internetConnection-button-checked-borderColor: #BAD9FE;
+  --input-internetConnection-button-checked-color: #4D6BFE;
+  // tiptap component
+  --tiptap-placeholder-color: #A6B4C0;
+  --tiptap-dropdown-menu-background-color: #FFFFFF;
+  --tiptap-dropdown-menu-hover-selected-background-color: #E9ECF0FF;
+  --tiptap-dropdown-menu-button-path-color: #A7B4C1FF;
+  --tiptap-background-color: #FFFFFF;
+  --tiptap-border-color: #DCE2EAFF;
+  --tiptap-mention-readonly-background-color: #d6dce3;
+  // model-management component
+  --model-management-table-header-th-backgroundColor: #F1F3F5FF;
+  --model-management-table-header-th-color: #6D7E8FFF;
+  --model-management-add-button-background-color: #F1F3F5FF;
+  --model-management-add-button-hover-background-color: #E9ECF0FF;
+  // modelDropdown
+  --model-dropdown-icon-color: #333940FF;
+  --model-dropdown-button-color: #728991FF;
+  --model-dropdown-background-color: #F1F3F5FF;
+  // model-modal
+  --model-modal-contentBg: #ffffff;
+  --model-modal-headerBg: #ffffff;
+  --model-modal-select-selectorBg: #F1F3F5;
+  --model-modal-select-colorBgElevated: #ffffff;
+  --model-modal-select-activeBorderColor: #d0d8e2;
+  --model-modal-select-hoverBorderColor: #cfd6e1;
+  --model-modal-select-optionSelectedBg: #F1F3F5;
+  --model-modal-button-background-color: #333940;
+  --model-modal-button-hover-background-color: #617080;
+  --model-modal-button-color: #ffffff;
+  --model-modal-a-color: #333940;
+  --model-modal-input-background-color: #f1f3f5;
+  --model-modal-input-color: #333940;
+  --model-modal-input-caret-color: #333940;
+  --model-modal-input-focus-border-color: #CED5E0;
+  --search-modal-link-color: #1890ff;
+  // modal
+  --modal-contentBg: #ffffff;
+  --modal-exclamation-color: #d9363e;
+  --modal-okButton-background-color: #333940FF;
+  --modal-okButton-hover-color: #617080;
+  --modal-okButton-color: #ffffff;
+  --modal-cancelButton-background-color: #F1F3F5FF;
+  --modal-cancelButton-color: #333940;
+  --modal-cancelButton-hover-color: #e9ecf0;
+
+
+  // mcp-management component
+  --mcp-management-table-header-th-backgroundColor: #F1F3F5FF;
+  --mcp-management-table-header-th-color: #6D7E8FFF;
+  --mcp-management-add-button-background-color: #F1F3F5FF;
+  --mcp-management-add-button-hover-background-color: #E9ECF0FF;
+  // mcpDropdown
+  --mcp-dropdown-icon-color: #333940FF;
+  --mcp-dropdown-button-color: #728991FF;
+  --mcp-dropdown-background-color: #F1F3F5FF;
+  // mcp-modal
+  --mcp-modal-contentBg: #ffffff;
+  --mcp-modal-headerBg: #ffffff;
+  --mcp-modal-select-selectorBg: #F1F3F5;
+  --mcp-modal-select-colorBgElevated: #ffffff;
+  --mcp-modal-select-activeBorderColor: #d0d8e2;
+  --mcp-modal-select-hoverBorderColor: #cfd6e1;
+  --mcp-modal-select-optionSelectedBg: #F1F3F5;
+  --mcp-modal-button-background-color: #333940;
+  --mcp-modal-button-hover-background-color: #617080;
+  --mcp-modal-button-color: #ffffff;
+  --mcp-modal-a-color: #333940;
+  --mcp-modal-input-background-color: #f1f3f5;
+  --mcp-modal-input-color: #333940;
+  --mcp-modal-input-caret-color: #333940;
+  --mcp-modal-input-focus-border-color: #CED5E0;
+  // delete-mcp-modal
+  --delete-mcp-modal-contentBg: #ffffff;
+  --delete-mcp-modal-exclamation-color: #d9363e;
+  --delete-mcp-modal-okButton-background-color: #333940FF;
+  --delete-mcp-modal-okButton-hover-color: #617080;
+  --delete-mcp-modal-okButton-color: #ffffff;
+  --delete-mcp-modal-cancelButton-background-color: #F1F3F5FF;
+  --delete-mcp-modal-cancelButton-color: #333940;
+  --delete-mcp-modal-cancelButton-hover-color: #e9ecf0;
+  // model-table-radio
+  --model-table-radio-colorPrimary: #00AA62;
+  --model-table-radio-after: #FFFFFF;
+  // search-management
+  --search-modal-contentBg: #ffffff;
+  --search-modal-headerBg: #ffffff;
+  --search-modal-select-selectorBg: #F1F3F5;
+  --search-modal-select-colorBgElevated: #ffffff;
+  --search-modal-select-activeBorderColor: #d0d8e2;
+  --search-modal-select-hoverBorderColor: #cfd6e1;
+  --search-modal-select-optionSelectedBg: #F1F3F5;
+  --search-modal-button-background-color: #333940;
+  --search-modal-button-hover-background-color: #617080;
+  --search-modal-button-color: #ffffff;
+  --search-modal-a-color: #333940;
+  --search-modal-input-background-color: #f1f3f5;
+  --search-modal-input-color: #333940;
+  --search-modal-input-caret-color: #333940;
+  --search-modal-input-focus-border-color: #CED5E0;
+  --search-management-table-header-th-backgroundColor: #F1F3F5FF;
+  --search-management-table-header-th-color: #6D7E8FFF;
+  // delete-search-modal
+  --delete-search-modal-contentBg: #ffffff;
+  --delete-search-modal-exclamation-color: #d9363e;
+  --delete-search-modal-okButton-background-color: #333940FF;
+  --delete-search-modal-okButton-hover-color: #617080;
+  --delete-search-modal-okButton-color: #ffffff;
+  --delete-search-modal-cancelButton-background-color: #F1F3F5FF;
+  --delete-search-modal-cancelButton-color: #333940;
+  --delete-search-modal-cancelButton-hover-color: #e9ecf0;
+  --modal-textArea-focus-border-color: #CED5E0;
+  // error-center-modal
+  --error-center-modal-contentBg: #ffffff;
+  --error-center-modal-headerBg: #ffffff;
+  --error-center-modal-title-color: #333940;
+  --error-center-modal-text-color: #595959;
+  --error-center-modal-label-color: #6D7E8F;
+  --error-center-modal-code-background: #f1f3f5;
+  --error-center-modal-code-color: #333940;
+  // console output styles
+  --console-background-color: #f5f5f5;
+  --console-text-color: #333;
+  --scrollbar-track-color: #f1f1f1;
+  --scrollbar-thumb-color: #c1c1c1;
+  --scrollbar-thumb-hover-color: #a8a8a8;
+}
+
+/* Dark theme variables */
+.dark-theme {
+  --background-color: #181a1f;
+  --text-color: #ced2da;
+  --text-secondary-color: #a6a6a6;
+  --border-color: #494c52;
+  --hover-background-color: #484c58;
+  --border-bottom-color: #181a1f;
+  --tab-background-color: #2a2c35;
+  --card-background-color: #1f1f1f;
+  --input-background-color: #2a2c35;
+  --disabled-color: #3a3a3a;
+  --disabled-text-color: #666666;
+  // md code block component color configuration
+  --md-code-block-background: #2a2c35;
+  --md-code-block-header-background: #2a2c35;
+  --md-code-block-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --md-code-block-header-border-bottom-color: #444;
+  --md-code-block-title-color: #ccc;
+  --md-code-block-gradient-overlay-bg: #2a2c35;
+  --md-inline-code-background: rgba(255, 255, 255, 0.1);
+  --md-gradient-button-color: #6f747c;
+  --md-gradient-button-background: #3a3d49;
+  --md-gradient-button-border-color: transparent;
+  --md-gradient-button-hover-background: #414351;
+  --md-code-block-actions-hover-background: #404451;
+  --md-code-block-actions-color: #d1d4dc;
+  --user-bubble-bg: #3a3d49;
+  --user-bubble-color: #ffffff;
+  // markdown footer button component color configuration
+  --md-footer-btn-bg: #2a2c35;
+  --md-footer-btn-border: #2a2c35;
+  --md-footer-btn-color: #fff;
+  --md-footer-btn-hover-border: #23252b;
+  --md-footer-btn-hover-color: #fff;
+  // table related color configuration
+  --md-table-border-color: #444;
+  --md-table-header-bg-color: #2a2c35;
+  --md-table-row-even-bg-color: rgba(255, 255, 255, 0.05);
+  // codebase list component color configuration
+  --codebase-bg-color: #181a1f; 
+  --codebase-selected-bg-color: #24262a; 
+  --codebase-line-number-color: #6e7177; 
+  // collapse panel component color configuration
+  --collapse-panel-background-color: #2a2c35;
+  --collapse-panel-icon-color: #9599a6;
+  --collapse-panel-title-color: #dadde5;
+  // icon line component
+  --icon-line-actual-color: #2c2f38;
+  // reasoning chain component
+  --reasoning-text-color: #9599a6;
+  // search list component
+  --search-list-index-bg-color: #2a2c35; 
+  --search-list-index-color: #939799; 
+  --search-list-title-color: #cdced0; 
+  --search-result-icon-color: #4096ff; 
+  --search-result-description-color: #a5a9b3; 
+  // input
+  --input-scrollbar-background-color: #31343E;
+  --input-internetConnection-button-color: #838793;
+  --input-internetConnection-icon-color: #DADDE5;
+  --input-internetConnection-button-checked-backgroundColor: #45518F;
+  --input-internetConnection-button-checked-borderColor: #3B58A0;
+  --input-internetConnection-button-checked-color: #4CAEFF;
+  // tiptap component
+  --tiptap-placeholder-color: #5C6373;
+  --tiptap-dropdown-menu-background-color: #33363d;
+  --tiptap-dropdown-menu-hover-selected-background-color: #484c58;
+  --tiptap-dropdown-menu-button-path-color: #585E6E;
+  --tiptap-background-color: #2A2C35;
+  --tiptap-border-color: #353944;
+  --tiptap-mention-readonly-background-color: #484c5b;
+  // model-management component
+  --model-management-table-header-th-backgroundColor: #2A2C35;
+  --model-management-table-header-th-color: #9195A2;
+  --model-management-add-button-background-color: #2A2C35;
+  --model-management-add-button-hover-background-color: #31343E;
+  // modelDropdown
+  --model-dropdown-icon-color: #DADDE5;
+  --model-dropdown-button-color: #838793;
+  --model-dropdown-background-color: #2A2C35;
+  // model-modal
+  --model-modal-contentBg: #33363d;
+  --model-modal-headerBg: #33363d;
+  --model-modal-select-selectorBg: #424550;
+  --model-modal-select-colorBgElevated: #33363d;
+  --model-modal-select-activeBorderColor: #515563;
+  --model-modal-select-hoverBorderColor: #515563;
+  --model-modal-select-optionSelectedBg: #424550;
+  --model-modal-button-background-color: #DADDE5;
+  --model-modal-button-hover-background-color: #ffffff;
+  --model-modal-button-color: #000000;
+  --model-modal-a-color: #DADDE5;
+  --model-modal-input-background-color: #424550;
+  --model-modal-input-color: #DADDE5;
+  --model-modal-input-caret-color: #DADDE5;
+  --model-modal-input-focus-border-color: #606577;
+  --search-modal-link-color: #1890ff;
+  // modal
+  --modal-contentBg: #33363d;
+  --modal-exclamation-color: #d9363e;
+  --modal-okButton-background-color: #DADDE5;
+  --modal-okButton-hover-color: #FFFFFF;
+  --modal-okButton-color: #000000;
+  --modal-cancelButton-background-color: #424550;
+  --modal-cancelButton-color: #ffffff;
+  --modal-cancelButton-hover-color: #484c58;
+
+  // mcp-management component
+  --mcp-management-table-header-th-backgroundColor: #2A2C35;
+  --mcp-management-table-header-th-color: #9195A2;
+  --mcp-management-add-button-background-color: #2A2C35;
+  --mcp-management-add-button-hover-background-color: #31343E;
+  // mcpDropdown
+  --mcp-dropdown-icon-color: #DADDE5;
+  --mcp-dropdown-button-color: #838793;
+  --mcp-dropdown-background-color: #2A2C35;
+  // mcp-modal
+  --mcp-modal-contentBg: #33363d;
+  --mcp-modal-headerBg: #33363d;
+  --mcp-modal-select-selectorBg: #424550;
+  --mcp-modal-select-colorBgElevated: #33363d;
+  --mcp-modal-select-activeBorderColor: #515563;
+  --mcp-modal-select-hoverBorderColor: #515563;
+  --mcp-modal-select-optionSelectedBg: #424550;
+  --mcp-modal-button-background-color: #DADDE5;
+  --mcp-modal-button-hover-background-color: #ffffff;
+  --mcp-modal-button-color: #000000;
+  --mcp-modal-a-color: #DADDE5;
+  --mcp-modal-input-background-color: #424550;
+  --mcp-modal-input-color: #DADDE5;
+  --mcp-modal-input-caret-color: #DADDE5;
+  --mcp-modal-input-focus-border-color: #606577;
+  // delete-mcp-modal
+  --delete-mcp-modal-contentBg: #33363d;
+  --delete-mcp-modal-exclamation-color: #d9363e;
+  --delete-mcp-modal-okButton-background-color: #DADDE5;
+  --delete-mcp-modal-okButton-hover-color: #FFFFFF;
+  --delete-mcp-modal-okButton-color: #000000;
+  --delete-mcp-modal-cancelButton-background-color: #424550;
+  --delete-mcp-modal-cancelButton-color: #ffffff;
+  --delete-mcp-modal-cancelButton-hover-color: #484c58;
+  // model-table-radio
+  --model-table-radio-colorPrimary: #00AA62;
+  --model-table-radio-after: #FFFFFF;
+  // search-management
+  --search-modal-contentBg: #33363d;
+  --search-modal-headerBg: #33363d;
+  --search-modal-select-selectorBg: #424550;
+  --search-modal-select-colorBgElevated: #33363d;
+  --search-modal-select-activeBorderColor: #515563;
+  --search-modal-select-hoverBorderColor: #515563;
+  --search-modal-select-optionSelectedBg: #424550;
+  --search-modal-button-background-color: #DADDE5;
+  --search-modal-input-color: #DADDE5;
+  --search-modal-input-caret-color: #DADDE5;
+  --search-modal-input-background-color: #424550;
+  --search-modal-button-hover-background-color: #ffffff;
+  --search-modal-button-color: #000000;
+  --search-modal-a-color: #DADDE5;
+  --search-modal-input-focus-border-color: #606577;
+  --search-management-table-header-th-backgroundColor: #2A2C35;
+  --search-management-table-header-th-color: #9195A2;
+  // delete-search-modal
+  --delete-search-modal-contentBg: #33363d;
+  --delete-search-modal-exclamation-color: #d9363e;
+  --delete-search-modal-okButton-background-color: #DADDE5;
+  --delete-search-modal-okButton-hover-color: #FFFFFF;
+  --delete-search-modal-okButton-color: #000000;
+  --delete-search-modal-cancelButton-background-color: #424550;
+  --delete-search-modal-cancelButton-color: #ffffff;
+  --delete-search-modal-cancelButton-hover-color: #484c58;
+  --modal-textArea-focus-border-color: #606577;
+  // error-center-modal
+  --error-center-modal-contentBg: #33363d;
+  --error-center-modal-headerBg: #33363d;
+  --error-center-modal-title-color: #DADDE5;
+  --error-center-modal-text-color: #a5a9b3;
+  --error-center-modal-label-color: #9195A2;
+  --error-center-modal-code-background: #424550;
+  --error-center-modal-code-color: #DADDE5;
+  // console output styles
+  --console-background-color: #1f1f1f;
+  --console-text-color: #e6e6e6;
+  --scrollbar-track-color: #2f2f2f;
+  --scrollbar-thumb-color: #6f6f6f;
+  --scrollbar-thumb-hover-color: #8f8f8f;
+}

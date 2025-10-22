@@ -1,0 +1,11 @@
+.searchModalTextArea::placeholder {
+    color: #9094A1 !important;
+}
+
+.searchModalTextArea:hover {
+    border-color: var(--delete-model-modal-textArea-focus-border-color) !important;
+}
+
+.searchModalTextArea:focus-within {
+    border-color: var(--delete-model-modal-textArea-focus-border-color) !important;
+}
