@@ -1,4 +1,4 @@
-# function call的实践-实现深度搜索
+> 关于[VoidMuse](https://github.com/voidmuse-dev/voidmuse): 一个以学习为目标的开源AI IDE插件，支持IntelliJ IDEA和VS Code。通过整合20+优秀开源组件，让你在实际开发中掌握AI工程化技术。不仅提供工具，更重要的是帮你把AI知识真正应用起来，通过实践来学习。本文将通过VoidMuse的深度搜索功能，带你深入理解Function Call技术。
 
 ## 1. 深度搜索和传统搜索的区别
 
