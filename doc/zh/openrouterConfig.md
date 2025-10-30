@@ -30,7 +30,7 @@ OpenRouter汇集了GPT-4、Claude、Gemini等众多优秀的AI模型，让你可
 - 🔗 [直达充值页面](https://openrouter.ai/settings/credits)
 - 或在控制台点击"Credits"选项卡
 
-![OpenRouter充值页面](./img/openrouter/openrouter-add-credit.png)
+![OpenRouter充值页面](../img/openrouter/openrouter-add-credit.png)
 
 **第2步**：选择充值金额
 - 建议首次充值$5-10美元进行测试
@@ -40,7 +40,7 @@ OpenRouter汇集了GPT-4、Claude、Gemini等众多优秀的AI模型，让你可
 - 🎉 **好消息**：支持微信和支付宝支付！
 - 国内用户可以直接使用熟悉的支付方式
 
-![微信支付宝充值](./img/openrouter/openrouter-add-credit-wx.png)
+![微信支付宝充值](../img/openrouter/openrouter-add-credit-wx.png)
 
 > 💡 **充值小贴士**：OpenRouter的计费是按token使用量计算的，$5通常可以支持相当长时间的使用。建议先小额充值测试，确认效果后再根据需要追加。
 
@@ -58,7 +58,7 @@ OpenRouter汇集了GPT-4、Claude、Gemini等众多优秀的AI模型，让你可
 - 点击"Create Key"按钮
 - 为你的API Key设置一个容易识别的名称（如："VoidMuse-Dev"）
 
-![创建API Key](./img/openrouter/openrouter-add-apikey.png)
+![创建API Key](../img/openrouter/openrouter-add-apikey.png)
 
 **第3步**：设置使用限制（推荐）
 - **月度限额**：设置每月最大使用金额，避免意外超支
@@ -85,7 +85,7 @@ OpenRouter汇集了GPT-4、Claude、Gemini等众多优秀的AI模型，让你可
 - **Base URL**：`https://openrouter.ai/api/v1`（通常会自动填入）
 - **Model ID**：选择你想使用的模型（如：`anthropic/claude-3.5-sonnet`）
 
-![VoidMuse OpenRouter配置](./img/openrouter/openrouter-VoidMuse.png)
+![VoidMuse OpenRouter配置](../img/openrouter/openrouter-VoidMuse.png)
 
 **第3步**：测试连接
 - 保存配置后，发送一条测试消息

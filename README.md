@@ -2,11 +2,13 @@
 
 <div align="center">
 
+**Language / 语言**: [English](README.md) | [中文](README_ZH.md)
+
 <img src="doc/img/icon/VoidMuse-full.png" alt="VoidMuse Logo" width="200" />
 
-🚀 **开源驱动的智能AI IDE插件** | **学习型AI工程化项目**
+🚀 **Open Source Intelligent AI IDE Plugin** | **Learning-Oriented AI Engineering Project**
 
-适配 IntelliJ IDEA & Visual Studio Code
+Compatible with IntelliJ IDEA & Visual Studio Code
 
 <a href="https://opensource.org/licenses/Apache-2.0" target="_blank">
   <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License" style="height: 22px;" />
@@ -21,251 +23,237 @@
   <img src="https://img.shields.io/badge/Open%20Source-Yes-green.svg" alt="Open Source" style="height: 22px;" />
 </a>
 
+[中文](README.md) | **English**
+
 </div>
 
 ---
 
-## 🎯 项目愿景
+## 🎯 Project Vision
 
-> **不仅仅是一个AI插件，更是一个AI工程化学习平台**
+> **More than just an AI plugin, it's an AI engineering learning platform**
 
-VoidMuse致力于通过**开源组件整合**的方式，以**最低的开发成本**构建高效智能的AI IDE插件。我们相信开源的力量，通过精心选择和整合优秀的开源组件，让每个开发者都能轻松构建自己的AI工具。
+VoidMuse is committed to building efficient and intelligent AI IDE plugins through **open source component integration** with **minimal development costs**. We believe in the power of open source, enabling every developer to easily build their own AI tools through carefully selected and integrated excellent open source components.
 
-### 🌟 核心理念
+### 🌟 Core Philosophy
 
-- 📚 **学习导向**: 提供完整的技术原理文档，让用户深度理解AI工程化
-- 🔧 **开源整合**: 基于20+优秀开源组件，降低开发门槛
-- 🧠 **知识传递**: 从Embedding到向量数据库，全面覆盖前沿AI概念
-- 💡 **实践驱动**: 理论与实践结合，边学边用
+- 📚 **Learning-Oriented**: Provides comprehensive technical documentation to help users deeply understand AI engineering
+- 🔧 **Open Source Integration**: Based on 20+ excellent open source components, lowering development barriers
+- 🧠 **Knowledge Transfer**: Comprehensive coverage of cutting-edge AI concepts from Embedding to vector databases
+- 💡 **Practice-Driven**: Combining theory with practice, learning while doing
 
 ---
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
+### Usage Methods
+Direct plugin installation
 
-### 使用方式
-直接使用插件
-
-**VS Code安装**
-1. 打开VS Code扩展商店 (Ctrl+Shift+X)
-2. 搜索 "VoidMuse"
-3. 点击安装并重启编辑器
+**VS Code Installation**
+1. Open VS Code Extension Marketplace (Ctrl+Shift+X)
+2. Search for "VoidMuse"
+3. Click install and restart the editor
 ![vscode-plugin](doc/img/run/vscode-plugin.jpg)
 
-**IntelliJ IDEA安装**
-1. 打开 Settings → Plugins
-2. 搜索 "VoidMuse"
-3. 点击安装并重启IDE
+**IntelliJ IDEA Installation**
+1. Open Settings → Plugins
+2. Search for "VoidMuse"
+3. Click install and restart IDE
 ![intellij-plugin](doc/img/run/intellij-plugin.jpg)
 
-作为学习者 - 本地开发启动详见 [开发指南](doc/DEVELOPMENT_GUIDE.md)
+For Learners - Local development startup details see [Development Guide](doc/en/DEVELOPMENT_GUIDE.md)
 
+### 🎯 3-Minute Quick Setup
 
-### 🎯 三分钟快速上手
+Want to experience VoidMuse's powerful features immediately? Follow our quick configuration guide and get started in three steps!
 
-想要立即体验VoidMuse的强大功能？跟着我们的快速配置指南，三步搞定！
+👉 **[📖 View 3-Step Quick Setup Guide](doc/en/quick-start.md)**
 
-👉 **[📖 查看三步快速上手指南](doc/quick-start.md)**
+> 💡 Just configure the AI model API key to start using basic features. Search and code understanding features can be configured later as needed.
 
-> 💡 只需配置AI模型API密钥，就能开始使用基础功能。搜索和代码理解功能可以后续按需配置。
+### Detailed Configuration Guide
 
-### 详细配置指南
+If you need more detailed configuration instructions, check out the following documentation:
 
-如果你需要更详细的配置说明，可以查看以下文档：
-
-- 🤖 **[AI模型配置](doc/freeLLMQuota.md)** - 获取免费API密钥和配置指南
-- 🔍 **[搜索功能配置](doc/googleSearchConfig.md)** - Google搜索配置详细教程
-- 🔍 **[博查搜索配置](doc/bochaSearchConfig.md)** - 国内搜索服务配置
-- 🧠 **代码理解配置** - 使用相同的AI模型API即可
-
----
-
-## 🏗️ 整体架构
-
-![VoidMuse架构图](doc/img/architecture.svg)
-
-*VoidMuse采用模块化架构设计，支持多IDE平台，集成多种AI模型，提供完整的AI开发体验。*
-
-详细架构文档：[技术架构说明](doc/architecture.md)
+- 🤖 **[AI Model Configuration](doc/en/freeLLMQuota.md)** - Get free API keys and configuration guide
+- 🔍 **[Search Function Configuration](doc/en/googleSearchConfig.md)** - Google Search configuration detailed tutorial
+- 🔍 **[Bocha Search Configuration](doc/en/bochaSearchConfig.md)** - Domestic search service configuration
+- 🧠 **Code Understanding Configuration** - Use the same AI model API
 
 ---
 
-## 🔬 技术亮点与学习价值
+## 🏗️ Overall Architecture
 
-### 🧠 AI工程化核心概念
+![VoidMuse Architecture](doc/img/architecture_en.png)
 
-- **Embedding技术**: 从原理到实践的完整解析
-- **向量数据库**: 本地化索引与检索机制
-- **上下文管理**: 大模型对话的上下文优化策略
-- **MCP协议**: 多模态对话协议的标准化实现
+*VoidMuse adopts a modular architecture design, supports multi-IDE platforms, integrates multiple AI models, and provides a complete AI development experience.*
 
-### 🔧 开源组件生态
-
-我们精心选择并整合了以下优秀开源组件：
-
-- **Ant Design 5.x** - 企业级UI设计语言
-- **TipTap** - 富文本编辑器
-- **Vercel的 ai-sdk** - 多模型支持、agent框架
-
-
-### 📖 学习资源汇总
-
-1. 微软 AI Agents for Beginners：构建AI代理的基础知识，https://learn.microsoft.com/zh-cn/shows/ai-agents-for-beginners/
-2. 吴恩达 Agentic AI 课程：代理式AI的实际应用，https://deeplearning.ai
-3. Hugging Face AI Agents 课程：实用的AI智能体开发技能，https://huggingface.co/learn/agents-course/zh-CN/unit0/introduction
-4. Google 5天 AI Agent 培训课：实战项目经验，https://rsvp.withgoogle.com/events/google-ai-agents-intensive_2025/home
-5. Anthropic 官方课程：高级AI Agent技术，https://anthropic.skilljar.com
-6. Coursera AI Agents 专项课程：学术理论与实际应用结合，https://coursera.org/specializations/ai-agents
-7. Salesforce AI Agent Course：企业级AI Agent解决方案，https://salesforce.com/ap/agentforce/ai-agent-course/
+Detailed architecture documentation: [Technical Architecture Description](doc/en/architecture.md)
 
 ---
 
-## 🛠️ 功能特性
+## 🔬 Technical Highlights & Learning Value
 
-### 🧠 智能代码补全 (AutoComplete)
+### 🧠 AI Engineering Core Concepts
 
-- **技术原理**: 基于上下文感知的智能补全算法
-- **学习价值**: 了解AI代码补全的实现机制
-- **核心特性**: 
-  - 实时代码分析
-  - 上下文感知补全
-  - 多语言支持
+- **Embedding Technology**: Complete analysis from principles to practice
+- **Vector Database**: Local indexing and retrieval mechanisms
+- **Context Management**: Context optimization strategies for large model conversations
+- **MCP Protocol**: Standardized implementation of multimodal conversation protocols
 
-### 🔍 本地代码库索引 (Codebase)
+### 🔧 Open Source Component Ecosystem
 
-- **技术原理**: 向量化存储 + 语义检索
-- **学习价值**: 掌握向量数据库的构建与优化
-- **核心特性**:
-  - 本地化向量数据库
-  - 语义相似度检索
-  - 智能代码上下文提取
+We carefully select and integrate the following excellent open source components:
 
-### 💬 多模型AI对话 (AI Chat)
+- **Ant Design 5.x** - Enterprise-class UI design language
+- **TipTap** - Rich text editor
+- **Vercel's ai-sdk** - Multi-model support, agent framework
 
-- **技术原理**: 多轮对话 + 工具调用 + 上下文管理
-- **学习价值**: 理解大模型应用的工程化实践
-- **支持模型**:
-  - OpenAI GPT系列
-  - Anthropic Claude系列
-  - DeepSeek系列
-  - 通过OpenRouter支持更多模型
+### 📖 Learning Resources Summary
 
-### 🔗 MCP协议支持
-
-- **技术原理**: 标准化多模态对话协议
-- **学习价值**: 跨平台AI交互的设计模式
-- **协议特性**:
-  - 工具调用标准化
-  - 多模态数据处理
-  - 可扩展的插件架构
-
-### 🔍 智能搜索集成
-
-- **支持引擎**: Google搜索、博查AI搜索
-- **配置文档**: 
-  - [Google搜索配置](doc/googleSearchConfig.md)
-  - [博查搜索配置](doc/bochaSearchConfig.md)
-- **免费资源**: [大模型厂商免费额度汇总](doc/freeLLMQuota.md)
+1. Microsoft AI Agents for Beginners: Basic knowledge for building AI agents, https://learn.microsoft.com/en-us/shows/ai-agents-for-beginners/
+2. Andrew Ng's Agentic AI Course: Practical applications of agentic AI, https://deeplearning.ai
+3. Hugging Face AI Agents Course: Practical AI agent development skills, https://huggingface.co/learn/agents-course/en/unit0/introduction
+4. Google 5-Day AI Agent Training: Hands-on project experience, https://rsvp.withgoogle.com/events/google-ai-agents-intensive_2025/home
+5. Anthropic Official Course: Advanced AI Agent technology, https://anthropic.skilljar.com
+6. Coursera AI Agents Specialization: Combining academic theory with practical applications, https://coursera.org/specializations/ai-agents
+7. Salesforce AI Agent Course: Enterprise-level AI Agent solutions, https://salesforce.com/ap/agentforce/ai-agent-course/
 
 ---
 
-## 📚 学习路径指南
+## 🛠️ Features
 
-### 🎯 适合人群
+### 🧠 Intelligent Code Completion (AutoComplete)
 
-- AI工程师想了解IDE插件开发
-- 前端/后端开发者想学习AI集成
-- 学生和研究者想理解AI工程化
-- 开源爱好者想参与AI项目
+- **Technical Principles**: Context-aware intelligent completion algorithms
+- **Learning Value**: Understanding the implementation mechanisms of AI code completion
+- **Core Features**: 
+  - Real-time code analysis
+  - Context-aware completion
+  - Multi-language support
 
-### 📖 推荐学习路径
+### 🔍 Local Codebase Indexing (Codebase)
 
-#### 初级路径 (AI概念入门)
-1. [什么是Embedding？](doc/tutorial/embedding-basics.md)
-2. 向量数据库基础
+- **Technical Principles**: Vectorized storage + semantic retrieval
+- **Learning Value**: Master the construction and optimization of vector databases
+- **Core Features**:
+  - Local vector database
+  - Semantic similarity retrieval
+  - Intelligent code context extraction
 
-### 🛠️ 实践项目
+### 💬 Multi-Model AI Chat (AI Chat)
 
-- [实现深度搜索](doc/tutorial/function%20call的实践-实现深度搜索.md)
-- [Codebase功能但实现](doc/tutorial/codebase功能的技术深度解析.md)
-- 自定义Embedding模型集成
-- 扩展MCP协议支持
-- 实现自定义搜索引擎
+- **Technical Principles**: Multi-turn dialogue + tool calling + context management
+- **Learning Value**: Understanding engineering practices of large model applications
+- **Supported Models**:
+  - OpenAI GPT series
+  - Anthropic Claude series
+  - DeepSeek series
+  - More models supported through OpenRouter
+
+### 🔗 MCP Protocol Support
+
+- **Technical Principles**: Standardized multimodal conversation protocol
+- **Learning Value**: Design patterns for cross-platform AI interaction
+- **Protocol Features**:
+  - Standardized tool calling
+  - Multimodal data processing
+  - Extensible plugin architecture
+
+### 🔍 Intelligent Search Integration
+
+- **Supported Engines**: Google Search, Bocha AI Search
+- **Configuration Documentation**: 
+  - [Google Search Configuration](doc/en/googleSearchConfig.md)
+  - [Bocha Search Configuration](doc/en/bochaSearchConfig.md)
+- **Free Resources**: [Large Model Provider Free Quota Summary](doc/en/freeLLMQuota.md)
 
 ---
 
-## 🚀 未来功能规划
+## 📚 Learning Path Guide
 
-| 功能模块 | 核心特性 | 技术原理 | 学习价值 |
+### 🎯 Target Audience
+
+- AI engineers wanting to learn IDE plugin development
+- Frontend/backend developers wanting to learn AI integration
+- Students and researchers wanting to understand AI engineering
+- Open source enthusiasts wanting to participate in AI projects
+
+### 📖 Recommended Learning Path
+
+#### Beginner Path (AI Concept Introduction)
+1. [What is Embedding?](doc/en/tutorial/embedding-basics.md)
+2. Vector Database Basics
+
+### 🛠️ Practice Projects
+
+- [Implementing Deep Search](doc/en/tutorial/function-call-deep-search.md)
+- [Codebase Feature Technical Deep Analysis](doc/en/tutorial/codebase-technical-deep-dive.md)
+- Custom Embedding Model Integration
+- Extending MCP Protocol Support
+- Implementing Custom Search Engines
+
+---
+
+## 🚀 Future Feature Roadmap
+
+| Feature Module | Core Features | Technical Principles | Learning Value |
 |---------|---------|---------|----------|
-| 🧠 **上下文记忆** | 跨会话记忆、智能优先级、个性化学习 | 向量数据库 + 语义检索 |AI记忆系统设计 |
-| 🗜️ **上下文压缩** | 动态长度管理、多级压缩、语义保持 | 智能摘要 + 分层压缩 |大模型上下文优化 |
-| 🤖 **Agent代码生成** | 需求分析、架构设计、自动实现、测试验证 | 多Agent协作框架 | AI驱动软件开发 |
+| 🧠 **Context Memory** | Cross-session memory, intelligent prioritization, personalized learning | Vector database + semantic retrieval | AI memory system design |
+| 🗜️ **Context Compression** | Dynamic length management, multi-level compression, semantic preservation | Intelligent summarization + hierarchical compression | Large model context optimization |
+| 🤖 **Agent Code Generation** | Requirement analysis, architecture design, automatic implementation, test validation | Multi-Agent collaboration framework | AI-driven software development |
 
 ---
 
-## 📊 数据收集说明
+## 📊 Data Collection Notice
 
-### 🔒 隐私保护承诺
+### 🔒 Privacy Protection Commitment
 
-为了更好地了解用户使用情况并改进产品体验，VoidMuse在GUI界面中集成了**极简化的埋点功能**。我们承诺：
+To better understand user usage and improve product experience, VoidMuse integrates **minimalist tracking functionality** in the GUI interface. We promise:
 
-- ✅ **仅收集页面访问数据**：只记录页面进入和离开时间，用于计算页面停留时长
-- ✅ **无敏感信息收集**：不收集任何代码内容、个人信息或操作细节
-- ✅ **透明开源**：所有埋点代码完全开源，可在 `gui/src/services/AnalyticsService.ts` 中查看
+- ✅ **Only collect page access data**: Only record page entry and exit times to calculate page dwell time
+- ✅ **No sensitive information collection**: No collection of any code content, personal information, or operation details
+- ✅ **Transparent open source**: All tracking code is completely open source, viewable in `gui/src/services/AnalyticsService.ts`
 
-### 📚 埋点技术学习价值
+### 📚 Tracking Technology Learning Value
 
-我们的埋点实现也是一个很好的**前端数据分析学习案例**：
+Our tracking implementation is also a great **frontend data analysis learning case**:
 
-- 🎯 **多平台支持**：同时集成Google Analytics和百度统计
-- ⏱️ **精确计时**：页面停留时间的准确计算方法
-- 🔄 **生命周期管理**：页面可见性变化的完整处理
-- 🛡️ **异常处理**：埋点失败时的优雅降级
+- 🎯 **Multi-platform support**: Simultaneously integrates Google Analytics and Baidu Statistics
+- ⏱️ **Precise timing**: Accurate calculation methods for page dwell time
+- 🔄 **Lifecycle management**: Complete handling of page visibility changes
+- 🛡️ **Exception handling**: Graceful degradation when tracking fails
 
 ---
 
-## 🤝 贡献指南
+## 🤝 Contributing Guide
 
-我们欢迎各种形式的贡献！无论是Bug修复、功能开发、文档完善还是技术分享，都能让VoidMuse变得更好。
+We welcome all forms of contributions! Whether it's bug fixes, feature development, documentation improvements, or technical sharing, all can make VoidMuse better.
 
-详细贡献指南：[贡献指南](doc/contributing.md)
+Detailed contribution guide: [Contributing Guide](doc/en/contributing.md)
 
-### 社区贡献者
+### Community Contributors
 
-感谢所有为项目贡献代码、文档和想法的开发者们。你们的贡献让VoidMuse变得更好！
+Thanks to all developers who contribute code, documentation, and ideas to the project. Your contributions make VoidMuse better!
 
-## 📞 联系我们
+## 📞 Contact Us
 
-- 🐛 **问题反馈**: [GitHub Issues](https://github.com/voidmuse-dev/voidmuse/issues)
-- 📧 **邮箱联系**: voidmuse@qq.com
+- 🐛 **Issue Reporting**: [GitHub Issues](https://github.com/voidmuse-dev/voidmuse/issues)
+- 📧 **Email Contact**: voidmuse@qq.com
 
-### 💬 社群交流
+### 💬 Community Communication
 
 <div align="center">
 
-| QQ交流群 | 微信交流群 |
+| QQ Group | WeChat Group |
 |:---:|:---:|
-| <img src="doc/img/qq-group.jpg" width="150" alt="QQ群二维码"/> |  |
-| 扫码加入QQ群 | 扫码加入微信群 |
-| 群号：865855850 | xxx |
-
-</div>
-
-> 💡 **提示**: 加群时请备注来源，方便管理员审核通过
-
----
-
-<div align="center">
-
-**⭐ 如果这个项目对你有帮助，请给我们一个Star！**
-
-**🚀 让我们一起构建更智能的开发体验！**
+| <img src="doc/img/qq-group.jpg" width="150" alt="QQ Group QR Code"/> |  |
+| Scan to join QQ group | Scan to join WeChat group |
 
 </div>
 
 ---
 
-## 📄 许可证
+## 📄 License
 
-本项目采用 [Apache-2.0](LICENSE) 许可证，我们相信开源的力量。
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.

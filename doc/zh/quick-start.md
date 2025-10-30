@@ -46,15 +46,15 @@
 - 🔗 [直达API Key管理页面](https://bailian.console.aliyun.com/?tab=model#/api-key)
 - 点击"创建API Key"，复制保存好
 
-![API Key获取示意图1](./img/quick-start/bailian-api-key-2.png)
-![API Key获取示意图2](./img/quick-start/bailian-api-key-1.png)
+![API Key获取示意图1](../img/quick-start/bailian-api-key-2.png)
+![API Key获取示意图2](../img/quick-start/bailian-api-key-1.png)
 
 **第3步**：在VoidMuse中配置
 - 打开插件设置-模型配置
 - 粘贴你的API Key
 
-![VoidMuse配置界面](./img/quick-start/setting-model-config.png)
-![VoidMuse配置界面](./img/quick-start/aliyun-model-config.png)
+![VoidMuse配置界面](../img/quick-start/setting-model-config.png)
+![VoidMuse配置界面](../img/quick-start/aliyun-model-config.png)
 
 > 💰 **省钱小技巧**：想要更多免费额度？查看我们的[免费额度大全](./freeLLMQuota.md)，发现更多薅羊毛机会！
 
@@ -62,7 +62,7 @@
 
 配置完API Key后，你就可以立即开始使用VoidMuse的核心功能了！试试问AI一些编程问题吧：
 
-![VoidMuse聊天界面](./img/quick-start/chat.png)
+![VoidMuse聊天界面](../img/quick-start/chat.png)
 
 *↑ 配置完成后就能立即开始AI对话*
 
@@ -97,7 +97,7 @@
 
 > 📖 **详细教程**：配置有点复杂？查看[Google搜索详细配置指南](./googleSearchConfig.md)
 
-![搜索配置界面](./img/googleSearch/zh/voidMuseSearchConfig_zh.JPG)
+![搜索配置界面](../img/googleSearch/zh/voidMuseSearchConfig_zh.JPG)
 
 #### 🥈 备选：博查搜索（国内友好）
 
@@ -134,7 +134,7 @@
 2. 在VoidMuse的Embedding设置中选择对应模型
 3. 完成！就是这么简单！
 
-![Embedding配置界面](./img/quick-start/aliyun-embedding-config.png)
+![Embedding配置界面](../img/quick-start/aliyun-embedding-config.png)
 
 ### 🏠 本地部署：Ollama（隐私优先）
 
@@ -159,7 +159,7 @@ ollama pull aroxima/gte-qwen2-1.5b-instruct
 - Base URL填写：`http://localhost:11434/v1`
 - Model ID填写：`aroxima/gte-qwen2-1.5b-instruct`
 
-![本地Embedding配置界面](./img/quick-start/localEmbedding.png)
+![本地Embedding配置界面](../img/quick-start/localEmbedding.png)
 > 💡 **小贴士**：Ollama使用OpenAI兼容的API协议，所以可以直接使用OpenAI的配置方式！
 
 > 🎯 **使用技巧**：配置完成后，试试问AI"这个项目的架构是怎样的？"，看看效果！
@@ -168,7 +168,7 @@ ollama pull aroxima/gte-qwen2-1.5b-instruct
 
 ### 开启embedding
 可以通过开启自动开启embedding，文件变更时就会自动进行embedding了
-![本地Embedding配置界面](./img/quick-start/autoEmbedding.png)
+![本地Embedding配置界面](../img/quick-start/autoEmbedding.png)
 
 
 ## 🎉 配置完成！开始体验

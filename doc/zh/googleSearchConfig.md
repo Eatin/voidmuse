@@ -12,7 +12,7 @@
 
 📋 **官方文档**：https://developers.google.com/custom-search/v1/overview?hl=zh-cn
 
-![配置页面](./img/googleSearch/zh/googleSearchIndex_zh.png)
+![配置页面](../img/googleSearch/zh/googleSearchIndex_zh.png)
 
 ---
 
@@ -27,14 +27,14 @@
 按照以下步骤创建您的自定义搜索引擎：
 
 **步骤 1：** 进入搜索引擎创建页面
-![配置页面](./img/googleSearch/zh/googleSearchEngine_1_zh.png)
+![配置页面](../img/googleSearch/zh/googleSearchEngine_1_zh.png)
 
 **步骤 2：** 填写搜索引擎基本信息
-![配置页面](./img/googleSearch/zh/googleSearchEngine_2_zh.png)
+![配置页面](../img/googleSearch/zh/googleSearchEngine_2_zh.png)
 
 **步骤 3：** 完成创建并获取 Search Engine ID
-![配置页面](./img/googleSearch/zh/googleSearchEngine_3_zh.png)
-![配置页面](./img/googleSearch/zh/googleSearchEngine_4_zh.png)
+![配置页面](../img/googleSearch/zh/googleSearchEngine_3_zh.png)
+![配置页面](../img/googleSearch/zh/googleSearchEngine_4_zh.png)
 
 ### 1.3 获取 Search Engine ID
 
@@ -53,10 +53,10 @@
 按照以下步骤获取您的 API 密钥：
 
 **步骤 1：** 进入 API 密钥管理页面
-![配置页面](./img/googleSearch/zh/googleSearchAPIKey_zh.png)
+![配置页面](../img/googleSearch/zh/googleSearchAPIKey_zh.png)
 
 **步骤 2：** 创建并配置 API 密钥
-![配置页面](./img/googleSearch/zh/googleSearchAPIKey_2_zh.png)
+![配置页面](../img/googleSearch/zh/googleSearchAPIKey_2_zh.png)
 
 ---
 
@@ -66,7 +66,7 @@
 
 将获取到的 Google 搜索参数配置到 VoidMuse 中：
 
-![配置页面](./img/googleSearch/zh/voidMuseSearchConfig_zh.JPG)
+![配置页面](../img/googleSearch/zh/voidMuseSearchConfig_zh.JPG)
 
 ### 3.2 配置项说明
 

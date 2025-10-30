@@ -2,7 +2,7 @@
 
 ## 整体架构图
 
-![VoidMuse架构图](img/architecture.svg)
+![VoidMuse架构图](../img/architecture.svg)
 
 ## 项目结构
 
@@ -67,7 +67,7 @@ VoidMuse/
 ### 详细技术选型文档
 
 - [技术选型文档](tech-selection.md)
-- [组件对比分析](component-comparison.md)
+- 组件对比分析（待补充）
 - [性能基准测试](performance-benchmark.md)
 
 ## 架构设计原则

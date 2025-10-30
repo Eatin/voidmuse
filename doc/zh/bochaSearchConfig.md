@@ -24,7 +24,7 @@
 按照以下步骤创建您的 API 密钥：
 
 **步骤 1：** 进入 API Key 创建页面
-![bochaApiKey创建流程](./img/bochaSearch/zh/bochaSearchAPIKey_1.png)
+![bochaApiKey创建流程](../img/bochaSearch/zh/bochaSearchAPIKey_1.png)
 
 **步骤 2：** 完成 API Key 创建并妥善保存
 
@@ -52,7 +52,7 @@
 
 将获取到的博查 API Key 配置到 VoidMuse 中：
 
-![voidMuse配置博查的方式](./img/bochaSearch/zh/voidMuseBochaConfig.png)
+![voidMuse配置博查的方式](../img/bochaSearch/zh/voidMuseBochaConfig.png)
 
 ### 3.2 配置项说明
 

@@ -68,11 +68,11 @@ cd extensions/intellij
 ## 📋 开发规范
 
 ### 代码规范
-- [开发环境搭建](dev-setup.md)
-- [代码规范](coding-standards.md)
-- [文档编写规范](doc-standards.md)
-- [测试指南](testing-guide.md)
-- [提交信息规范](commit-standards.md)
+- 开发环境搭建（参见上述章节）
+- 代码规范（遵循现有代码风格）
+- 文档编写规范（清晰完整）
+- 测试指南（为新功能添加测试）
+- 提交信息规范（见下文）
 
 ### 提交规范
 
