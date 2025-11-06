@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect, useRef, useCallback } from 'react';
+import { message } from 'antd';
 import { storageService } from '@/storage';
 import { useXAgent, useXChat } from '@ant-design/x';
 import type { MessageInfo } from '@ant-design/x/es/use-x-chat';
@@ -422,20 +423,26 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     // Setup XAgent
     const [agent] = useXAgent<any, { message: InputData }, ChatMessage>({
-        request: async ({ message }, { onSuccess, onUpdate, onStream }) => {
+        request: async ({ message: reqMessage }, { onSuccess, onUpdate, onStream }) => {
             // Create AbortController for cancellation: create a new one for each request
             if (onStream) {
                 onStream(new AbortController());
             }
-            const selectedModel = await storageService.getSelectedModelConfig();
-            if (!selectedModel) {
-                throw new Error(t('context.model.noModelConfigured'));
+            let selectedModel: ModelItem | null = null;
+            try {
+                selectedModel = await storageService.getSelectedModelConfig();
+            } catch (error) {
+                const errorMsg = t('context.model.noModelConfigured');
+                message.error(errorMsg);
+                handleApiError(error, onUpdate, onSuccess);
+                return;
             }
+            
             try {
                 // 0. First add an assistant message: can have loading state, but currently auto-scroll only works when second-to-last message is visible
                 onUpdate({ role: 'assistant', content: '', messages: [], status: 'loading' });
                 // 1. Prepare context content
-                const { processResult, historyList, contextItems } = await prepareContextItem(message);
+                const { processResult, historyList, contextItems } = await prepareContextItem(reqMessage);
 
 
                 // 2. Update last user message
