@@ -184,6 +184,7 @@ https://github.com/user-attachments/assets/a36b0890-89e4-4223-b42c-4c8e1103a86d
 - **免费资源**: [大模型厂商免费额度汇总](doc/zh/freeLLMQuota.md)
 
 https://github.com/user-attachments/assets/82ec0711-136a-4647-9150-b2e112dd3e98
+
 ---
 
 ## 📚 学习路径指南
