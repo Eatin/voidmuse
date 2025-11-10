@@ -205,7 +205,7 @@ https://github.com/user-attachments/assets/82ec0711-136a-4647-9150-b2e112dd3e98
 ### 🛠️ 实践项目
 
 - [实现深度搜索](doc/zh/tutorial/function%20call的实践-实现深度搜索.md)
-- [Codebase功能但实现](doc/zh/zh/tutorial/codebase实现.md)
+- [Codebase功能实现](doc/zh/tutorial/codebase实现.md)
 - 自定义Embedding模型集成
 - 扩展MCP协议支持
 - 实现自定义搜索引擎
