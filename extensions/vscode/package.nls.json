@@ -1,6 +1,0 @@
-{
-    "voidmuse.writeCommentsForCode": "Write Comments for this Code",
-    "voidmuse.fixCode": "Fix this Code",
-    "voidmuse.optimizeCode": "Optimize this Code",
-    "voidmuse.genGitCommitMsg": "generate git commit message"
-}

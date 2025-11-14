@@ -1,6 +1,0 @@
-{
-    "voidmuse.writeCommentsForCode": "给这段代码添加注释",
-    "voidmuse.fixCode": "修复这段代码",
-    "voidmuse.optimizeCode": "优化这段代码",
-    "voidmuse.genGitCommitMsg": "生成git提交信息"
-}

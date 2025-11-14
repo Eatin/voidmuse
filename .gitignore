@@ -38,3 +38,4 @@ gui/yarn-error.log*
 
 # Vite
 gui/.vite
+extensions/vscode
