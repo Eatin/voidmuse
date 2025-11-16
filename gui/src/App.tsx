@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, App as AntdApp } from 'antd';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ErrorNotificationProvider } from './contexts/ErrorNotificationContext';
+import ErrorBoundary from './components/error/ErrorBoundary';
 import './i18n';
 import { ModelProvider } from './contexts/ModelContext';
 import { EmbeddingModelProvider } from './contexts/EmbeddingModelContext';
@@ -32,14 +33,18 @@ const IndexApp = () => {
     }, [mcpContext]);
 
     return (
-        <ConfigProvider theme={themeConfig}>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<IndexPage />} />
-                    <Route path="*" element={<div>Page not found (404)</div>} />
-                </Routes>
-            </Router>
-        </ConfigProvider>
+        <ErrorBoundary>
+            <ConfigProvider theme={themeConfig}>
+                <AntdApp>
+                    <Router>
+                        <Routes>
+                            <Route path="/" element={<IndexPage />} />
+                            <Route path="*" element={<div>Page not found (404)</div>} />
+                        </Routes>
+                    </Router>
+                </AntdApp>
+            </ConfigProvider>
+        </ErrorBoundary>
     );
 };
 

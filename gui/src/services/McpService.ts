@@ -1,8 +1,23 @@
-import { experimental_createMCPClient, tool } from 'ai';
 import { McpItem } from '@/types/mcps';
 import { IDEService } from '@/api/IDEService'
 import { convertJsonToTool } from './tool/McpToolUtil';
 import { McpConnectionTestResult } from '../types/ide';
+
+// MCP SDK imports - only available in Node.js environment
+let Client: any;
+let StdioClientTransport: any;
+
+if (typeof window === 'undefined') {
+  // Node.js environment
+  try {
+    const mcpClient = require('@modelcontextprotocol/sdk/client/index.js');
+    const mcpStdio = require('@modelcontextprotocol/sdk/client/stdio.js');
+    Client = mcpClient.Client;
+    StdioClientTransport = mcpStdio.StdioClientTransport;
+  } catch (error) {
+    console.warn('MCP SDK not available in this environment');
+  }
+}
 
 
 interface McpToolsResult {
@@ -42,11 +57,15 @@ export class McpService {
                 url: mcpConfig.url
             };
         } else if (mcpConfig.command) {
-            // Local MCP server (stdio)
-            //return new StdioMCPTransport({
-            //    command: mcpConfig.command,
-            //    args: mcpConfig.args || []
-            //});
+            // Local MCP server (stdio) - only available in Node.js environment
+            if (!StdioClientTransport) {
+                console.warn('StdioClientTransport not available in browser environment');
+                return null;
+            }
+            return new StdioClientTransport({
+                command: mcpConfig.command,
+                args: mcpConfig.args || []
+            });
         }
 
         return null;
@@ -72,6 +91,16 @@ export class McpService {
      * @returns Tool retrieval result
      */
     static async getTools(mcpConfig: McpItem, addPrefix: boolean = true): Promise<McpToolsResult | null> {
+        // 浏览器环境下直接返回空结果，避免MCP SDK错误
+        if (typeof window !== 'undefined') {
+            console.log('MCP tools loading skipped in browser environment');
+            return {
+                tools: {},
+                serverName: mcpConfig.name,
+                toolCount: 0
+            };
+        }
+
         try {
             const transport = this.createTransportConfig(mcpConfig);
             if (!transport) {
@@ -79,15 +108,19 @@ export class McpService {
                 return null;
             }
 
+            if (!Client) {
+                console.warn('MCP Client not available in this environment');
+                return null;
+            }
+
             // Create MCP client
-            const client = await experimental_createMCPClient({
-                name: mcpConfig.name,
-                transport
-            });
+            const client = new Client({ name: mcpConfig.name, version: '1.0.0' });
+            await client.connect(transport);
 
             try {
                 // Get MCP tools (AI SDK will automatically convert to tool format)
-                const mcpTools = await client.tools();
+                const toolsResult = await client.listTools();
+                const mcpTools = toolsResult.tools;
 
                 let tools: Record<string, any> = {};
 
@@ -115,6 +148,12 @@ export class McpService {
             console.error(`Failed to load MCP tools from ${mcpConfig.name}:`, error);
             return null;
         }
+    }
+
+    static async callTool(toolName: string, toolArgs: any): Promise<any> {
+        // This method is intentionally left empty as the actual tool calling
+        // is handled by the IDE service or the MCP client directly.
+        throw new Error('callTool is not implemented in McpService');
     }
 
     

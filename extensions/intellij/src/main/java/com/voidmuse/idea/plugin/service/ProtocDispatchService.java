@@ -5,6 +5,8 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ModalityState;
 import com.intellij.ui.jcef.JBCefBrowser;
 import com.voidmuse.idea.plugin.call.CallJavaCallbackReq;
 import com.voidmuse.idea.plugin.call.CallJavaReq;
@@ -53,6 +55,8 @@ public final class ProtocDispatchService extends CefMessageRouterHandlerAdapter 
                         callJavaCallback(project, requestId, response);
                     } catch (Exception e) {
                         LOG.error("handleCallJava error", e);
+                        // 发生错误时也要回调JavaScript，避免界面卡住
+                        callJavaCallback(project, requestId, "{\"error\":\"" + e.getMessage() + "\"}");
                     }
                 });
             } else {
@@ -70,7 +74,8 @@ public final class ProtocDispatchService extends CefMessageRouterHandlerAdapter 
 
     private static void callJavaCallback(Project project, String requestId, String response) {
         JBCefBrowser browser = ProjectBeanService.getInstance(project).getBrowser();
-        SwingUtilities.invokeLater(() -> {
+        // 使用IDEA的invokeLater确保在EDT中执行
+        ApplicationManager.getApplication().invokeLater(() -> {
             try {
                 Map<String, Object> args = new HashMap<>();
                 //要处理两层解析的转义符
@@ -84,6 +89,6 @@ public final class ProtocDispatchService extends CefMessageRouterHandlerAdapter 
             } catch (Exception e) {
                 LOG.error("callJavaCallback error", e);
             }
-        });
+        }, ModalityState.NON_MODAL);
     }
 }

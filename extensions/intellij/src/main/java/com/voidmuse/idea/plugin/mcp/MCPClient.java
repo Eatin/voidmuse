@@ -30,6 +30,12 @@ public class MCPClient {
 
     public void init(){
         McpClientTransport transport;
+        LOGGER.info("Initializing MCP client for: " + mcpConfig.getName());
+        LOGGER.info("Command: " + mcpConfig.getCommand());
+        LOGGER.info("Args: " + mcpConfig.getArgs());
+        LOGGER.info("URL: " + mcpConfig.getUrl());
+        LOGGER.info("Timeout: 30 seconds");
+        
         if (mcpConfig.getUrl() != null && !mcpConfig.getUrl().isEmpty()) {
 
             try {
@@ -46,7 +52,7 @@ public class MCPClient {
                 transport = builder.build();
 
                 this.client = McpClient.sync(transport)
-                        .requestTimeout(Duration.ofSeconds(10))
+                        .requestTimeout(Duration.ofSeconds(30))
                         .capabilities(McpSchema.ClientCapabilities.builder()
                                 .roots(true)      // Enable roots capability
                                 .sampling()       // Enable sampling capability
@@ -56,48 +62,43 @@ public class MCPClient {
 
                 LOGGER.info("Connected using SSE transport");
             } catch (Exception e) {
-                /*// 如果失败，回退到 SSE 传输
-                LOGGER.warning("Streamable HTTP connection failed, falling back to SSE transport");
-                HttpClientStreamableHttpTransport.Builder builder = HttpClientStreamableHttpTransport.builder(mcpConfig.getUrl());
-                if(mcpConfig.getHeaders() != null && !mcpConfig.getHeaders().isEmpty()){
-                    Consumer<HttpRequest.Builder> customizer = reqBuilder -> {
-                        mcpConfig.getHeaders().forEach((k,v)->{
-                            reqBuilder.setHeader(k,v.toString());
-                        });
-                    };
-
-                    builder.customizeRequest(customizer);
-                }
-                transport = builder.build();
-
+                LOGGER.severe("Failed to initialize HTTP transport: " + e.getMessage());
+                e.printStackTrace();
+                throw new RuntimeException("Failed to initialize MCP client: " + e.getMessage(), e);
+            }
+        } else{
+            try {
+                LOGGER.info("Using stdio transport with command: " + mcpConfig.getCommand());
+                ServerParameters params = ServerParameters.builder(mcpConfig.getCommand())
+                        .args(mcpConfig.getArgs())
+                        .build();
+                transport = new StdioClientTransport(params);
                 this.client = McpClient.sync(transport)
-                        .requestTimeout(Duration.ofSeconds(10))
+                        .requestTimeout(Duration.ofSeconds(30))
                         .capabilities(McpSchema.ClientCapabilities.builder()
                                 .roots(true)      // Enable roots capability
                                 .sampling()       // Enable sampling capability
                                 .build())
                         .build();
+                LOGGER.info("Initializing stdio client...");
                 this.client.initialize();
-                LOGGER.info("Connected using Streamable HTTP transport");*/
+                LOGGER.info("Connected using stdio transport");
+            } catch (Exception e) {
+                LOGGER.severe("Failed to initialize stdio transport: " + e.getMessage());
+                e.printStackTrace();
+                throw new RuntimeException("Failed to initialize MCP client: " + e.getMessage(), e);
             }
-        } else{
-            ServerParameters params = ServerParameters.builder(mcpConfig.getCommand())
-                    .args(mcpConfig.getArgs())
-                    .build();
-            transport = new StdioClientTransport(params);
-            this.client = McpClient.sync(transport)
-                    .requestTimeout(Duration.ofSeconds(10))
-                    .capabilities(McpSchema.ClientCapabilities.builder()
-                            .roots(true)      // Enable roots capability
-                            .sampling()       // Enable sampling capability
-                            .build())
-                    .build();
-            LOGGER.info("Connected using SSE transport");
-            this.client.initialize();
         }
-        McpSchema.ListToolsResult tools = client.listTools();
-        this.tools = tools.tools();
-        mcpConfig.setConnected(true);
+        try {
+            McpSchema.ListToolsResult tools = client.listTools();
+            this.tools = tools.tools();
+            mcpConfig.setConnected(true);
+            LOGGER.info("Successfully loaded " + tools.tools().size() + " tools");
+        } catch (Exception e) {
+            LOGGER.severe("Failed to list tools: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Failed to list tools: " + e.getMessage(), e);
+        }
     }
 
     public void close() {

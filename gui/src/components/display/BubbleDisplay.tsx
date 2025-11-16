@@ -109,7 +109,7 @@ const BubbleDisplay: React.FC<BubbleDisplayProps> = ({ messageInfos }) => {
 
   const bubbleItems = messageInfos.map((item, index) => {
     const { message, status } = item;
-    const loading = status === 'loading' && message.messages.every(msg => msg.content === '');
+    const loading = status === 'loading' && message.messages?.every(msg => msg.content === '') || false;
     return {
       key: index,
       role: message.role || 'user',
@@ -118,13 +118,13 @@ const BubbleDisplay: React.FC<BubbleDisplayProps> = ({ messageInfos }) => {
       typing: status === 'loading' ? {step: 3, interval: 20} : false,
       footer: () => {
         if (message.role === 'assistant' && status != 'loading') {
-          const normalMessage = message.messages.filter(msg => msg.type === 'normal');
-          return <MarkdownFooter 
+          const normalMessage = message.messages?.filter(msg => msg.type === 'normal') || [];
+          return normalMessage.length > 0 ? <MarkdownFooter 
             messageContext={normalMessage[0]?.content}
             timingInfo={message.timing}
             tokenUsage={message.tokenUsage}
             onRetry={() => retryMessage(index)}
-          />;
+          /> : null;
         }
         return null;
       },
@@ -141,7 +141,7 @@ const BubbleDisplay: React.FC<BubbleDisplayProps> = ({ messageInfos }) => {
       className: 'user-bubble',
       messageRender: (message) => {
         return <UserDisplay 
-          content={message.messages[0]?.content as string || ''} 
+          content={message.messages?.[0]?.content as string || ''} 
         />;
       },
     },

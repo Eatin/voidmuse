@@ -3,6 +3,7 @@ package com.voidmuse.idea.plugin.autocomplete
 import cn.hutool.core.codec.Base64
 import com.intellij.injected.editor.VirtualFileWindow
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.application.WriteAction
 import com.intellij.openapi.application.invokeLater
 import com.intellij.openapi.application.runReadAction
@@ -74,13 +75,17 @@ class AutocompleteService(private val project: Project) {
             object : CallJavaScriptService.Callback {
                 override fun run(args: Map<String, Any>) {
                     val result: String = args["data"].toString().trimStart()
-                    SpinnerIconManager.hideSpinnerIcon(editor)
-                    renderCompletion(editor, offset, result)
-                    pendingCompletion = pendingCompletion?.copy(text = result)
+                    ApplicationManager.getApplication().invokeLater({
+                        SpinnerIconManager.hideSpinnerIcon(editor)
+                        renderCompletion(editor, offset, result)
+                        pendingCompletion = pendingCompletion?.copy(text = result)
+                    }, ModalityState.NON_MODAL)
                 }
 
                 override fun timeout() {
-                    SpinnerIconManager.hideSpinnerIcon(editor)
+                    ApplicationManager.getApplication().invokeLater({
+                        SpinnerIconManager.hideSpinnerIcon(editor)
+                    }, ModalityState.NON_MODAL)
                 }
             }
         )

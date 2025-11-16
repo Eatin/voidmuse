@@ -15,6 +15,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Computable;
@@ -80,138 +81,143 @@ public class CallJavaHandlerImpl implements CallJavaHandler {
 
     @Override
     public String handleCallJava(Project project, CallJavaReq callJavaReq) throws Exception {
-        Map<String, Object> arg = callJavaReq.getArg();
+        try {
+            Map<String, Object> arg = callJavaReq.getArg();
 
-        if (jumpToFile.name().equals(callJavaReq.getMethodName())) {
-            AlarmInfo alarmInfo = BeanUtil.fillBeanWithMap(arg, new AlarmInfo(), false);
-            jumpToFile(project, alarmInfo.getAlarmClass(), alarmInfo.getAlarmMethod());
-            return "success";
-        }
-        if (canLocateClassMethod.name().equals(callJavaReq.getMethodName())) {
-            AlarmInfo alarmInfo = BeanUtil.fillBeanWithMap(arg, new AlarmInfo(), false);
-            Boolean result = canLocateClassMethod(project, alarmInfo.getAlarmClass(), alarmInfo.getAlarmMethod());
-            return String.valueOf(result);
-        }
-        if (jumpToFileByPath.name().equals(callJavaReq.getMethodName())) {
-            jumpToFileByPath(project, arg.get("path").toString(),
-                    String.valueOf(ObjectUtils.defaultIfNull(arg.get("fieldName"), "")),
-                    String.valueOf(ObjectUtils.defaultIfNull(arg.get("startLine"), "")));
-            return "success";
-        }
-
-        if (findFile.name().equals(callJavaReq.getMethodName())) {
-            return findFile(project, arg.get("fileName").toString());
-        }
-
-        if (persistentState.name().equals(callJavaReq.getMethodName())) {
-            PluginDataPersistent dataPersistent = PluginDataPersistent.getInstance();
-            for (Map.Entry<String, Object> entry : arg.entrySet()) {
-                dataPersistent.getState().putData(entry.getKey(), entry.getValue().toString());
+            if (jumpToFile.name().equals(callJavaReq.getMethodName())) {
+                AlarmInfo alarmInfo = BeanUtil.fillBeanWithMap(arg, new AlarmInfo(), false);
+                jumpToFile(project, alarmInfo.getAlarmClass(), alarmInfo.getAlarmMethod());
+                return "success";
             }
-            if (arg.containsKey("global:mcps")) {
-                McpService.getInstance().reloadConfig(arg.get("global:mcps").toString());
+            if (canLocateClassMethod.name().equals(callJavaReq.getMethodName())) {
+                AlarmInfo alarmInfo = BeanUtil.fillBeanWithMap(arg, new AlarmInfo(), false);
+                Boolean result = canLocateClassMethod(project, alarmInfo.getAlarmClass(), alarmInfo.getAlarmMethod());
+                return String.valueOf(result);
             }
-            return "success";
-        }
-
-        if (getPersistentState.name().equals(callJavaReq.getMethodName())) {
-            PluginDataPersistent dataPersistent = PluginDataPersistent.getInstance();
-            return dataPersistent.getState().getData(arg.get("key").toString());
-        }
-
-        if (getFileContent.name().equals(callJavaReq.getMethodName())) {
-            String path = arg.get("path").toString();
-            return getFileContent(project, path);
-        }
-        if (openUrl.name().equals(callJavaReq.getMethodName())) {
-            String url = arg.get("url").toString();
-            URI uri = URI.create(url);
-            java.awt.Desktop.getDesktop().browse(uri);
-            return "success";
-        }
-        if (handleJsCallback.name().equals(callJavaReq.getMethodName())) {
-            CallJavaScriptService callJavaScriptService = CallJavaScriptService.getInstance(project);
-            if (callJavaScriptService != null) {
-                callJavaScriptService.handleCallback(callJavaReq);
+            if (jumpToFileByPath.name().equals(callJavaReq.getMethodName())) {
+                jumpToFileByPath(project, arg.get("path").toString(),
+                        String.valueOf(ObjectUtils.defaultIfNull(arg.get("fieldName"), "")),
+                        String.valueOf(ObjectUtils.defaultIfNull(arg.get("startLine"), "")));
+                return "success";
             }
-            return "success";
-        }
-        if (buildWithCodebaseContext.name().equals(callJavaReq.getMethodName())) {
-            String prompt = arg.get("prompt").toString();
-            String optimizePrompt = arg.get("optimizePrompt").toString();
-            List<FindNearFileInfo> fileInfos = EmbeddingsService.getInstance(project).buildWithCodebaseContext(prompt, optimizePrompt);
-            return JSONUtil.toJsonStr(fileInfos);
-        }
-        if (isCodebaseIndexExists.name().equals(callJavaReq.getMethodName())) {
-            return String.valueOf(LuceneVectorStore.getInstance(project).isIndexExists());
-        }
-        if (getSelectedFiles.name().equals(callJavaReq.getMethodName())) {
-            return getSelectedFiles(project);
-        }
-        if (codeToInsert.name().equals(callJavaReq.getMethodName())) {
-            String content = arg.get("content").toString();
-            insertContentAtCursor(project, content);
-            return "success";
-        }
-        if (getProjectConfig.name().equals(callJavaReq.getMethodName())) {
-            return JSONUtil.toJsonStr(getProjectInfo(project));
-        }
-        if (closeWindow.name().equals(callJavaReq.getMethodName())) {
-            //关闭tool window
-            ToggleToolWindowAction.closeToolWindow(project);
-        }
-        if (getCodebaseIndexingProgress.name().equals(callJavaReq.getMethodName())) {
-            //获取当前项目的索引进度 0~1
-            return String.valueOf(CodebaseIndexingAllTask.getProjectIndicatorValue(project));
-        }
-        if (testMcpConnection.name().equals(callJavaReq.getMethodName())) {
-            //测试mcp连接
-            String name = arg.get("name").toString();
-            return JSONUtil.toJsonStr(McpService.getInstance().testMcpConnection(name));
-        }
-        if (getMcpTools.name().equals(callJavaReq.getMethodName())) {
-            //获取mcp工具列表
-            return beanToJson.writeValueAsString(McpService.getInstance().getMcpTools());
-        }
-        if (callMcpTool.name().equals(callJavaReq.getMethodName())) {
-            //调用mcp工具
-            String serviceName = arg.get("serviceName").toString();
-            String toolName = arg.get("toolName").toString();
-            Map<String, Object> params = (Map<String, Object>) arg.get("params");
-            return beanToJson.writeValueAsString(McpService.getInstance().callMcpTool(serviceName, toolName, params));
-        }
-        if (writeFile.name().equals(callJavaReq.getMethodName())) {
-            //通用的写文件方法，支持diff展示
-            writeFileWithDiff(project, arg);
-            return "success";
-        }
-        if (getUrlContent.name().equals(callJavaReq.getMethodName())) {
-            String url = arg.get("url").toString();
-            return getUrlContent(url);
-        }
 
-        if (executeCommand.name().equals(callJavaReq.getMethodName())) {
-            String command = arg.get("command").toString();
-            return executeCommand(command);
-        }
+            if (findFile.name().equals(callJavaReq.getMethodName())) {
+                return findFile(project, arg.get("fileName").toString());
+            }
 
-        if (executeScript.name().equals(callJavaReq.getMethodName())) {
-            String script = arg.get("script").toString();
-            String requestId = arg.get("requestId").toString();
-            executeScript(script, requestId);
-            return "success";
-        }
+            if (persistentState.name().equals(callJavaReq.getMethodName())) {
+                PluginDataPersistent dataPersistent = PluginDataPersistent.getInstance();
+                for (Map.Entry<String, Object> entry : arg.entrySet()) {
+                    dataPersistent.getState().putData(entry.getKey(), entry.getValue().toString());
+                }
+                if (arg.containsKey("global:mcps")) {
+                    McpService.getInstance().reloadConfig(arg.get("global:mcps").toString());
+                }
+                return "success";
+            }
 
-        if (getScriptStatus.name().equals(callJavaReq.getMethodName())) {
-            String requestId = arg.get("requestId").toString();
-            return getScriptStatus(requestId);
-        }
+            if (getPersistentState.name().equals(callJavaReq.getMethodName())) {
+                PluginDataPersistent dataPersistent = PluginDataPersistent.getInstance();
+                return dataPersistent.getState().getData(arg.get("key").toString());
+            }
 
-        if (stopScript.name().equals(callJavaReq.getMethodName())) {
-            String requestId = arg.get("requestId").toString();
-            return stopScript(requestId);
+            if (getFileContent.name().equals(callJavaReq.getMethodName())) {
+                String path = arg.get("path").toString();
+                return getFileContent(project, path);
+            }
+            if (openUrl.name().equals(callJavaReq.getMethodName())) {
+                String url = arg.get("url").toString();
+                URI uri = URI.create(url);
+                java.awt.Desktop.getDesktop().browse(uri);
+                return "success";
+            }
+            if (handleJsCallback.name().equals(callJavaReq.getMethodName())) {
+                CallJavaScriptService callJavaScriptService = CallJavaScriptService.getInstance(project);
+                if (callJavaScriptService != null) {
+                    callJavaScriptService.handleCallback(callJavaReq);
+                }
+                return "success";
+            }
+            if (buildWithCodebaseContext.name().equals(callJavaReq.getMethodName())) {
+                String prompt = arg.get("prompt").toString();
+                String optimizePrompt = arg.get("optimizePrompt").toString();
+                List<FindNearFileInfo> fileInfos = EmbeddingsService.getInstance(project).buildWithCodebaseContext(prompt, optimizePrompt);
+                return JSONUtil.toJsonStr(fileInfos);
+            }
+            if (isCodebaseIndexExists.name().equals(callJavaReq.getMethodName())) {
+                return String.valueOf(LuceneVectorStore.getInstance(project).isIndexExists());
+            }
+            if (getSelectedFiles.name().equals(callJavaReq.getMethodName())) {
+                return getSelectedFiles(project);
+            }
+            if (codeToInsert.name().equals(callJavaReq.getMethodName())) {
+                String content = arg.get("content").toString();
+                insertContentAtCursor(project, content);
+                return "success";
+            }
+            if (getProjectConfig.name().equals(callJavaReq.getMethodName())) {
+                return JSONUtil.toJsonStr(getProjectInfo(project));
+            }
+            if (closeWindow.name().equals(callJavaReq.getMethodName())) {
+                //关闭tool window
+                ToggleToolWindowAction.closeToolWindow(project);
+            }
+            if (getCodebaseIndexingProgress.name().equals(callJavaReq.getMethodName())) {
+                //获取当前项目的索引进度 0~1
+                return String.valueOf(CodebaseIndexingAllTask.getProjectIndicatorValue(project));
+            }
+            if (testMcpConnection.name().equals(callJavaReq.getMethodName())) {
+                //测试mcp连接
+                String name = arg.get("name").toString();
+                return JSONUtil.toJsonStr(McpService.getInstance().testMcpConnection(name));
+            }
+            if (getMcpTools.name().equals(callJavaReq.getMethodName())) {
+                //获取mcp工具列表
+                return beanToJson.writeValueAsString(McpService.getInstance().getMcpTools());
+            }
+            if (callMcpTool.name().equals(callJavaReq.getMethodName())) {
+                //调用mcp工具
+                String serviceName = arg.get("serviceName").toString();
+                String toolName = arg.get("toolName").toString();
+                Map<String, Object> params = (Map<String, Object>) arg.get("params");
+                return beanToJson.writeValueAsString(McpService.getInstance().callMcpTool(serviceName, toolName, params));
+            }
+            if (writeFile.name().equals(callJavaReq.getMethodName())) {
+                //通用的写文件方法，支持diff展示
+                writeFileWithDiff(project, arg);
+                return "success";
+            }
+            if (getUrlContent.name().equals(callJavaReq.getMethodName())) {
+                String url = arg.get("url").toString();
+                return getUrlContent(url);
+            }
+
+            if (executeCommand.name().equals(callJavaReq.getMethodName())) {
+                String command = arg.get("command").toString();
+                return executeCommand(command);
+            }
+
+            if (executeScript.name().equals(callJavaReq.getMethodName())) {
+                String script = arg.get("script").toString();
+                String requestId = arg.get("requestId").toString();
+                executeScript(script, requestId);
+                return "success";
+            }
+
+            if (getScriptStatus.name().equals(callJavaReq.getMethodName())) {
+                String requestId = arg.get("requestId").toString();
+                return getScriptStatus(requestId);
+            }
+
+            if (stopScript.name().equals(callJavaReq.getMethodName())) {
+                String requestId = arg.get("requestId").toString();
+                return stopScript(requestId);
+            }
+            return "";
+        } catch (Exception e) {
+            LOG.error("handleCallJava error for method: " + callJavaReq.getMethodName(), e);
+            throw new RuntimeException("处理Java调用失败: " + e.getMessage(), e);
         }
-        return "";
     }
 
     private boolean canLocateClassMethod(Project project, String className, String methodName) {
@@ -318,16 +324,18 @@ public class CallJavaHandlerImpl implements CallJavaHandler {
     }
 
     private void insertContentAtCursor(Project project, String content) {
+        // 确保在EDT中执行编辑器操作
         ApplicationManager.getApplication().invokeLater(() -> {
             Editor editor = FileEditorManager.getInstance(project).getSelectedTextEditor();
             if (editor != null) {
                 Document document = editor.getDocument();
                 int offset = editor.getCaretModel().getCurrentCaret().getOffset();
+                // 使用WriteCommandAction确保文档操作在正确的上下文中执行
                 WriteCommandAction.runWriteCommandAction(project, () -> {
                     document.insertString(offset, content);
                 });
             }
-        });
+        }, ModalityState.NON_MODAL);
     }
 
     private Map<String, String> getProjectInfo(Project project) {

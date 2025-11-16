@@ -13,6 +13,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.*;
+import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -25,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.nio.ByteBuffer;
 
 @Service(Service.Level.PROJECT)
 public final class LuceneVectorStore {
@@ -37,6 +39,11 @@ public final class LuceneVectorStore {
     private static final int VECTOR_DIMENSION = 1024;
     private static final int curVersion = 1;
     private final String storePath;
+
+    /**
+     * 向量搜索权重
+     */
+    private static final float VECTOR_SEARCH_WEIGHT = 0.7f;
 
     public LuceneVectorStore(Project project) {
         this.project = project;
@@ -61,6 +68,29 @@ public final class LuceneVectorStore {
 
     public static LuceneVectorStore getInstance(Project project) {
         return project.getService(LuceneVectorStore.class);
+    }
+
+    /**
+     * 将float数组转换为字节数组
+     */
+    private byte[] floatToByteArray(float[] floatArray) {
+        ByteBuffer buffer = ByteBuffer.allocate(floatArray.length * 4);
+        for (float f : floatArray) {
+            buffer.putFloat(f);
+        }
+        return buffer.array();
+    }
+
+    /**
+     * 将字节数组转换为float数组
+     */
+    private static float[] byteArrayToFloatArray(byte[] byteArray) {
+        ByteBuffer buffer = ByteBuffer.wrap(byteArray);
+        float[] floatArray = new float[byteArray.length / 4];
+        for (int i = 0; i < floatArray.length; i++) {
+            floatArray[i] = buffer.getFloat();
+        }
+        return floatArray;
     }
 
     public void startCacheIndex() throws IOException {
@@ -117,13 +147,13 @@ public final class LuceneVectorStore {
         String fileName = new File(path).getName();
         doc.add(new TextField("fileName", fileName, Field.Store.YES));
 
-        // 添加向量字段 - 使用新的 API
+        // 添加向量字段 - Lucene 8.x 兼容实现
         float[] floatVector = new float[vector.length];
         for (int i = 0; i < vector.length; i++) {
             floatVector[i] = (float) vector[i];
         }
-        // 替换为新的 API
-        doc.add(new KnnFloatVectorField("vector", floatVector, VectorSimilarityFunction.COSINE));
+        // 在Lucene 8.x中，我们将向量存储为二进制字段
+        doc.add(new StoredField("vector", floatToByteArray(floatVector)));
 
         // 添加或更新文档
         indexWriter.updateDocument(new Term("id", id), doc);
@@ -215,15 +245,11 @@ public final class LuceneVectorStore {
                 }
             }
 
-            // 准备向量查询 - 使用新的 API
+            // 准备向量查询 - Lucene 8.x 兼容实现
             Query knnQuery = null;
             if (vectorQuery != null && vectorQuery.length > 0) {
-                float[] floatVector = new float[vectorQuery.length];
-                for (int i = 0; i < vectorQuery.length; i++) {
-                    floatVector[i] = (float) vectorQuery[i];
-                }
-                // 使用新的 KnnFloatVectorQuery API
-                knnQuery = new KnnFloatVectorQuery("vector", floatVector, k * 3);
+                // 在Lucene 8.x中，我们使用自定义的向量相似度查询
+                knnQuery = new VectorSimilarityQuery("vector", vectorQuery, k * 3);
             }
 
             // 执行混合查询
@@ -557,6 +583,157 @@ public final class LuceneVectorStore {
         ScoredDocument(int docId, float score) {
             this.docId = docId;
             this.score = score;
+        }
+    }
+
+    /**
+     * 自定义向量相似度查询 - Lucene 8.x 兼容实现
+     */
+    private static class VectorSimilarityQuery extends Query {
+        private final String field;
+        private final double[] queryVector;
+        private final int k;
+
+        public VectorSimilarityQuery(String field, double[] queryVector, int k) {
+            this.field = field;
+            this.queryVector = queryVector;
+            this.k = k;
+        }
+
+        @Override
+        public Weight createWeight(IndexSearcher searcher, ScoreMode scoreMode, float boost) throws IOException {
+            return new Weight(this) {
+                @Override
+                public void extractTerms(Set<Term> terms) {
+                    // 不向terms集合添加任何内容
+                }
+
+                @Override
+                public Explanation explain(LeafReaderContext context, int doc) throws IOException {
+                    return Explanation.match(scoreDoc(context, doc), "vector similarity score");
+                }
+
+                @Override
+                public Scorer scorer(LeafReaderContext context) throws IOException {
+                    return new Scorer(this) {
+                        private int docId = -1;
+                        private final int maxDoc = context.reader().maxDoc();
+
+                        @Override
+                        public DocIdSetIterator iterator() {
+                            return new DocIdSetIterator() {
+                                @Override
+                                public int docID() {
+                                    return docId;
+                                }
+
+                                @Override
+                                public int nextDoc() throws IOException {
+                                    return advance(docId + 1);
+                                }
+
+                                @Override
+                                public int advance(int target) throws IOException {
+                                    docId = target;
+                                    while (docId < maxDoc) {
+                                        if (scoreDoc(context, docId) > 0) {
+                                            return docId;
+                                        }
+                                        docId++;
+                                    }
+                                    return NO_MORE_DOCS;
+                                }
+
+                                @Override
+                                public long cost() {
+                                    return maxDoc;
+                                }
+                            };
+                        }
+
+                        @Override
+                        public float score() throws IOException {
+                            return scoreDoc(context, docId);
+                        }
+
+                        @Override
+                        public int docID() {
+                            return docId;
+                        }
+
+                        @Override
+                        public float getMaxScore(int upTo) throws IOException {
+                            return Float.MAX_VALUE;
+                        }
+                    };
+                }
+
+                @Override
+                public boolean isCacheable(LeafReaderContext ctx) {
+                    return false;
+                }
+            };
+        }
+
+        private float scoreDoc(LeafReaderContext context, int docId) throws IOException {
+            Document doc = context.reader().document(docId);
+            IndexableField vectorField = doc.getField(field);
+            if (vectorField == null) {
+                return 0.0f;
+            }
+            
+            byte[] vectorBytes = vectorField.binaryValue().bytes;
+            float[] storedVector = byteArrayToFloatArray(vectorBytes);
+            
+            // 计算余弦相似度
+            return (float) cosineSimilarity(queryVector, storedVector);
+        }
+
+        /**
+         * 计算余弦相似度
+         */
+        private double cosineSimilarity(double[] vec1, float[] vec2) {
+            if (vec1.length != vec2.length) {
+                return 0.0;
+            }
+            
+            double dotProduct = 0.0;
+            double norm1 = 0.0;
+            double norm2 = 0.0;
+            
+            for (int i = 0; i < vec1.length; i++) {
+                dotProduct += vec1[i] * vec2[i];
+                norm1 += vec1[i] * vec1[i];
+                norm2 += vec2[i] * vec2[i];
+            }
+            
+            if (norm1 == 0.0 || norm2 == 0.0) {
+                return 0.0;
+            }
+            
+            return dotProduct / (Math.sqrt(norm1) * Math.sqrt(norm2));
+        }
+
+        @Override
+        public String toString(String field) {
+            return "VectorSimilarityQuery(" + this.field + ")";
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            VectorSimilarityQuery that = (VectorSimilarityQuery) obj;
+            return k == that.k &&
+                    Objects.equals(field, that.field) &&
+                    Arrays.equals(queryVector, that.queryVector);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = Objects.hash(field, k);
+            result = 31 * result + Arrays.hashCode(queryVector);
+            return result;
         }
     }
 }

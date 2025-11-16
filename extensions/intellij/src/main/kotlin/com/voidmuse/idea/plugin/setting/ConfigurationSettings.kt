@@ -20,5 +20,9 @@ class ConfigurationSettings :
 class ConfigurationSettingsState : BaseState() {
     var checkForPluginUpdates by property(true)
     var chatAutoReferenceSelectedFile by property(true)
-
+    var serverUrl: String? by string("http://localhost:3002/")
+    var useCustomServer by property(false)
+    var environmentMode: String? by string("auto") // auto, development, production
+    var customDevUrl: String? by string("http://localhost:3002/")
+    var customProdUrl: String? by string("http://voidmuse/index.html")
 }

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "/Users/eatin-li/.nvm/versions/node/v24.11.0/bin/npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/eatin-li/Desktop",
+        "/Users/eatin-li/IdeaProjects/voidmuse1"
+      ]
+    }
+  }
+}

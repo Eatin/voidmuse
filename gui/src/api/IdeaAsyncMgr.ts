@@ -1,12 +1,18 @@
 interface PendingRequest {
     onSuccess: (response: any) => void;
     onFailure: (error_code: string, error_message: string) => void;
+    retryCount?: number;
 }
 
 // Message manager
 const IdeaAsyncMgr = {
     // Store pending requests
     pendingRequests: new Map<string, PendingRequest>(),
+    
+    // Configuration
+    requestTimeout: 30000, // 30秒超时
+    maxRetries: 2, // 最大重试次数
+    retryDelay: 1000, // 重试延迟（毫秒）
 
     // Send message and register callback
     sendMessage: function (data: any, onSuccess: (response: any) => void, onFailure: (error_code: string, error_message: string) => void): void {

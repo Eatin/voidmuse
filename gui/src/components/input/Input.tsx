@@ -5,7 +5,8 @@ import {
 } from '@ant-design/icons';
 import {Attachments, AttachmentsProps} from '@ant-design/x';
 import Sender from '../sender/index'
-import {Button, Divider, Flex, type GetProp, type GetRef, theme, Tooltip, ConfigProvider, message} from 'antd';
+import {Button, Divider, Flex, type GetProp, type GetRef, theme, Tooltip, ConfigProvider} from 'antd';
+import { useMessage } from '@/utils/MessageUtils';
 import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import ModelDropdown from "../dropdown/ModelDropdown";
@@ -28,6 +29,7 @@ const Input: React.FC<InputProps> = ({onRequest, loading = false, onCancel}) => 
 
     const { t } = useTranslation('components');
     const { currentLanguage } = useLanguage();
+    const message = useMessage();
     
     const [open, setOpen] = React.useState(false);
     const [items, setItems] = React.useState<GetProp<AttachmentsProps, 'items'>>([]);

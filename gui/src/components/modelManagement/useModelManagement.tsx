@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Form, message} from 'antd';
+import {Form} from 'antd';
+import { useMessage } from '@/utils/MessageUtils';
 import {useTranslation} from 'react-i18next';
 import {ModelItem, ProviderOption, ModelOption, ModelPricing, TieredPricing} from '../../types/models';
 import {useModelContext} from '../../contexts/ModelContext';
@@ -399,7 +400,8 @@ const getDefaultPricing = (provider: string, modelId: string): ModelPricing | Ti
 };
 
 const useModelManagement = () => {
-    const {t} = useTranslation('components');
+    const { t } = useTranslation('components');
+    const message = useMessage();
     
     const {
         models,

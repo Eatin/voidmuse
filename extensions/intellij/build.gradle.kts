@@ -36,7 +36,7 @@ intellij {
     pluginName.set(properties("pluginName"))
     version.set(properties("platformVersion"))
     type.set(properties("platformType"))
-    plugins.set(listOf("java", "PythonCore:243.24978.46"))//, "PythonCore:241.14494.240"
+    plugins.set(listOf("java", "PythonCore:231.8109.144"))
 }
 
 sourceSets {
@@ -54,12 +54,13 @@ dependencies {
     implementation("cn.hutool:hutool-all:5.8.24")
     implementation("io.github.java-diff-utils:java-diff-utils:4.12")
     compileOnly("org.projectlombok:lombok:1.18.30")
-    implementation("com.jetbrains:ideaIC:2024.3.5")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
     implementation("com.knuddels:jtokkit:1.1.0")
     implementation("io.modelcontextprotocol.sdk:mcp:0.11.3")
     // 添加Lucene依赖
-    implementation("org.apache.lucene:lucene-queryparser:9.12.0")
+    implementation("org.apache.lucene:lucene-queryparser:8.11.1")
+    // 添加SLF4J提供者解决日志警告
+    implementation("org.slf4j:slf4j-simple:2.0.9")
 }
 
 tasks {
@@ -98,5 +99,11 @@ tasks {
         autoReloadPlugins.set(false)
         // jdk19以上才支持
         systemProperty("org.apache.lucene.store.MMapDirectory.enableMemorySegments", "false")
+        // 确保开发模式系统属性被传递
+        systemProperty("voidmuse.dev.mode", "true")
+        // 也设置环境变量
+        environment("VOIDMUSE_DEV_MODE", "true")
+        environment("voidmuse_dev_mode", "true")
+        environment("VOIDMUSE_DEVELOPMENT", "true")
     }
 }

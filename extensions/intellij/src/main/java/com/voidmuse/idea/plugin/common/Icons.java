@@ -7,6 +7,6 @@ import javax.swing.*;
 
 public final class Icons {
   public static final Icon DefaultSmall =
-          IconLoader.getIcon("/icons/pluginIcon.svg", Icons.class);
+          IconLoader.getIcon("/icons/pluginIcon13x13.svg", Icons.class);
   public static final Icon StatusBarCompletionInProgress = new AnimatedIcon.Default();
 }

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/eatin-li/Desktop",
+        "/Users/eatin-li/IdeaProjects/voidmuse1"
+      ]
+    }
+  }
+}

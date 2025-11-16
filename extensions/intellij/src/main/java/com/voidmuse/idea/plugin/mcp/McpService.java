@@ -50,30 +50,43 @@ public final class McpService {
         Set<String> currentKeys = new HashSet<>(clients.keySet());
         Set<String> targetKeys = new HashSet<>();
 
+        LOGGER.info("Updating MCP clients, current clients: " + currentKeys);
+        LOGGER.info("Target items: " + items.stream().map(McpItem::getName).collect(java.util.stream.Collectors.toList()));
+
         // 更新或创建新客户端
         for (McpItem item : items) {
-            if (item.getEnabled() == null || !item.getEnabled()) continue;
+            if (item.getEnabled() == null || !item.getEnabled()) {
+                LOGGER.info("Skipping disabled item: " + item.getName());
+                continue;
+            }
 
             targetKeys.add(item.getName());
+            LOGGER.info("Processing MCP item: " + item.getName());
             try {
                 if (clients.containsKey(item.getName())) {
                     MCPClient client = clients.get(item.getName());
+                    LOGGER.info("Found existing client for: " + item.getName() + ", connected: " + client.getConfig().getConnected());
                     if (client.getConfig().getConnected() == null || !client.getConfig().getConnected()) {
+                        LOGGER.info("Reinitializing client for: " + item.getName());
                         client.init();
                     }
                 } else {
+                    LOGGER.info("Creating new client for: " + item.getName());
                     MCPClient client = new MCPClient(item);
                     clients.put(item.getName(), client);
                     client.init();
+                    LOGGER.info("Successfully initialized client for: " + item.getName());
                 }
             } catch (Exception e) {
-                LOGGER.severe("Init client error for " + item.getName() + ": " + e.getMessage());
+                LOGGER.severe("Failed to initialize client for " + item.getName() + ": " + e.getMessage());
+                e.printStackTrace();
             }
         }
 
         // 移除禁用的客户端
         for (String key : currentKeys) {
             if (!targetKeys.contains(key)) {
+                LOGGER.info("Removing disabled client: " + key);
                 MCPClient client = clients.get(key);
                 if (client != null) {
                     client.close();
@@ -81,6 +94,8 @@ public final class McpService {
                 clients.remove(key);
             }
         }
+        
+        LOGGER.info("Updated MCP clients, final clients: " + clients.keySet());
     }
 
     public MCPClient getClient(String key) {
@@ -133,11 +148,14 @@ public final class McpService {
     }
 
     public McpConnectionTestResult testMcpConnection(String name) {
+        LOGGER.info("Testing MCP connection for: " + name);
         MCPClient client = clients.get(name);
         if (client != null) {
             try {
+                LOGGER.info("Found existing client for: " + name);
                 List<McpSchema.Tool> tools = client.getTools();
                 if (tools.isEmpty()) {
+                    LOGGER.info("No tools found, reinitializing client for: " + name);
                     client.init();
                     tools = client.getTools();
                 }
@@ -150,11 +168,15 @@ public final class McpService {
                     toolInfos.add(toolInfo);
                 }
 
+                LOGGER.info("Successfully tested connection for " + name + ", found " + tools.size() + " tools");
                 return new McpConnectionTestResult(true, tools.size(), toolInfos, null);
             } catch (Exception e) {
+                LOGGER.severe("Failed to test connection for " + name + ": " + e.getMessage());
+                e.printStackTrace();
                 return new McpConnectionTestResult(false, 0, null, e.getMessage());
             }
         }
+        LOGGER.warning("Client not found for: " + name);
         return new McpConnectionTestResult(false, 0, null, "Client not found");
     }
 

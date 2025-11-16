@@ -21,7 +21,7 @@ export interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
   content: string;
   status: MessageStatus;
-  messages: ChatMessageDetail[];
+  messages?: ChatMessageDetail[];
   modelId?: string;
   timing?: TimingInfo;
   tokenUsage?: TokenUsage;

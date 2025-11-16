@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import { ModelItem } from '../types/models';
 import { storageService } from '../storage';
-import { message } from 'antd';
+import { useMessage } from '@/utils/MessageUtils';
 import { useTranslation } from 'react-i18next';
 
 interface ModelContextProps {
@@ -28,7 +28,8 @@ export const ModelProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const { t } = useTranslation('errors');
     const [models, setModels] = useState<ModelItem[]>([]);
     const [selectedModelKey, setSelectedModelKey] = useState<string | null>(null);
-    const [selectedAutoCompleteModelKey, setSelectedAutoCompleteModelKey] = useState<string | null>(null); 
+    const [selectedAutoCompleteModelKey, setSelectedAutoCompleteModelKey] = useState<string | null>(null);
+    const message = useMessage(); 
 
     // Calculate currently selected model object
     const selectedModel = useMemo(() => {

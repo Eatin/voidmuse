@@ -58,6 +58,19 @@ export class ModelFactory {
                         include: true, // Enable usage accounting to get cost data
                     },
                 });
+            case 'customize':
+                // Customize Provider: Use OpenAI compatible interface with additional configuration
+                const customizeProvider = createOpenAICompatible({
+                    name: 'customize',
+                    baseURL: baseConfig.baseURL,
+                    apiKey: baseConfig.apiKey,
+                    includeUsage: true,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                });
+                return customizeProvider(modelId || '');
             default:
                 // Default to OpenAI compatible interface
                 return createOpenAI(baseConfig)(modelId || '');

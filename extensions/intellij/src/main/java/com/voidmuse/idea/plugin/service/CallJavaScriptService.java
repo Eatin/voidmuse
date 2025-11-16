@@ -4,6 +4,8 @@ import cn.hutool.json.JSONUtil;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.ui.jcef.JBCefBrowser;
 import com.voidmuse.idea.plugin.call.CallJavaReq;
 import com.voidmuse.idea.plugin.call.CallJavaScriptReq;
@@ -46,24 +48,51 @@ public final class CallJavaScriptService {
     }
 
     public void callJavaScriptAsync(String methodName, Map<String, Object> args, Callback callback) {
-        JBCefBrowser browser = ProjectBeanService.getInstance(project).getBrowser();
-        if (browser == null) {
-            throw new RuntimeException("browser is null");
+        try {
+            JBCefBrowser browser = ProjectBeanService.getInstance(project).getBrowser();
+            if (browser == null) {
+                LOG.error("Browser is null, cannot execute JavaScript asynchronously");
+                if (callback != null) {
+                    callback.timeout();
+                }
+                return;
+            }
+            //添加唯一id
+            String requestId = UUID.randomUUID().toString();
+            args.put("requestId", requestId);
+            CallJavaScriptReq callJavaScriptReq = new CallJavaScriptReq(methodName, args);
+            // Store the callback and set a timeout
+            callbacks.put(requestId, callback);
+            
+            // 确保在EDT中执行JCEF操作
+            ApplicationManager.getApplication().invokeLater(() -> {
+                try {
+                    browser.getCefBrowser().executeJavaScript("callJavaScript('" + JSONUtil.toJsonStr(callJavaScriptReq) + "')", null, 0);
+                    delayQueue.offer(new DelayedTask(requestId, 30, TimeUnit.SECONDS));
+                } catch (Exception e) {
+                    LOG.error("executeJavaScript error in callJavaScriptAsync", e);
+                    Callback removedCallback = callbacks.remove(requestId);
+                    if (removedCallback != null) {
+                        removedCallback.timeout();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            LOG.error("callJavaScriptAsync error", e);
+            if (callback != null) {
+                callback.timeout();
+            }
         }
-        //添加唯一id
-        String requestId = UUID.randomUUID().toString();
-        args.put("requestId", requestId);
-        CallJavaScriptReq callJavaScriptReq = new CallJavaScriptReq(methodName, args);
-        // Store the callback and set a timeout
-        callbacks.put(requestId, callback);
-        browser.getCefBrowser().executeJavaScript("callJavaScript('" + JSONUtil.toJsonStr(callJavaScriptReq) + "')", null, 0);
-
-        delayQueue.offer(new DelayedTask(requestId, 30, TimeUnit.SECONDS));
     }
 
     public void callJavaScript(Project project, String methodName, Map<String, Object> arg) {
         JBCefBrowser browser = ProjectBeanService.getInstance(project).getBrowser();
-        SwingUtilities.invokeLater(() -> {
+        if (browser == null) {
+            LOG.warn("Browser is null, cannot execute JavaScript");
+            return;
+        }
+        // 确保在EDT中执行JCEF操作
+        ApplicationManager.getApplication().invokeLater(() -> {
             try {
                 CallJavaScriptReq callJavaScriptReq = new CallJavaScriptReq(methodName, arg);
                 browser.getCefBrowser().executeJavaScript("callJavaScript('" + JSONUtil.toJsonStr(callJavaScriptReq) + "')", null, 0);

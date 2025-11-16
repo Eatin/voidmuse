@@ -1,6 +1,6 @@
 package com.voidmuse.idea.plugin.editor;
 
-import com.intellij.openapi.actionSystem.ActionUpdateThread;
+
 import cn.hutool.core.codec.Base64;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -32,10 +32,7 @@ public class InlineEditAction extends AnAction implements DumbAware {
         e.getPresentation().setVisible(true);
     }
 
-    @Override
-    public ActionUpdateThread getActionUpdateThread() {
-        return ActionUpdateThread.EDT;
-    }
+
 
     @Override
     public void actionPerformed(AnActionEvent e) {

@@ -165,7 +165,7 @@ const ModelDropdown: React.FC = () => {
             trigger={['click']}
             placement="top"
             arrow={true}
-            destroyPopupOnHide={true}
+            destroyOnHidden={true}
             overlayStyle={{minWidth: '200px', maxWidth: '250px'}}
         >
             <Button style={{

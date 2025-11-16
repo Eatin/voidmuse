@@ -50,25 +50,32 @@ public class PluginSelectionListener implements SelectionListener, DumbAware {
         ApplicationManager.getApplication().runReadAction(() -> {
             Editor editor = e.getEditor();
 
-            if (!isFileEditor(editor)) {
-                removeAllTooltips();
+            if (editor == null || editor.getProject() == null) {
                 return;
             }
 
-            if (editor != lastActiveEditor) {
-                removeAllTooltips();
-                lastActiveEditor = editor;
-            }
+            // 将UI操作调度到EDT线程
+            ApplicationManager.getApplication().invokeLater(() -> {
+                if (!isFileEditor(editor)) {
+                    removeAllTooltips();
+                    return;
+                }
 
-            SelectionModel model = editor.getSelectionModel();
-            String selectedText = model.getSelectedText();
+                if (editor != lastActiveEditor) {
+                    removeAllTooltips();
+                    lastActiveEditor = editor;
+                }
 
-            if (shouldRemoveTooltip(selectedText, editor)) {
-                removeExistingTooltips(editor, null);
-                return;
-            }
+                SelectionModel model = editor.getSelectionModel();
+                String selectedText = model.getSelectedText();
 
-            updateTooltip(editor);
+                if (shouldRemoveTooltip(selectedText, editor)) {
+                    removeExistingTooltips(editor, null);
+                    return;
+                }
+
+                updateTooltip(editor);
+            });
         });
     }
 
@@ -76,6 +83,12 @@ public class PluginSelectionListener implements SelectionListener, DumbAware {
         if (editor == null || editor.getProject() == null) {
             return false;
         }
+        
+        // 确保在EDT线程中执行UI操作
+        if (!ApplicationManager.getApplication().isDispatchThread()) {
+            return false;
+        }
+        
         Project project = editor.getProject();
         VirtualFile virtualFile = FileDocumentManager.getInstance().getFile(editor.getDocument());
 
@@ -83,10 +96,14 @@ public class PluginSelectionListener implements SelectionListener, DumbAware {
             return false;
         }
 
-        FileEditorManager fileEditorManager = FileEditorManager.getInstance(project);
-        FileEditor fileEditor = fileEditorManager.getSelectedEditor(virtualFile);
-
-        return fileEditor instanceof TextEditor;
+        try {
+            FileEditorManager fileEditorManager = FileEditorManager.getInstance(project);
+            FileEditor fileEditor = fileEditorManager.getSelectedEditor(virtualFile);
+            return fileEditor instanceof TextEditor;
+        } catch (Exception e) {
+            // 如果发生异常，返回false以避免崩溃
+            return false;
+        }
     }
 
     private boolean shouldRemoveTooltip(String selectedText, Editor editor) {

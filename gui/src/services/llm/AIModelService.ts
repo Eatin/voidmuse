@@ -133,6 +133,14 @@ export class AIModelService {
                 prompt
             });
             
+            // 检查空输出
+            if (!text || text.trim().length === 0) {
+                const error = new Error('AI_NoOutputGeneratedError: No output generated. Check the stream for errors.');
+                const additionalInfo = `Provider: ${modelConfig.provider || 'unknown'}\nURL: ${modelConfig.baseUrl || 'default'}\nPrompt: ${prompt.slice(0, 100)}...`;
+                errorReportingService.reportErrorWithException('AI No Output Generated', error, 'error', 'AIModelService', additionalInfo);
+                throw error;
+            }
+            
             this.saveTokenUsage(usage, 'editCode', modelConfig, providerMetadata);
             return text;
         } catch (error) {
@@ -190,6 +198,14 @@ export class AIModelService {
                 prompt
             });
             
+            // 检查空输出
+            if (!text || text.trim().length === 0) {
+                const error = new Error('AI_NoOutputGeneratedError: No output generated. Check the stream for errors.');
+                const additionalInfo = `Provider: ${modelConfig.provider || 'unknown'}\nURL: ${modelConfig.baseUrl || 'default'}\nPrompt: ${prompt.slice(0, 100)}...`;
+                errorReportingService.reportErrorWithException('AI No Output Generated', error, 'error', 'AIModelService', additionalInfo);
+                throw error;
+            }
+            
             this.saveTokenUsage(usage, 'codeComplete', modelConfig, providerMetadata);
 
             return text;
@@ -220,6 +236,14 @@ export class AIModelService {
                 model,
                 prompt
             });
+            
+            // 检查空输出
+            if (!text || text.trim().length === 0) {
+                const error = new Error('AI_NoOutputGeneratedError: No output generated. Check the stream for errors.');
+                const additionalInfo = `Provider: ${modelConfig.provider || 'unknown'}\nURL: ${modelConfig.baseUrl || 'default'}\nPrompt: ${prompt.slice(0, 100)}...`;
+                errorReportingService.reportErrorWithException('AI No Output Generated', error, 'error', 'AIModelService', additionalInfo);
+                throw error;
+            }
             
             this.saveTokenUsage(usage, 'Chat', modelConfig, providerMetadata);
 

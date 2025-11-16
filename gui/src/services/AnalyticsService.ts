@@ -34,8 +34,8 @@ class AnalyticsService {
     this.config = {
       googleAnalyticsId: 'G-0KP7W64S1P',
       baiduAnalyticsId: '93a02f36f43bdea2827e3ca2016dcad1',
-      enableGoogle: true,
-      enableBaidu: true,
+      enableGoogle: false,  // 禁用谷歌统计
+      enableBaidu: false,   // 禁用百度统计
     };
   }
 
@@ -51,9 +51,13 @@ class AnalyticsService {
       this.config = { ...this.config, ...config };
     }
 
-    console.log('Analytics Service initialized:', {
-      google: this.config.enableGoogle && !!this.config.googleAnalyticsId,
-      baidu: this.config.enableBaidu && !!this.config.baiduAnalyticsId,
+    // 强制禁用统计功能
+    this.config.enableGoogle = false;
+    this.config.enableBaidu = false;
+
+    console.log('Analytics Service initialized (disabled):', {
+      google: false,
+      baidu: false,
     });
   }
 

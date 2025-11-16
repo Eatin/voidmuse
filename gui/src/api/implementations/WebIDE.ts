@@ -30,7 +30,11 @@ import {
 export class WebIDE implements IDEInterface {
   
   testMcpConnection(name: string): McpConnectionTestResult | PromiseLike<McpConnectionTestResult> {
-    return Promise.resolve({ success: false, message: 'Not implemented in web IDE' });
+    console.log(`WebIDE: Attempting to test MCP connection for: ${name}`);
+    return Promise.resolve({ 
+      success: false, 
+      message: 'MCP connections are not supported in web browser environment. Please use the desktop application (VS Code extension or IntelliJ plugin) to enable MCP functionality.' 
+    });
   }
   callMcpTool(params: CallMcpParams): string | PromiseLike<string> {
     return Promise.resolve("");

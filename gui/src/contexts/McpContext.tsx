@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useMe
 import { McpItem } from '../types/mcps';
 import { storageService } from '../storage';
 import { McpService } from '../services';
-import { message } from 'antd';
+import { useMessage } from '@/utils/MessageUtils';
 
 interface McpContextProps {
     mcps: McpItem[];
@@ -18,22 +18,32 @@ const McpContext = createContext<McpContextProps | undefined>(undefined);
 
 export const McpProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [mcps, setMcps] = useState<McpItem[]>([]);
+    const message = useMessage();
     // Get MCP data from storage service
     const refreshMcps = async (): Promise<void> => {
         try {
             const configs = await storageService.getMcpConfigs();
+            console.log('Loaded MCP configs:', configs);
+            
             // Test enabled MCP connections
             const enabledConfigs = configs.filter(config => config.enabled);
+            console.log('Enabled MCP configs to test:', enabledConfigs);
+            
             if (enabledConfigs.length > 0) {
                 const testResults = await McpService.testMultipleConnections(enabledConfigs);
+                console.log('MCP test results:', testResults);
                 
                 // Update connection status
                 configs.forEach(config => {
                     if (config.enabled) {
                         const result = testResults.get(config.key);
-                        console.log('mcp test', result);
+                        console.log(`MCP ${config.name} test result:`, result);
                         config.connected = result?.success || false;
                         config.tools = result?.tools;
+                        
+                        if (!result?.success) {
+                            console.warn(`MCP ${config.name} connection failed:`, result?.error || result?.message);
+                        }
                     }
                 });
             }
@@ -90,7 +100,6 @@ export const McpProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
 
     const toggleMcpEnabled = async (key: string, enabled: boolean): Promise<void> => {
-
         const updatedmcps = mcps.map(m =>{
             if (m.key === key) {
                 return { 

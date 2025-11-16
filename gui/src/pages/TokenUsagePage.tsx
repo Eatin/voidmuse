@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Space, Typography, Divider, Button, message, Select } from 'antd';
+import { Space, Typography, Divider, Button, Select } from 'antd';
+import { useMessage } from '@/utils/MessageUtils';
 import { useTranslation } from 'react-i18next';
 import { TokenUsageList, TokenUsageCard } from '@/components/token/index';
 import type { TokenUsageSummary, TokenUsageDetail } from '@/components/token/types';
@@ -9,6 +10,7 @@ const { Title, Paragraph } = Typography;
 
 const TokenUsagePage: React.FC = () => {
   const { t } = useTranslation('pages');
+  const message = useMessage();
   const [data, setData] = useState<TokenUsageSummary[]>([]);
   const [loading, setLoading] = useState(false);
   const [allTokenUsageRecords, setAllTokenUsageRecords] = useState<TokenUsageDetail[]>([]);

@@ -73,16 +73,25 @@ class CheckUpdateActivity : ProjectActivity {
         }
 
         companion object {
-            private fun installPluginUpdate(project: Project) {
-                val settingsCopy = UpdateSettings()
-                val settingsState = settingsCopy.state
-                settingsState.copyFrom(UpdateSettings.getInstance().state)
-                settingsState.isCheckNeeded = true
-                settingsState.isPluginsCheckNeeded = true
-                settingsState.isShowWhatsNewEditor = true
-                settingsState.isThirdPartyPluginsAllowed = true
-                updateAndShowResult(project, settingsCopy)
+                private fun installPluginUpdate(project: Project) {
+                    ApplicationManager.getApplication().executeOnPooledThread {
+                        try {
+                            val settingsCopy = UpdateSettings()
+                            val settingsState = settingsCopy.state
+                            settingsState.copyFrom(UpdateSettings.getInstance().state)
+                            settingsState.isCheckNeeded = true
+                            settingsState.isPluginsCheckNeeded = true
+                            settingsState.isShowWhatsNewEditor = true
+                            settingsState.isThirdPartyPluginsAllowed = true
+                            updateAndShowResult(project, settingsCopy)
+                        } catch (e: Exception) {
+                            com.voidmuse.idea.plugin.util.OverlayUtil.getDefaultNotification(
+                                "更新过程中发生错误: ${e.message}",
+                                com.intellij.notification.NotificationType.ERROR
+                            ).notify(project)
+                        }
+                    }
+                }
             }
-        }
     }
 }

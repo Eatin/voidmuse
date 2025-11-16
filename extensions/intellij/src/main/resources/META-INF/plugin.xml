@@ -31,10 +31,15 @@ Our mission is to empower every developer to build their own AI tools effortless
         <toolWindow id="VoidMuse"
                     canCloseContents="true"
                     anchor="right"
-                    icon="/icons/pluginIcon.svg"
-                    factoryClass="com.voidmuse.idea.plugin.factory.AIToolTabFactory"
+                    icon="/icons/pluginIcon13x13.svg"
+                    factoryClass="com.voidmuse.idea.plugin.factory.AdvancedToolWindowFactory"
         />
         <applicationService serviceImplementation="com.voidmuse.idea.plugin.common.PluginDataPersistent"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.voidmuse.idea.plugin.setting.VoidMuseConfigurable"
+                id="com.voidmuse.idea.plugin.setting.VoidMuseConfigurable"
+                displayName="VoidMuse Settings"/>
        <!-- <postStartupActivity implementation="com.voidmuse.idea.plugin.service.FileService"/>-->
         <postStartupActivity
                 implementation="com.voidmuse.idea.plugin.activity.PluginStartupActivity"/>
@@ -97,6 +102,27 @@ Our mission is to empower every developer to build their own AI tools effortless
             <keyboard-shortcut first-keystroke="ctrl alt U" keymap="$default"/>
             <keyboard-shortcut first-keystroke="ctrl meta U" keymap="Mac OS X" replace-all="true"/>
         </action>
+        <action id="ToggleJcefModeAction"
+                class="com.voidmuse.idea.plugin.editor.ToggleJcefModeAction"
+                text="VoidMuse: Toggle JCEF Mode"
+                description="Switch between JCEF and Simple mode for VoidMuse tool window">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+        <action id="ConfigDiagnosticAction"
+                class="com.voidmuse.idea.plugin.setting.ConfigDiagnosticAction"
+                text="VoidMuse: Configuration Diagnostic"
+                description="Show current VoidMuse configuration status">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+        <!-- 主工具栏图标暂时禁用，因为找不到正确的组ID
+        <action id="VoidMuseMainToolbarAction"
+                class="com.voidmuse.idea.plugin.editor.ToggleToolWindowAction"
+                text="VoidMuse"
+                description="Toggle VoidMuse Tool Window"
+                icon="/icons/pluginIcon13x13.svg">
+            <add-to-group group-id="ProjectViewToolbar" anchor="last"/>
+        </action>
+        -->
     </actions>
 
 

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect, useRef, useCallback } from 'react';
-import { message } from 'antd';
+import { useMessage } from '@/utils/MessageUtils';
 import { storageService } from '@/storage';
 import { useXAgent, useXChat } from '@ant-design/x';
 import type { MessageInfo } from '@ant-design/x/es/use-x-chat';
@@ -65,6 +65,7 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const { projectInfo } = useProjectContext();
     const { mcps } = useMcpContext();
     const projectInfoRef = useRef<ProjectInfoResponse | null>(null);
+    const message = useMessage();
 
     useEffect(() => {
         projectInfoRef.current = projectInfo;
@@ -153,23 +154,36 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         const tools = await getToolsFromContextItems(contextItems);
 
-        const result = streamText({
-            model: model,
-            messages: MessageConverter.getInstance().convertToApiFormat(historyList.map(msg => msg.message), promptContent),
-            system: PromptService.getSystemPrompt({
-                modelName: modelRef.current?.name || '',
-                projectInfo: projectInfo,
-                tools: tools
-            }),
-            tools: tools,
-            stopWhen: stepCountIs(5),
-            abortSignal: abortController.current?.signal,
-            onError: (error) => {
-                handleApiError(error, onUpdate, onSuccess, selectedModel);
-            }
-        });
+        try {
+            const result = streamText({
+                model: model,
+                messages: MessageConverter.getInstance().convertToApiFormat(historyList.map(msg => msg.message), promptContent),
+                system: PromptService.getSystemPrompt({
+                    modelName: modelRef.current?.name || '',
+                    projectInfo: projectInfo,
+                    tools: tools
+                }),
+                tools: tools,
+                stopWhen: stepCountIs(5),
+                abortSignal: abortController.current?.signal,
+                onError: (error) => {
+                    handleApiError(error, onUpdate, onSuccess, selectedModel);
+                }
+            });
 
-        return { result, startTime };
+            return { result, startTime };
+        } catch (error) {
+            // 捕获流初始化错误
+            const additionalInfo = `Provider: ${selectedModel.provider || 'unknown'}\nURL: ${selectedModel.baseUrl || 'default'}`;
+            errorReportingService.reportErrorWithException('Stream API Init Failed', error, 'error', 'ChatContext.callStreamAPI', additionalInfo);
+            
+            // 检查是否是特定的流错误
+            if (error instanceof Error && error.message.includes('No output generated')) {
+                throw new Error('AI_NoOutputGeneratedError: No output generated. Check the stream for errors.');
+            }
+            
+            throw error;
+        }
     };
 
     const processStreamData = async (apiResult: any, assistantMessages: ChatMessageDetail[], onUpdate: (data: any) => void): Promise<ResponseResult> => {
@@ -181,55 +195,86 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         let finalMessages = [...assistantMessages];
 
-        for await (const part of result.fullStream) {
-            if (!hasReceivedFirstToken) {
-                firstTokenTime = Date.now() - startTime;
-                hasReceivedFirstToken = true;
+        try {
+            for await (const part of result.fullStream) {
+                if (!hasReceivedFirstToken) {
+                    firstTokenTime = Date.now() - startTime;
+                    hasReceivedFirstToken = true;
+                }
+
+                if (part.type === 'text-delta') {
+                    finalText += part.text;
+                    finalMessages = updateOrAddMessage(finalMessages, 'normal', finalText);
+                    onUpdate({ role: 'assistant', content: finalText, messages: finalMessages, status: 'loading' });
+                } else if (part.type === 'reasoning-delta') {
+                    reasoning += part.text;
+                    finalMessages = updateOrAddMessage(finalMessages, 'reasoning', reasoning);
+                    onUpdate({ role: 'assistant', content: reasoning, messages: finalMessages, status: 'loading' });
+                } else if (part.type === 'tool-call') {
+                    const toolCallMessage: ChatMessageDetail = {
+                        type: 'tool_call',
+                        content: [{
+                            type: 'tool-call',
+                            toolCallId: part.toolCallId,
+                            toolName: part.toolName,
+                            input: part.input
+                        }],
+                        status: 'loading'
+                    };
+                    finalMessages.push(toolCallMessage);
+
+                    // Update UI to show tool call
+                    onUpdate({ role: 'assistant', content: `tool call: ${part.toolName}`, messages: finalMessages, status: 'loading' });
+
+                    console.log('tool call', part, finalMessages);
+
+                } else if (part.type === 'tool-result') {
+                    const toolResultMessage: ChatMessageDetail = {
+                        type: 'tool_result',
+                        content: [{
+                            type: 'tool-result',
+                            toolCallId: part.toolCallId,
+                            toolName: part.toolName,
+                            output: part.output
+                        }],
+                        status: 'success'
+                    };
+                    finalMessages.push(toolResultMessage);
+
+                    // Update UI to show tool result
+                    onUpdate({ role: 'assistant', content: `tool call completed: ${part.toolName}`, messages: finalMessages, status: 'loading' });
+                    console.log('tool call completed', part, finalMessages);
+                }
             }
-
-            if (part.type === 'text-delta') {
-                finalText += part.text;
-                finalMessages = updateOrAddMessage(finalMessages, 'normal', finalText);
-                onUpdate({ role: 'assistant', content: finalText, messages: finalMessages, status: 'loading' });
-            } else if (part.type === 'reasoning-delta') {
-                reasoning += part.text;
-                finalMessages = updateOrAddMessage(finalMessages, 'reasoning', reasoning);
-                onUpdate({ role: 'assistant', content: reasoning, messages: finalMessages, status: 'loading' });
-            } else if (part.type === 'tool-call') {
-                const toolCallMessage: ChatMessageDetail = {
-                    type: 'tool_call',
-                    content: [{
-                        type: 'tool-call',
-                        toolCallId: part.toolCallId,
-                        toolName: part.toolName,
-                        input: part.input
-                    }],
-                    status: 'loading'
-                };
-                finalMessages.push(toolCallMessage);
-
-                // Update UI to show tool call
-                onUpdate({ role: 'assistant', content: `tool call: ${part.toolName}`, messages: finalMessages, status: 'loading' });
-
-                console.log('tool call', part, finalMessages);
-
-            } else if (part.type === 'tool-result') {
-                const toolResultMessage: ChatMessageDetail = {
-                    type: 'tool_result',
-                    content: [{
-                        type: 'tool-result',
-                        toolCallId: part.toolCallId,
-                        toolName: part.toolName,
-                        output: part.output
-                    }],
-                    status: 'success'
-                };
-                finalMessages.push(toolResultMessage);
-
-                // Update UI to show tool result
-                onUpdate({ role: 'assistant', content: `tool call completed: ${part.toolName}`, messages: finalMessages, status: 'loading' });
-                console.log('tool call completed', part, finalMessages);
+        } catch (error) {
+            // 检查是否有接收到任何内容
+            if (!hasReceivedFirstToken && finalText.length === 0) {
+                const noOutputError = new Error('AI_NoOutputGeneratedError: No output generated. Check the stream for errors.');
+                console.error('Stream processing error - no output generated:', error);
+                throw noOutputError;
             }
+            
+            // 如果有部分内容但流中断，记录警告但继续使用已有内容
+            if (finalText.length > 0) {
+                console.warn('Stream processing interrupted but content received:', error);
+                return {
+                    timingInfo: {
+                        firstTokenLatency: firstTokenTime,
+                        totalLatency: Date.now() - startTime
+                    },
+                    tokenUsage: { promptTokens: 0, completionTokens: 0, totalTokens: 0, cost: 0 },
+                    finalMessages
+                };
+            }
+            
+            throw error;
+        }
+
+        // 检查是否完全没有接收到内容
+        if (!hasReceivedFirstToken && finalText.length === 0) {
+            const noOutputError = new Error('AI_NoOutputGeneratedError: No output generated. Check the stream for errors.');
+            console.error('No content received from stream');
+            throw noOutputError;
         }
 
         // Calculate total latency and build timing information
@@ -359,40 +404,68 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return msgs;
     };
 
-    // Retry message
     const retryMessage = (messageIndex: number) => {
-        // 1. First get user message data
-        let userMessageContent = '';
-        let userMessageHtml = '';
-        let userContextItems: ContextItem[] = [];
-        let userMessageIndex = -1;
+        try {
+            // 1. First get user message data
+            let userMessageContent = '';
+            let userMessageHtml = '';
+            let userContextItems: ContextItem[] = [];
+            let userMessageIndex = -1;
 
-        // Find the most recent user message before current assistant message
-        for (let i = messageIndex - 1; i >= 0; i--) {
-            if (messages[i].message.role === 'user') {
-                userMessageContent = messages[i].message.messages[0].plainText || messages[i].message.content;
-                userMessageHtml = messages[i].message.messages[0].content || messages[i].message.content;
-                userContextItems = messages[i].message.messages[0].contextItems || [];
-                userMessageIndex = i;
-                break;
+            // Find the most recent user message before current assistant message
+            for (let i = messageIndex - 1; i >= 0; i--) {
+                if (messages[i].message.role === 'user') {
+                    const userMessage = messages[i].message;
+                    if (userMessage.messages && userMessage.messages.length > 0) {
+                        userMessageContent = userMessage.messages[0].plainText || userMessage.content;
+                        userMessageHtml = userMessage.messages[0].content || userMessage.content;
+                        userContextItems = userMessage.messages[0].contextItems || [];
+                    } else {
+                        userMessageContent = userMessage.content;
+                        userMessageHtml = userMessage.content;
+                    }
+                    userMessageIndex = i;
+                    break;
+                }
             }
+
+            if (userMessageIndex === -1) {
+                // If no corresponding user message found, return directly
+                console.warn('No user message found for retry at index:', messageIndex);
+                return;
+            }
+
+            // 2. Keep all messages before user message
+            const newMessages = messages.slice(0, userMessageIndex);
+
+            // 3. Set message state
+            setMessages(newMessages);
+
+            // 4. Use setTimeout to ensure state update before sending message
+            setTimeout(() => {
+                try {
+                    sendMessageWithHistory(userMessageHtml, userMessageContent, userContextItems, newMessages);
+                } catch (error) {
+                    console.error('Error in retryMessage setTimeout:', error);
+                    errorReportingService.reportErrorWithException(
+                        'Retry Message Error',
+                        error,
+                        'error',
+                        'ChatContext.retryMessage',
+                        'Failed to retry message'
+                    );
+                }
+            }, 0);
+        } catch (error) {
+            console.error('Error in retryMessage:', error);
+            errorReportingService.reportErrorWithException(
+                'Retry Message Error',
+                error,
+                'error',
+                'ChatContext.retryMessage',
+                'Failed to prepare message retry'
+            );
         }
-
-        if (userMessageIndex === -1) {
-            // If no corresponding user message found, return directly
-            return;
-        }
-
-        // 2. Keep all messages before user message
-        const newMessages = messages.slice(0, userMessageIndex);
-
-        // 3. Set message state
-        setMessages(newMessages);
-
-        // 4. Use setTimeout to ensure state update before sending message
-        setTimeout(() => {
-            sendMessageWithHistory(userMessageHtml, userMessageContent, userContextItems, newMessages);
-        }, 0);
     };
 
     const createNewSession = () => {
@@ -477,14 +550,28 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             abortController.current = controller;
         },
         requestFallback: (_, { error }) => {
+            const errorMsg = extractErrorMessage(error);
+            const errorContent = `Request failed: ${errorMsg}. Please try again.`;
+            console.error('Chat request failed:', error);
+            
+            // 报告错误到错误报告服务
+            errorReportingService.reportErrorWithException(
+                'Chat Request Failed',
+                error,
+                'error',
+                'ChatContext.useXChat',
+                'Request fallback triggered due to error'
+            );
+            
             return {
                 role: 'assistant',
-                content: 'Request failed, please retry',
+                content: errorContent,
                 messages: [{
-                    content: 'Request failed, please retry',
-                    status: 'success',
+                    content: errorContent,
+                    status: 'error',
                     type: 'normal'
-                }]
+                }],
+                status: 'error'
             };
         }
     });
@@ -501,28 +588,57 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         sendMessageWithHistory(htmlText, plainText, contextItems, messages);
     };
 
-    // Message sending handler method
     const sendMessageWithHistory = (htmlText: string, plainText: string, contextItems: ContextItem[] = [], messageHistory: MessageInfo<ChatMessage>[] = []) => {
-        // If there's currently a message being output, cancel current message output first
-        cancelRequest();
-        // Send logic: delayed execution, let cancel send complete first
-        setTimeout(() => {
-            setLoading(true);
-            onRequest({
-                role: 'user',
-                content: plainText,
-                messages: [
-                    {
-                        content: htmlText,
-                        plainText: plainText,
-                        status: 'success',
-                        type: 'normal',
-                        contextItems: contextItems
-                    }
-                ],
-                _historyMsgList: messageHistory
-            });
-        }, 0);
+        try {
+            // If there's currently a message being output, cancel current message output first
+            cancelRequest();
+            
+            // Validate input parameters
+            if (!htmlText || !plainText) {
+                console.error('Invalid message content: htmlText or plainText is empty');
+                return;
+            }
+            
+            // Send logic: delayed execution, let cancel send complete first
+            setTimeout(() => {
+                try {
+                    setLoading(true);
+                    onRequest({
+                        role: 'user',
+                        content: plainText,
+                        messages: [
+                            {
+                                content: htmlText,
+                                plainText: plainText,
+                                status: 'success',
+                                type: 'normal',
+                                contextItems: contextItems
+                            }
+                        ],
+                        _historyMsgList: messageHistory
+                    });
+                } catch (error) {
+                    console.error('Error in sendMessageWithHistory setTimeout:', error);
+                    setLoading(false);
+                    errorReportingService.reportErrorWithException(
+                        'Send Message Error',
+                        error,
+                        'error',
+                        'ChatContext.sendMessageWithHistory',
+                        'Failed to send message'
+                    );
+                }
+            }, 0);
+        } catch (error) {
+            console.error('Error in sendMessageWithHistory:', error);
+            errorReportingService.reportErrorWithException(
+                'Send Message Error',
+                error,
+                'error',
+                'ChatContext.sendMessageWithHistory',
+                'Failed to prepare message sending'
+            );
+        }
     };
 
     // Save message history

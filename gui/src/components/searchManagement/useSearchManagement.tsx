@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Form, message} from 'antd';
+import {Form} from 'antd';
+import { useMessage } from '@/utils/MessageUtils';
 import {SearchConfigItem, SearchProviderOption, SearchEngineOption} from '../../types/search';
 import { useTranslation } from 'react-i18next';
 import {StorageService} from '../../storage/StorageService';
@@ -11,6 +12,7 @@ const searchProviderOptions: SearchProviderOption[] = [
 
 const useSearchManagement = () => {
     const { t } = useTranslation('components');
+    const message = useMessage();
     const [searchConfigs, setSearchConfigs] = useState<SearchConfigItem[]>([]);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [currentProvider, setCurrentProvider] = useState<string>('');

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import { ModelItem } from '../types/models';
 import { storageService } from '../storage';
-import { message } from 'antd';
+import { useMessage } from '@/utils/MessageUtils';
 import { useTranslation } from 'react-i18next';
 
 interface EmbeddingModelContextProps {
@@ -23,6 +23,7 @@ export const EmbeddingModelProvider: React.FC<{ children: ReactNode }> = ({ chil
     const { t } = useTranslation('errors');
     const [embeddingModels, setEmbeddingModels] = useState<ModelItem[]>([]);
     const [selectedEmbeddingModelKey, setSelectedEmbeddingModelKey] = useState<string | null>(null);
+    const message = useMessage();
 
     const selectedEmbeddingModel = useMemo(() => {
         if (!selectedEmbeddingModelKey) return null;
